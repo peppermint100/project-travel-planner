@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +31,6 @@ public class WebController {
     @GetMapping(value="check-connection") //서버가 실행 중인지 체크
     public ResponseEntity<BasicSuccess> checkConnection(){
 
-
         BasicSuccess basicSuccess = BasicSuccess.builder()
                 .success(true)
                 .msg("success")
@@ -44,10 +44,18 @@ public class WebController {
     public ResponseEntity<BasicSuccess> signUp(@RequestParam String email, @RequestParam String password,
                                                 @RequestParam String passwordConfirm, @RequestParam String name, @RequestParam String phone){
 
+        if(email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()){
+            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("빈 칸을 전부 채워주세요.").build();
+            return ResponseEntity.ok().body(basicSuccess);
+        }
+
         //입력한 비밀번호 두가지가 다를 때
         if(!password.equals(passwordConfirm)){
-            throw new PasswordConfirmNotSameException();
+            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("두 비밀번호가 일치하지 않습니다.").build();
+            return ResponseEntity.ok().body(basicSuccess);
+//            throw new PasswordConfirmNotSameException();
         }
+
         userJpaRepository.save(
                 User.builder()
                 .email(email)
@@ -56,7 +64,6 @@ public class WebController {
                 .phone(phone)
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
-
 
         BasicSuccess basicSuccess = BasicSuccess.builder()
                 .success(true)
@@ -83,6 +90,8 @@ public class WebController {
 
         return ResponseEntity.ok().body(signInSuccess);
     }
+
+
 
     //내정보 조회
     @PostMapping(value="me")

@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okio.IOException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Boolean.FALSE
 
 object RetrofitClient {
     private val TAG: String = "로그"
@@ -25,13 +26,12 @@ object RetrofitClient {
             }
         })
 
-
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         client.addInterceptor(loggingInterceptor)
         client.addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
-                val currentRequest = chain.request().newBuilder().addHeader(API.TOKEN_HEADER, SharedPreferenceManager.getToken()).build()
+                val currentRequest = chain.request().newBuilder().header(API.TOKEN_HEADER, SharedPreferenceManager.getToken()).build()
                 return chain.proceed(currentRequest)
             }
         })
