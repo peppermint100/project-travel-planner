@@ -42,6 +42,7 @@
             android:textColor="@color/colorPrimary"
             android:clickable="true"
             android:text="로그인"
+            android:textSize="20sp"
             android:layout_weight="1"
             android:textAlignment="center"
             />
@@ -53,6 +54,7 @@
             android:textColor="@color/colorPrimary"
             android:textAlignment="center"
             android:layout_weight="1"
+            android:textSize="20sp"
             android:text="회원가입"
             />
         <TextView
@@ -63,6 +65,7 @@
             android:textColor="@color/colorPrimary"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:textSize="20sp"
             android:text="비밀번호 찾기"
             />
     </LinearLayout>

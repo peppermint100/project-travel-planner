@@ -23,7 +23,9 @@ class LoadingActivity: AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_loading)
 
         CoroutineScope(Dispatchers.IO).launch{
-            val isLoading = AuthRetrofitManager.instance.checkConnection()
+            delay(1000)
+//            val isLoading = AuthRetrofitManager.instance.checkConnection()
+            val isLoading = true
             Log.d(TAG, "LoadingActivity - onCreate: checking server connection...$isLoading ");
             withContext(Dispatchers.Main){
                 if(isLoading){
@@ -34,7 +36,6 @@ class LoadingActivity: AppCompatActivity() {
                     Toast.makeText(this@LoadingActivity, "어플리케이션 서버에 문제가 있습니다.", Toast.LENGTH_SHORT)
                 }
             }
-
         }
     }
 

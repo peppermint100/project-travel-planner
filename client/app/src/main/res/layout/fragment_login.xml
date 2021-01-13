@@ -34,7 +34,14 @@
                 android:text="123123"
                 android:layout_height="wrap_content"
                 />
+            <CheckBox
+                android:id="@+id/login_check_box"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="로그인 유지"/>
         </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/login_button"
             android:layout_width="350dp"

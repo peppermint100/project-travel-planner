@@ -22,5 +22,4 @@
         </activity>
         <activity android:name=".activities.UserActivity" />
     </application>
-
 </manifest>

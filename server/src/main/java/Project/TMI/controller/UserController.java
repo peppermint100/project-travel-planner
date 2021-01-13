@@ -2,7 +2,6 @@ package Project.TMI.controller;
 
 import Project.TMI.advice.exception.CEmailSigninFailedException;
 import Project.TMI.advice.exception.CUserNotFoundException;
-import Project.TMI.advice.exception.PasswordConfirmNotSameException;
 import Project.TMI.config.security.JwtTokenProvider;
 import Project.TMI.entity.User;
 import Project.TMI.model.*;
@@ -16,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,17 +42,17 @@ public class WebController {
     public ResponseEntity<BasicSuccess> signUp(@RequestParam String email, @RequestParam String password,
                                                 @RequestParam String passwordConfirm, @RequestParam String name, @RequestParam String phone){
 
-        if(email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()){
-            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("빈 칸을 전부 채워주세요.").build();
-            return ResponseEntity.ok().body(basicSuccess);
-        }
-
-        //입력한 비밀번호 두가지가 다를 때
-        if(!password.equals(passwordConfirm)){
-            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("두 비밀번호가 일치하지 않습니다.").build();
-            return ResponseEntity.ok().body(basicSuccess);
-//            throw new PasswordConfirmNotSameException();
-        }
+//        if(email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()){
+//            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("빈 칸을 전부 채워주세요.").build();
+//            return ResponseEntity.ok().body(basicSuccess);
+//        }
+//
+//        //입력한 비밀번호 두가지가 다를 때
+//        if(!password.equals(passwordConfirm)){
+//            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("두 비밀번호가 일치하지 않습니다.").build();
+//            return ResponseEntity.ok().body(basicSuccess);
+////            throw new PasswordConfirmNotSameException();
+//        }
 
         userJpaRepository.save(
                 User.builder()
@@ -76,6 +74,8 @@ public class WebController {
     //로그인
     @PostMapping(value="signin")
     public ResponseEntity<SignInSuccess> signIn(@RequestParam String email, @RequestParam String password){
+
+        System.out.println(email + password);
 
         User user = userJpaRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
         if(!passwordEncoder.matches(password, user.getPassword())){
