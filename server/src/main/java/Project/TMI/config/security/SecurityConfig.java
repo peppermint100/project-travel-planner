@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().hasRole("USER")
 //                .and()
 //                    .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()) //accessDeniedHandler, 권한이 없는 접근일 때에 발생시킬 동작
-                .and()
-                    .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint()) //authenticationEntryPoint, 인증과정에서 실패하거나, 인증헤더를 넘겨주지 않았을때 발생시킬 동작
+//                .and()
+//                    .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint()) //authenticationEntryPoint, 인증과정에서 실패하거나, 인증헤더를 넘겨주지 않았을때 발생시킬 동작
                 .and()                  //JwtAuthenticationFilter jwt 토큰을 검증하기 위한 페이지, jwtTokenProvider 받아온 토큰을 정제해서 JwtAuthenticationFilter에 넘겨줌,
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); //UsernamePasswordAuthenticationFilter 로그인에서 인증을 처리하는 필터.
 
