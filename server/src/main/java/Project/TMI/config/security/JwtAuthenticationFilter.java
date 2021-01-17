@@ -16,7 +16,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private JwtTokenProvider jwtTokenProvider;
 
     //jwt Provider 주입
-    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider){
+    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -24,8 +24,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
+        // jwtTokenProvider.resolveToken 를 이용해 header에 있는 토큰을 꺼냄
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
-        if(token != null && jwtTokenProvider.validateToken(token)){
+
+        // 토큰이 존재하고, jwtTokenProvider.validateToken 를 이용해 유효성이 검중되었다면
+        if (token != null && jwtTokenProvider.validateToken(token)) {
 
             Authentication auth = jwtTokenProvider.getAuthentication(token);
 

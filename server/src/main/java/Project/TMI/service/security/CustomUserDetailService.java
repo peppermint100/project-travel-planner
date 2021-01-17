@@ -2,7 +2,7 @@ package Project.TMI.service.security;
 
 
 import Project.TMI.advice.exception.CUserNotFoundException;
-import Project.TMI.repository.UserJpaRepository;
+import Project.TMI.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userRepository;
 
     public UserDetails loadUserByUsername(String userPk){
-        return userJpaRepository.findById(Long.valueOf(userPk)).orElseThrow(CUserNotFoundException::new);
+        return userRepository.findById(Long.valueOf(userPk)).orElseThrow(CUserNotFoundException::new);
     }
 }

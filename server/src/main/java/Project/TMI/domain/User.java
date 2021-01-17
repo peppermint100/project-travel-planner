@@ -1,4 +1,4 @@
-package Project.TMI.entity;
+package Project.TMI.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -24,14 +24,24 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long userId;
 
     private String email;
+
     private String password;
 
     private String name;
+
     private String phone;
 
+    @OneToMany(mappedBy = "user")
+    private List<Plan> userPlans = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<SharedPlan> sharedPlans = new ArrayList<>();
+
+
+    //인증관련========================================
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

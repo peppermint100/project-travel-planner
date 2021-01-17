@@ -48,7 +48,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    //jwt 토큰으로 인증정보 조회
+    //jwt 토큰으로 인증정보 조회(jwt 토큰을 이용해 유저 정보를 가져옵니다. loadUserByUsername 에서 Username은 식별자 여기서는 토큰)
     public Authentication getAuthentication(String token){
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());

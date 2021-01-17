@@ -14,9 +14,8 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException,
-            ServletException {
+    @Override //ExceptionController로 요청을 보냄
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException{
         response.sendRedirect("/exception/entrypoint");
     }
 }

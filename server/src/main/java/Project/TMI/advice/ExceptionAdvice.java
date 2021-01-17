@@ -5,7 +5,6 @@ import Project.TMI.model.Failure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -21,16 +20,16 @@ public class ExceptionAdvice {
         return new ResponseEntity<>(new Failure("알수없는 오류입니다."), HttpStatus.OK);
     }
 
-    //공부필요
+    //인증 받지 않은 사람이 요청을 했을 때
     @ExceptionHandler(CAuthenticationEntryPointException.class)
-    public ResponseEntity<Failure> authenticationEntryPointException(HttpServletRequest request, CAuthenticationEntryPointException e) {
-        return new ResponseEntity<>(new Failure("authenticationEntryPointException"), HttpStatus.OK);
+    public ResponseEntity<Failure> CAuthenticationEntryPointException(HttpServletRequest request, CAuthenticationEntryPointException e) {
+        return new ResponseEntity<>(new Failure("인증에 실패 하였습니다."), HttpStatus.OK);
     }
 
-    //공부필요
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Failure> accessDeniedException(HttpServletRequest request, AccessDeniedException e) {
-        return new ResponseEntity<>(new Failure("accessDeniedException"), HttpStatus.OK);
+    //인증을 받았으나 해당 요청에 대한 권한이 없을 때 발생
+    @ExceptionHandler(CAccessDeniedException.class)
+    public ResponseEntity<Failure> CAccessDeniedException(HttpServletRequest request, CAccessDeniedException e) {
+        return new ResponseEntity<>(new Failure("접근 권한이 없습니다."), HttpStatus.OK);
     }
 
     //SignUp

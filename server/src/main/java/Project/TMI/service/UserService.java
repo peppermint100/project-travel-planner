@@ -1,8 +1,8 @@
 package Project.TMI.service;
 
-import Project.TMI.controller.dto.SignUpDto;
-import Project.TMI.entity.User;
-import Project.TMI.repository.UserJpaRepository;
+import Project.TMI.domain.dto.SignUpDto;
+import Project.TMI.domain.User;
+import Project.TMI.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +13,13 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void userSave(SignUpDto signUpDto){
-        userJpaRepository.save(signUpDto.toEntity());
+        userRepository.save(signUpDto.toEntity());
     }
 
     //email을 이용한 유저 정보 조회
-    public Optional<User> findOneUserByEmail(String email){ return userJpaRepository.findByEmail(email); }
+    public Optional<User> findOneUserByEmail(String email){ return userRepository.findByEmail(email); }
 }
