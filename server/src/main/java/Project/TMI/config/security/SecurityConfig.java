@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //jwt token으로 인증할 것이므로 세션이 필요X 생성안함
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/signup", "/signin", "/check-connection").permitAll() //회원가입, 로그인, check-connection은 항상 요청허용
+                    .antMatchers("/user/**").permitAll() //회원가입, 로그인, check-connection은 항상 요청허용
                     .antMatchers(HttpMethod.GET, "/test").permitAll() //추가적으로 Get요청을 허용해야 할 경우 여기에 추가해줍니다. "test"처럼
                     .anyRequest().hasRole("USER")
 //                .and()

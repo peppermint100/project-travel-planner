@@ -24,8 +24,8 @@ class LoadingActivity: AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch{
             delay(1000)
-//            val isLoading = AuthRetrofitManager.instance.checkConnection()
-            val isLoading = true
+            val isLoading = AuthRetrofitManager.instance.checkConnection()
+//            val isLoading = true
             Log.d(TAG, "LoadingActivity - onCreate: checking server connection...$isLoading ");
             withContext(Dispatchers.Main){
                 if(isLoading){

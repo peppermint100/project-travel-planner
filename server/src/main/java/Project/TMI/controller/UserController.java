@@ -18,8 +18,8 @@ import java.util.Collections;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
-public class WebController {
+@RequestMapping("/user/")
+public class UserController {
 
     private final UserJpaRepository userJpaRepository;
     private final JwtTokenProvider jwtTokenProvider;
@@ -42,17 +42,21 @@ public class WebController {
     public ResponseEntity<BasicSuccess> signUp(@RequestParam String email, @RequestParam String password,
                                                 @RequestParam String passwordConfirm, @RequestParam String name, @RequestParam String phone){
 
-//        if(email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()){
-//            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("빈 칸을 전부 채워주세요.").build();
-//            return ResponseEntity.ok().body(basicSuccess);
-//        }
-//
-//        //입력한 비밀번호 두가지가 다를 때
-//        if(!password.equals(passwordConfirm)){
-//            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("두 비밀번호가 일치하지 않습니다.").build();
-//            return ResponseEntity.ok().body(basicSuccess);
-////            throw new PasswordConfirmNotSameException();
-//        }
+        if(email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()){
+            throw new IllegalStateException("fawkef");
+            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("빈 칸을 전부 채워주세요.").build();
+            return ResponseEntity.ok().body(basicSuccess);
+        }
+
+        //입력한 비밀번호 두가지가 다를 때
+        try{
+            if(!password.equals(passwordConfirm)) {
+                throw new PasswordConfirmNotSameException("error");
+            }
+        }catch(IllegalStateException e){
+            BasicSuccess basicSuccess = BasicSuccess.builder().success(false).msg("서버메시지: 두 비밀번호가 다릅니다.").build();
+            return ResponseEntity.ok().body(basicSuccess);
+        }
 
         userJpaRepository.save(
                 User.builder()
