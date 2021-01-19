@@ -5,6 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/fragment_signup"
         >
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_text_input_layout"
@@ -84,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="SIGN-IN"
+        android:text="회원가입"
         />
     </LinearLayout>
 </layout>

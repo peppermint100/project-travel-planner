@@ -69,12 +69,12 @@ class AuthRetrofitManager {
             return BaseResponse(msg = msg, success=success)
         }
 
-//        if(password != passwordConfirm){
-//            Log.d(TAG, "AuthRetrofitManager - signUp: 비밀번호가 서로 일치하지 않습니다. ");
-//            val msg="비밀번호가 서로 일치하지 않습니다."
-//            val success=false
-//            return BaseResponse(msg = msg, success=success)
-//        }
+        if(password != passwordConfirm){
+            Log.d(TAG, "AuthRetrofitManager - signUp: 비밀번호가 서로 일치하지 않습니다. ");
+            val msg="비밀번호가 서로 일치하지 않습니다."
+            val success=false
+            return BaseResponse(msg = msg, success=success)
+        }
 
         if(!EmailValidator.isEmailValid(email)){
             Log.d(TAG, "AuthRetrofitManager - signUp: 이메일의 형식이 올바르지 않습니다 ");
@@ -103,11 +103,13 @@ class AuthRetrofitManager {
         val response = call?.awaitResponse()!!
         val body = response.body() as JsonObject
         val userId = body.get("userId").asString
-        val username = body.get("username").asString
+        val username = body.get("name").asString
         val email = body.get("email").asString
         val success = body.get("success").asBoolean
         val msg = body.get("msg").asString
         val statusCode = response.code()
+
+        Log.d(TAG, "AuthRetrofitManager - me: msg: $msg, userId: $userId, username: $username");
 
         if(statusCode == 200){
             return MeResponse(userId, username, email, success, msg)

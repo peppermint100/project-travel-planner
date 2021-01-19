@@ -1,5 +1,6 @@
 package com.example.projecttravelplanner.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.projecttravelplanner.R
+import com.example.projecttravelplanner.activities.MainActivity
 import com.example.projecttravelplanner.databinding.FragmentLoginBinding
 import com.example.projecttravelplanner.retrofit.auth.AuthRetrofitManager
 import com.example.projecttravelplanner.utils.SharedPreferenceManager
@@ -45,6 +47,8 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                         binding.etEmail.text?.clear()
                         binding.etPassword.text?.clear()
                         Toast.makeText(activity, loginResult.msg, Toast.LENGTH_SHORT).show()
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
                     }else{
                         Toast.makeText(activity, loginResult.msg, Toast.LENGTH_SHORT).show()
                     }

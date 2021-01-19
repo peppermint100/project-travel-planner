@@ -2,6 +2,7 @@ package com.example.projecttravelplanner.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.projecttravelplanner.R
@@ -9,7 +10,6 @@ import com.example.projecttravelplanner.databinding.ActivityUserBinding
 import com.example.projecttravelplanner.fragments.ForgotPasswordFragment
 import com.example.projecttravelplanner.fragments.LoginFragment
 import com.example.projecttravelplanner.fragments.SignUpFragment
-import kotlin.math.sign
 
 class UserActivity: AppCompatActivity() {
     private val TAG: String = "로그"
@@ -29,7 +29,6 @@ class UserActivity: AppCompatActivity() {
 
         toSignUpFragment()
         applyFragmentNavigation()
-
     }
 
     private fun applyFragmentNavigation(){
@@ -45,12 +44,16 @@ class UserActivity: AppCompatActivity() {
     }
 
     private fun toLoginFragment(){
+        binding.toLoginButton.visibility = View.GONE
+        binding.toSignupButton.visibility = View.VISIBLE
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.user_fragment_frame, loginFragment)
             commit()
         }
     }
     private fun toSignUpFragment(){
+        binding.toSignupButton.visibility = View.GONE
+        binding.toLoginButton.visibility = View.VISIBLE
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.user_fragment_frame, signupFragment)
             commit()
@@ -61,5 +64,10 @@ class UserActivity: AppCompatActivity() {
             replace(R.id.user_fragment_frame, forgotPasswordFragment)
             commit()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        finish()
     }
 }

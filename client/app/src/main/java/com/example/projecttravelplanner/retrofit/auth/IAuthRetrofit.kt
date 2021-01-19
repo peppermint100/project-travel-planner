@@ -29,7 +29,6 @@ interface IAuthRetrofit {
             @Field("phone") phone: String
     ): Call<JsonElement>
 
-    @FormUrlEncoded
     @POST("/user/me")
-    fun me(): Call<MeResponse>
+    fun me(): Call<JsonElement>
 }

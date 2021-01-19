@@ -18,6 +18,7 @@ import kotlinx.coroutines.*
 class SignUpFragment: Fragment() {
     private val TAG: String = "로그"
     private lateinit var binding: FragmentSignupBinding
+    private lateinit var loginFragment: LoginFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +47,10 @@ class SignUpFragment: Fragment() {
                         binding.etPasswordConfirm.text?.clear()
                         binding.etPhone.text?.clear()
                         Toast.makeText(activity, signUpResult.msg, Toast.LENGTH_SHORT).show()
+                        val loginFragment = LoginFragment()
+                        val transaction = fragmentManager?.beginTransaction()
+                        transaction?.replace(R.id.user_fragment_frame, loginFragment)
+                        transaction?.commit()
                     }else{
                         Toast.makeText(activity, signUpResult.msg, Toast.LENGTH_SHORT).show()
                     }
