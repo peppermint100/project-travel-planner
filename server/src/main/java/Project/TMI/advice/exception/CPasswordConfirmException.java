@@ -1,13 +1,13 @@
 package Project.TMI.advice.exception;
 
-public class CSignUpPasswordConfirmException extends RuntimeException {
-    public CSignUpPasswordConfirmException(String msg, Throwable t) {
+public class CPasswordConfirmException extends RuntimeException {
+    public CPasswordConfirmException(String msg, Throwable t) {
         super(msg, t);
     }
-    public CSignUpPasswordConfirmException(String msg) {
+    public CPasswordConfirmException(String msg) {
         super(msg);
     }
-    public CSignUpPasswordConfirmException() {
+    public CPasswordConfirmException() {
         super();
     }
 }

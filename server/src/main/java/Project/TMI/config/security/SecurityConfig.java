@@ -36,7 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/**").permitAll() //회원가입, 로그인, check-connection은 항상 요청허용
+//                 //user부분 작업 끝나면 이걸로 변경해야할듯(로그인, 회원가입, 접속체크, 비밀번호찾기)
+//                .antMatchers("/user/signup","/user/signin","/user/check-connection","/user/sendMailPassword").permitAll()
+                .antMatchers("/user/**").permitAll() //현재는 테스트의 편리함을 위해 이렇게 사용
                 .antMatchers(HttpMethod.GET, "/exception/**").permitAll() //추가적으로 Get요청을 허용해야 할 경우 여기에 추가해줍니다. "test"처럼
                 .anyRequest().hasRole("USER")
 

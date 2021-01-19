@@ -23,6 +23,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	//mailService
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 	//model.response
 	implementation 'io.springfox:springfox-swagger2:2.6.1'
     implementation 'io.springfox:springfox-swagger-ui:2.6.1'

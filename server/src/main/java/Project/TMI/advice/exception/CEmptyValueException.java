@@ -1,13 +1,13 @@
 package Project.TMI.advice.exception;
 
-public class CSignUpEmptyValueException extends RuntimeException{
-    public CSignUpEmptyValueException(String msg, Throwable t){
+public class CEmptyValueException extends RuntimeException{
+    public CEmptyValueException(String msg, Throwable t){
         super(msg, t);
     }
-    public CSignUpEmptyValueException(String msg){
+    public CEmptyValueException(String msg){
         super(msg);
     }
-    public CSignUpEmptyValueException(){
+    public CEmptyValueException(){
         super();
     }
 }

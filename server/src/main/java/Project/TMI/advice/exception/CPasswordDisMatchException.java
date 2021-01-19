@@ -1,14 +1,14 @@
 package Project.TMI.advice.exception;
 
-public class CAccessDeniedException extends RuntimeException {
+public class CPasswordDisMatchException extends RuntimeException {
 
-    public CAccessDeniedException(String msg, Throwable t) {
+    public CPasswordDisMatchException(String msg, Throwable t) {
         super(msg, t);
     }
-    public CAccessDeniedException(String msg) {
+    public CPasswordDisMatchException(String msg) {
         super(msg);
     }
-    public CAccessDeniedException() {
+    public CPasswordDisMatchException() {
         super();
     }
 

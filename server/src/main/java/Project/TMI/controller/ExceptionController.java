@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/exception/")
+@RequestMapping("/exception")
 public class ExceptionController {
 
-    @GetMapping("accessdenied")
+    @GetMapping("/accessdenied")
     public void AccessDeniedException(){
         throw new CAccessDeniedException();
     }
 
-    @GetMapping("entrypoint")
+    @GetMapping("/entrypoint")
     public void CAuthenticationEntryPointException(){
         throw new CAuthenticationEntryPointException();
     }

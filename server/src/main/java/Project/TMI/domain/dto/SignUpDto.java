@@ -1,11 +1,10 @@
-package Project.TMI.controller.dto;
+package Project.TMI.domain.dto;
 
 import Project.TMI.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collections;
 import java.util.List;
 
 @Getter

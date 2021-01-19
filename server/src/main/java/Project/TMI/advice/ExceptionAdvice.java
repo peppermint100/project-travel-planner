@@ -33,13 +33,13 @@ public class ExceptionAdvice {
     }
 
     //SignUp
-    @ExceptionHandler(CSignUpPasswordConfirmException.class)
-    protected ResponseEntity<Failure> CSignInPasswordConfirmException(HttpServletRequest request, CSignUpPasswordConfirmException e) {
+    @ExceptionHandler(CPasswordConfirmException.class)
+    protected ResponseEntity<Failure> CSignInPasswordConfirmException(HttpServletRequest request, CPasswordConfirmException e) {
         return new ResponseEntity<>(new Failure("비밀번호와 비밀번호 확인의 값이 다릅니다."), HttpStatus.OK);
     }
 
-    @ExceptionHandler(CSignUpEmptyValueException.class)
-    protected ResponseEntity<Failure> CSignUpEmptyValueException(HttpServletRequest request, CSignUpEmptyValueException e) {
+    @ExceptionHandler(CEmptyValueException.class)
+    protected ResponseEntity<Failure> CSignUpEmptyValueException(HttpServletRequest request, CEmptyValueException e) {
         return new ResponseEntity<>(new Failure("입력하지 않은 값이 있습니다. 다시 확인해 주세요."), HttpStatus.OK);
     }
 
@@ -52,6 +52,12 @@ public class ExceptionAdvice {
     //User 조회 오류
     @ExceptionHandler(CUserNotFoundException.class)
     protected ResponseEntity<Failure> CUserNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
-        return new ResponseEntity<>(new Failure("해당 이메일을 가진 계정이 존재하지 않습니다."), HttpStatus.OK);
+        return new ResponseEntity<>(new Failure("해당 유저아이디를 가진 계정이 존재하지 않습니다."), HttpStatus.OK);
+    }
+
+    //비밀번호 불일치 오류
+    @ExceptionHandler(CPasswordDisMatchException.class)
+    protected ResponseEntity<Failure> CPasswordDisMatchException(HttpServletRequest request, CPasswordDisMatchException e) {
+        return new ResponseEntity<>(new Failure("현재 비밀번호가 일치하지 않습니다."), HttpStatus.OK);
     }
 }

@@ -40,6 +40,15 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<SharedPlan> sharedPlans = new ArrayList<>();
 
+    //update
+    public void updatePassword(String password){
+        this.password = password;
+    }
+
+    public void updateUserInfo(String name, String phone){
+        this.name = name;
+        this.phone = phone;
+    }
 
     //인증관련========================================
     @ElementCollection(fetch = FetchType.EAGER)
