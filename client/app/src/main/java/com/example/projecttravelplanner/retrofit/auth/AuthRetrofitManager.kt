@@ -117,4 +117,22 @@ class AuthRetrofitManager {
             return MeResponse(userId, username, email, success, msg)
         }
     }
+
+    suspend fun sendResetPasswordRequest(email: String, username: String): BaseResponse {
+        val call = iAuthRetrofit?.sendResetPasswordRequest(email, username)
+        val response = call?.awaitResponse()!!
+
+        val body = response.body() as JsonObject
+        val success = body.get("success").asBoolean
+        val msg = body.get("msg").asString
+        val statusCode = response.code()
+
+        Log.d(TAG, "AuthRetrofitManager - sendResetPasswordRequest: msg: $msg ");
+
+        if(statusCode == 200){
+            return BaseResponse(success = success, msg = msg)
+        }else {
+            return BaseResponse(success = success, msg = msg)
+        }
+    }
 }

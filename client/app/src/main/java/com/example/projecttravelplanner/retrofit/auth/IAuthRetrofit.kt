@@ -31,4 +31,11 @@ interface IAuthRetrofit {
 
     @POST("/user/me")
     fun me(): Call<JsonElement>
+
+    @FormUrlEncoded
+    @POST("/user/sendMailPassword")
+    fun sendResetPasswordRequest(
+            @Field("email") email: String,
+            @Field("name") username: String
+    ): Call<JsonElement>
 }
