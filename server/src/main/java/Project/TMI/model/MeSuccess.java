@@ -10,18 +10,16 @@ public class MeSuccess {
 
     private boolean success;
     private String msg;
-    private long userId;
+    private Long userId;
     private String email;
-    private String phone;
     private String name;
 
     @Builder
-    public MeSuccess(boolean success, String msg, long userId, String email, String phone, String name) {
+    public MeSuccess(boolean success, String msg, long userId, String email, String name) {
         this.success = success;
         this.msg = msg;
         this.userId = userId;
         this.email = email;
-        this.phone = phone;
         this.name = name;
     }
 }

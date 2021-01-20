@@ -32,22 +32,16 @@ public class User implements UserDetails {
 
     private String name;
 
-    private String phone;
-
     @OneToMany(mappedBy = "user")
     private List<Plan> userPlans = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<SharedPlan> sharedPlans = new ArrayList<>();
 
-    //update
-    public void updatePassword(String password){
-        this.password = password;
-    }
-
-    public void updateUserInfo(String name, String phone){
+    //updateUserInfo
+    public void updateUserInfo(String name, String password){
         this.name = name;
-        this.phone = phone;
+        this.password = password;
     }
 
     //인증관련========================================

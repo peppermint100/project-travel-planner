@@ -7,11 +7,11 @@ import lombok.Getter;
 public class UpdateUserInfoDto {
 
     private String name;
-    private String phone;
+    private String password;
 
     @Builder
-    public UpdateUserInfoDto(String name, String phone) {
+    public UpdateUserInfoDto(String name, String password) {
         this.name = name;
-        this.phone = phone;
+        this.password = password;
     }
 }

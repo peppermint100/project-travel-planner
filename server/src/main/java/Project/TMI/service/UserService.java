@@ -1,7 +1,6 @@
 package Project.TMI.service;
 
 import Project.TMI.advice.exception.CUserNotFoundException;
-import Project.TMI.domain.dto.UpdatePasswordDto;
 import Project.TMI.domain.dto.SignUpDto;
 import Project.TMI.domain.User;
 import Project.TMI.domain.dto.UpdateUserInfoDto;
@@ -37,24 +36,15 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    //비밀번호 변경
-    @Transactional
-    public void userPasswordUpdate(Long userId, UpdatePasswordDto passwordDto){
-        //userId를 통해 유저 엔티티를 가져옵니다.
-        User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
-        //비밀번호를 passwordEncoder이용해 암호화 해줍니다.
-        String encodePassword = passwordEncoder.encode(passwordDto.getPassword());
-        //비밀번호 변경 실행
-        user.updatePassword(encodePassword);
-    }
-
-    //유저 정보 변경
+    //유저 정보 변경(비밀번호 변경도 함께 사용)
     @Transactional
     public void userInfoUpdate(Long userId, UpdateUserInfoDto userInfoDto){
         //userId를 통해 유저 엔티티를 가져옵니다.
         User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
+        //비밀번호를 passwordEncoder이용해 암호화 해줍니다.
+        String encodePassword = passwordEncoder.encode(userInfoDto.getPassword());
         //유저정보 변경 실행
-        user.updateUserInfo(userInfoDto.getName(), userInfoDto.getPhone());
+        user.updateUserInfo(userInfoDto.getName(), encodePassword);
     }
 
     //임시비밀번호 생성

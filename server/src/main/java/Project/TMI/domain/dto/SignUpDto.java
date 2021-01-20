@@ -13,16 +13,14 @@ public class SignUpDto {
 
     private String email;
     private String password;
-    private String phone;
     private String name;
     private List roles;
 
     @Builder
-    public SignUpDto(String email, String password, String phone, String name, List roles) {
+    public SignUpDto(String email, String password, String name, List roles) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.phone = phone;
         this.roles = roles;
     }
 
@@ -31,7 +29,6 @@ public class SignUpDto {
                 .email(email)
                 .password(password)
                 .name(name)
-                .phone(phone)
                 .roles(roles)
                 .build();
     }

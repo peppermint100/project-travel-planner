@@ -3,7 +3,6 @@ package Project.TMI.controller;
 import Project.TMI.advice.exception.*;
 import Project.TMI.config.security.JwtTokenProvider;
 import Project.TMI.domain.dto.MailDto;
-import Project.TMI.domain.dto.UpdatePasswordDto;
 import Project.TMI.domain.dto.SignUpDto;
 import Project.TMI.domain.User;
 import Project.TMI.domain.dto.UpdateUserInfoDto;
@@ -40,11 +39,10 @@ public class UserController {
     //2. 회원가입
     @PostMapping(value = "/signup")
     public ResponseEntity<Success> signUp(@RequestParam String email, @RequestParam String password,
-                                          @RequestParam String passwordConfirm, @RequestParam String name,
-                                          @RequestParam String phone) {
+                                          @RequestParam String passwordConfirm, @RequestParam String name) {
 
         //입력 정보 중 비어있는 값이 있을 때
-        if (email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()) {
+        if (email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
             throw new CEmptyValueException();
         }
 
@@ -58,7 +56,6 @@ public class UserController {
                         .email(email)
                         .password(passwordEncoder.encode(password))
                         .name(name)
-                        .phone(phone)
                         .roles(Collections.singletonList("ROLE_USER"))
                         .build()
         );
@@ -104,7 +101,6 @@ public class UserController {
                 .userId(user.getUserId())
                 .email(user.getEmail())
                 .name(user.getName())
-                .phone(user.getPhone())
                 .build();
 
         return new ResponseEntity<>(meSuccess, HttpStatus.OK);
@@ -129,10 +125,13 @@ public class UserController {
 
         //새로운 비밀번호를 생성해 Dto에 담아줍니다.
         String newPassword = userService.createNewPassword();
-        UpdatePasswordDto passwordDto = new UpdatePasswordDto(newPassword);
+        UpdateUserInfoDto userInfoDto = UpdateUserInfoDto.builder()
+                .password(newPassword)
+                .name(name)
+                .build();
 
         //비밀번호 변경 실행
-        userService.userPasswordUpdate(user.getUserId(), passwordDto);
+        userService.userInfoUpdate(user.getUserId(), userInfoDto);
 
         //이메일 메시지 생성
         MailDto mailDto = new MailDto();
@@ -146,49 +145,65 @@ public class UserController {
         return new ResponseEntity<>(new Success(true, "임시비밀번호 이메일 전송 성공"), HttpStatus.OK);
     }
 
-    //6. 비밀번호 변경,
-    @PostMapping(value = "/updatePassword")
-    public ResponseEntity<Success> updatePassword(@RequestParam(defaultValue = "0") Long userId, @RequestParam String passwordBefore,
-                                                  @RequestParam String password, @RequestParam String passwordConfirm) {
+    //6. 회원정보 변경,
+    @PostMapping(value = "/updateUserInfo")
+    public ResponseEntity<Success> updateUserInfo(@RequestParam(defaultValue = "0") Long userId, @RequestParam String passwordBefore,
+                                                  @RequestParam String password, @RequestParam String passwordConfirm,
+                                                  @RequestParam String name) {
 
-        //입력값들 중에 빈값이 있을 경우
-        if (passwordBefore.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || userId == 0) {
+        //필수 입력값 들중에 빈 칸이 있을 경우
+        if (passwordBefore.isEmpty() || name.isEmpty() || userId == 0) {
             throw new CEmptyValueException();
         }
+
+        //만약 새로운 비밀번호 입력값들 중 하나라도 입력이 되어 있다면 ==============================
+        if (!password.isEmpty() || !passwordConfirm.isEmpty()) {
+
+            //비밀번호 입력값중 하나의 값만 입력이 되어 있을 때 오류
+            if ((!password.isEmpty() && passwordConfirm.isEmpty()) || (password.isEmpty() && !passwordConfirm.isEmpty())) {
+                throw new CEmptyValueException();
+            }
+
+            //새로 변경할 비밀번호 두가지가 다를 경우 오류
+            if (!password.equals(passwordConfirm)) {
+                throw new CPasswordConfirmException();
+            }
+
+            //빈값이 없으면 Id를 이용해 유저 정보를 가져옵니다.
+            User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
+
+            //현재 비밀번호가 틀렸을 경우 오류, 기본으로 값이 입력되어 있을 것이라 발생하기 쉽지 않지만 일단 두었습니다.
+            if (!passwordEncoder.matches(passwordBefore, user.getPassword())) {
+                throw new CPasswordDisMatchException();
+            }
+            //회원정보 변경 진행
+            UpdateUserInfoDto userInfoDto = UpdateUserInfoDto.builder()
+                    .password(password)
+                    .name(name)
+                    .build();
+            userService.userInfoUpdate(userId, userInfoDto);
+
+            return new ResponseEntity<>(new Success(true, "회원정보(비밀번호포함) 변경 성공"), HttpStatus.OK);
+        }
+        //이름만 변경이 되고 비밀번호 관련값은 입력하지 않았을 경우 ==============================
         //빈값이 없으면 Id를 이용해 유저 정보를 가져옵니다.
         User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
 
-        //현재 비밀번호가 틀렸음 오류
+        //현재 비밀번호가 틀렸을 경우 오류, 기본으로 값이 입력되어 있을 것이라 발생하기 쉽지 않지만 일단 두었습니다.
         if (!passwordEncoder.matches(passwordBefore, user.getPassword())) {
             throw new CPasswordDisMatchException();
         }
-        //변경할 비밀번호 두가지가 다를 경우 오류
-        if (!password.equals(passwordConfirm)) {
-            throw new CPasswordConfirmException();
-        }
 
-        //비밀번호 변경 진행
-        UpdatePasswordDto passwordDto = new UpdatePasswordDto(password);
-        userService.userPasswordUpdate(userId, passwordDto);
-
-        return new ResponseEntity<>(new Success(true, "비밀번호 변경 성공"), HttpStatus.OK);
-    }
-
-    //7. 유저정보 변경,
-    @PostMapping(value = "/updateUserInfo")
-    public ResponseEntity<Success> updateUserInfo(@RequestParam(defaultValue = "0") Long userId, @RequestParam String name,
-                                                  @RequestParam String phone) {
-
-        //만약 빈값이 있다면 CSignUpEmptyValueException 발생
-        if (name.isEmpty() || phone.isEmpty() || userId == 0) {
-            throw new CEmptyValueException();
-        }
-
-        UpdateUserInfoDto userUpdateDto = new UpdateUserInfoDto(name, phone);
-        userService.userInfoUpdate(userId, userUpdateDto);
+        //회원정보 변경 진행
+        UpdateUserInfoDto userInfoDto = UpdateUserInfoDto.builder()
+                .password(passwordBefore)
+                .name(name)
+                .build();
+        userService.userInfoUpdate(userId, userInfoDto);
 
         return new ResponseEntity<>(new Success(true, "회원정보 변경 성공"), HttpStatus.OK);
     }
+
 }
 
 
