@@ -33,10 +33,9 @@ class SignUpFragment: Fragment() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
             val passwordConfirm = binding.etPasswordConfirm.text.toString()
-            val phone = binding.etPhone.text.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
-                val signUpResult = AuthRetrofitManager.instance.signUp(email=email, username=username, password=password, passwordConfirm = passwordConfirm, phone = phone)
+                val signUpResult = AuthRetrofitManager.instance.signUp(email=email, username=username, password=password, passwordConfirm = passwordConfirm)
 
                 withContext(Dispatchers.Main){
                     if(signUpResult.success){
@@ -45,7 +44,6 @@ class SignUpFragment: Fragment() {
                         binding.etUsername.text?.clear()
                         binding.etPassword.text?.clear()
                         binding.etPasswordConfirm.text?.clear()
-                        binding.etPhone.text?.clear()
                         Toast.makeText(activity, signUpResult.msg, Toast.LENGTH_SHORT).show()
                         val loginFragment = LoginFragment()
                         val transaction = fragmentManager?.beginTransaction()

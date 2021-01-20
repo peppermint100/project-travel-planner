@@ -61,8 +61,8 @@ class AuthRetrofitManager {
         }
     }
 
-    suspend fun signUp(email: String, username: String, password: String, passwordConfirm: String, phone: String): BaseResponse{
-        if(email.isEmpty() || username.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || phone.isEmpty()){
+    suspend fun signUp(email: String, username: String, password: String, passwordConfirm: String): BaseResponse{
+        if(email.isEmpty() || username.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()){
             Log.d(TAG, "AuthRetrofitManager - signUp: 빈 칸이 존재합니다. ");
             val msg="빈 칸을 전부 채워주세요."
             val success=false
@@ -83,7 +83,7 @@ class AuthRetrofitManager {
             return BaseResponse(msg = msg, success=success)
         }
 
-        val call = iAuthRetrofit?.signUp(email, username, password, passwordConfirm, phone)
+        val call = iAuthRetrofit?.signUp(email, username, password, passwordConfirm)
         val response = call?.awaitResponse()!!
 
         val statusCode = response.code()

@@ -1,7 +1,6 @@
 package com.example.projecttravelplanner.retrofit.auth
 
 import com.example.projecttravelplanner.type.BaseResponse
-import com.example.projecttravelplanner.type.auth.MeResponse
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.http.Field
@@ -25,8 +24,7 @@ interface IAuthRetrofit {
             @Field("email") email: String,
             @Field("name") username: String,
             @Field("password") password: String,
-            @Field("passwordConfirm") passwordConfirm: String,
-            @Field("phone") phone: String
+            @Field("passwordConfirm") passwordConfirm: String
     ): Call<JsonElement>
 
     @POST("/user/me")

@@ -65,20 +65,6 @@
                 android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phone_text_input_layout"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/colorPrimary"
-            android:hint="PHONE NUMBER"
-            android:layout_gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/sign_in_button"
         android:layout_width="350dp"
