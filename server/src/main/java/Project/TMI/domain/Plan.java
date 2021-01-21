@@ -3,12 +3,14 @@ package Project.TMI.domain;
 import Project.TMI.domain.PlanDetail.Detail;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Plan {
 

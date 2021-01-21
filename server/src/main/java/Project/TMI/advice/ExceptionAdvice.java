@@ -38,6 +38,12 @@ public class ExceptionAdvice {
         return new ResponseEntity<>(new Failure("비밀번호와 비밀번호 확인의 값이 다릅니다."), HttpStatus.OK);
     }
 
+    //이미 존재하는 이메일.
+    @ExceptionHandler(CSignUpEmailExistException.class)
+    protected ResponseEntity<Failure> CSignUpEmailExistException(HttpServletRequest request, CSignUpEmailExistException e) {
+        return new ResponseEntity<>(new Failure("이미 존재하는 이메일 입니다."), HttpStatus.OK);
+    }
+
     @ExceptionHandler(CEmptyValueException.class)
     protected ResponseEntity<Failure> CSignUpEmptyValueException(HttpServletRequest request, CEmptyValueException e) {
         return new ResponseEntity<>(new Failure("입력하지 않은 값이 있습니다. 다시 확인해 주세요."), HttpStatus.OK);
@@ -59,5 +65,20 @@ public class ExceptionAdvice {
     @ExceptionHandler(CPasswordDisMatchException.class)
     protected ResponseEntity<Failure> CPasswordDisMatchException(HttpServletRequest request, CPasswordDisMatchException e) {
         return new ResponseEntity<>(new Failure("현재 비밀번호가 일치하지 않습니다."), HttpStatus.OK);
+    }
+
+    @ExceptionHandler(CPasswordNotInputException.class)
+    protected ResponseEntity<Failure> CPasswordNotInputException(HttpServletRequest request, CPasswordNotInputException e) {
+        return new ResponseEntity<>(new Failure("회원 정보를 변경하려면 비밀번호를 입력 해주세요."), HttpStatus.OK);
+    }
+
+    //========================================================================================================================================
+    //========================================================================================================================================
+    //Plan
+
+    //Plan 조회 오류
+    @ExceptionHandler(CPlanNotFoundException.class)
+    protected ResponseEntity<Failure> CPlanNotFoundException(HttpServletRequest request, CPlanNotFoundException e) {
+        return new ResponseEntity<>(new Failure("해당 Plan을 찾을 수 없습니다."), HttpStatus.OK);
     }
 }

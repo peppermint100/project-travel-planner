@@ -32,7 +32,7 @@ public class UserService {
     }
 
     //email을 이용한 유저 정보 조회
-    public Optional<User> findOneUserByEmail(String email){
+    public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
 

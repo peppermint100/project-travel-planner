@@ -1,7 +1,12 @@
 package Project.TMI.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class SharedPlan {
 
