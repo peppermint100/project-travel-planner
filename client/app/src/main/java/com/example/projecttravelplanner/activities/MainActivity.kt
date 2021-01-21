@@ -38,8 +38,6 @@ class MainActivity: AppCompatActivity() {
         myPageFragment = MyPageFragment()
         settingsFragment = SettingsFragment()
 
-        toHomeFragment()
-
         binding.menuDrawerButton.setOnClickListener {
             Log.d(TAG, "MainActivity - onCreate: menu icon clicked ");
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -54,12 +52,18 @@ class MainActivity: AppCompatActivity() {
             when(it.itemId){
                 R.id.my_plan ->{
                     toHomeFragment()
+                    binding.mainText.text = "나의 계획"
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.my_page ->{
                     toMyPageFragment()
+                    binding.mainText.text = "마이 페이지"
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.my_settings ->{
                     toSettingsFragment()
+                    binding.mainText.text = "설정"
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
             }
             true
@@ -72,21 +76,21 @@ class MainActivity: AppCompatActivity() {
 
     private fun toHomeFragment(){
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.user_fragment_frame, homeFragment)
+            replace(R.id.main_fragment_frame, homeFragment)
             commit()
         }
     }
 
     private fun toMyPageFragment(){
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.user_fragment_frame, myPageFragment)
+            replace(R.id.main_fragment_frame, myPageFragment)
             commit()
         }
     }
 
     private fun toSettingsFragment(){
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.user_fragment_frame, settingsFragment)
+            replace(R.id.main_fragment_frame, settingsFragment)
             commit()
         }
     }

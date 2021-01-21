@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.projecttravelplanner.R
 import com.example.projecttravelplanner.databinding.ActivityLoadingBinding
 import com.example.projecttravelplanner.retrofit.auth.AuthRetrofitManager
+import com.example.projecttravelplanner.utils.SharedPreferenceManager
 import kotlinx.coroutines.*
 
 class LoadingActivity: AppCompatActivity() {
@@ -19,6 +20,8 @@ class LoadingActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "LoadingActivity - onCreate: ");
+
+        SharedPreferenceManager.clearToken()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_loading)
 
@@ -41,6 +44,5 @@ class LoadingActivity: AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        finish()
     }
 }

@@ -68,6 +68,5 @@ class UserActivity: AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        finish()
     }
 }

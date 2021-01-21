@@ -4,18 +4,15 @@
         android:id="@+id/my_plan"
         android:title="내 계획"
         android:icon="@drawable/menu_home_icon"
-        android:iconTint="@color/colorPrimary"
         />
     <item
         android:id="@+id/my_page"
         android:title="마이 페이지"
         android:icon="@drawable/menu_my_page_icon"
-        android:iconTint="@color/colorPrimary"
         />
     <item
         android:id="@+id/my_settings"
         android:title="설정"
         android:icon="@drawable/menu_settings_icon"
-        android:iconTint="@color/colorPrimary"
         />
 </menu>
