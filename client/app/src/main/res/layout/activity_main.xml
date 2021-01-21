@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello main"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        >
+        <ImageView
+            android:id="@+id/menu_drawer_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_menu_24"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나의 계획"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/menu_drawer_button"
+            android:textSize="30sp"
+            android:textColor="#fff"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            />
+        <FrameLayout
+            android:id="@+id/main_fragment_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/main_nav_menu"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:itemTextColor="@color/colorPrimary"
         />
- </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 </layout>
