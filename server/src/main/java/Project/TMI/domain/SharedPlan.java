@@ -10,6 +10,7 @@ public class SharedPlan {
 
     //planId
     @OneToOne
+    @JoinColumn(name="sharedPlan")
     private Plan plan;
 
     //userId

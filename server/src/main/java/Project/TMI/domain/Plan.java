@@ -1,11 +1,14 @@
 package Project.TMI.domain;
 
 import Project.TMI.domain.PlanDetail.Detail;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Getter
 @Entity
 public class Plan {
 
@@ -27,6 +30,14 @@ public class Plan {
     private List<Detail> details = new ArrayList<>();
 
     //공유된 플랜
-    @OneToOne
+    @OneToOne(mappedBy = "plan")
     private SharedPlan sharedPlan;
+
+    @Builder
+    public Plan(String planName, String placeImage, LocalDateTime createdAt, User user) {
+        this.planName = planName;
+        this.placeImage = placeImage;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
 }
