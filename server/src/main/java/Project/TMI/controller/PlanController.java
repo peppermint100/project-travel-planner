@@ -15,10 +15,7 @@ import Project.TMI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -66,13 +63,8 @@ public class PlanController {
     }
 
     //2. 플랜 삭제
-    @PostMapping(value = "/deletePlan")
-    public ResponseEntity<Success> deletePlan(@RequestParam(defaultValue = "0") Long planId){
-
-        //planId가 비어있다면,
-        if(planId == 0){
-            throw new CEmptyValueException();
-        }
+    @DeleteMapping(value = "/deletePlan/{planId}")
+    public ResponseEntity<Success> deletePlan(@PathVariable Long planId){
 
         //planId의 plan이 존재하지 않는다면.
         if(planService.findById(planId) == null){

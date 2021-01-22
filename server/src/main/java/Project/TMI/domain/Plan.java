@@ -35,6 +35,7 @@ public class Plan {
     @OneToOne(mappedBy = "plan")
     private SharedPlan sharedPlan;
 
+    //==================================================================================================================
     @Builder
     public Plan(String planName, String placeImage, LocalDateTime createdAt, User user) {
         this.planName = planName;

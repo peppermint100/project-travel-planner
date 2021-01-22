@@ -44,7 +44,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    //인증관련========================================
+    //인증관련===========================================================================================================
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

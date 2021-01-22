@@ -92,7 +92,7 @@ public class UserController {
     }
 
     //4. 로그인 유지
-    @PostMapping(value = "/me")
+    @GetMapping(value = "/me")
     public ResponseEntity<MeSuccess> me() {
         // SecurityContext에서 인증받은 회원의 정보를 얻어온다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -151,13 +151,13 @@ public class UserController {
     }
 
     //6. 회원정보 변경   => 너무 보기 지저분해서 다음에 조금 더 개선된 코드로 만들어볼 예정
-    @PostMapping(value = "/updateUserInfo")
-    public ResponseEntity<Success> updateUserInfo(@RequestParam(defaultValue = "0") Long userId, @RequestParam String passwordBefore,
+    @PutMapping(value = "/updateUserInfo/{userId}")
+    public ResponseEntity<Success> updateUserInfo(@PathVariable Long userId, @RequestParam String passwordBefore,
                                                   @RequestParam String password, @RequestParam String passwordConfirm,
                                                   @RequestParam String name) {
 
         //필수 입력값 들중에 빈 칸이 있을 경우 빈값오류
-        if (name.isEmpty() || userId == 0) {
+        if (name.isEmpty()) {
             throw new CEmptyValueException();
         }
 

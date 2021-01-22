@@ -13,6 +13,4 @@ public class Location extends Detail{
 
     private String comment;
 
-    private LocalDateTime time;
-
 }
