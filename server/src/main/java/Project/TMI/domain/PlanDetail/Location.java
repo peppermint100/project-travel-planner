@@ -12,5 +12,4 @@ public class Location extends Detail{
     private Position location;
 
     private String comment;
-
 }

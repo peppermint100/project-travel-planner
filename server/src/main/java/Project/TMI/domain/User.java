@@ -32,10 +32,14 @@ public class User implements UserDetails {
 
     private String name;
 
-    @OneToMany(mappedBy = "user")
+    private String userImage;
+
+    @OneToMany
+    @JoinColumn(name="userId")
     private List<Plan> userPlans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
+    @JoinColumn(name="userId")
     private List<SharedPlan> sharedPlans = new ArrayList<>();
 
     //updateUserInfo

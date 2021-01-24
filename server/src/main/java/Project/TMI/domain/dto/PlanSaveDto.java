@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 
 public class PlanSaveDto {
 
-    private User user;
+    private Long userId;
     private String planName;
     private String placeImage;
     private LocalDateTime createdAt;
 
     @Builder
-    public PlanSaveDto(User user, String planName, String placeImage, LocalDateTime createdAt) {
-        this.user = user;
+    public PlanSaveDto(Long userId, String planName, String placeImage, LocalDateTime createdAt) {
+        this.userId = userId;
         this.planName = planName;
         this.placeImage = placeImage;
         this.createdAt = createdAt;
@@ -24,7 +24,7 @@ public class PlanSaveDto {
 
     public Plan toEntity(){
         return Plan.builder()
-                .user(user)
+                .userId(userId)
                 .planName(planName)
                 .placeImage(placeImage)
                 .createdAt(createdAt)

@@ -22,25 +22,23 @@ public class Plan {
     private String placeImage;
     private LocalDateTime createdAt;
 
-    //플랜주인
-    @ManyToOne
-    @JoinColumn(name="userId")
-    private User user;
+    private Long userId;
 
     //디테일
     @OneToMany(mappedBy = "plan")
     private List<Detail> details = new ArrayList<>();
 
     //공유된 플랜
-    @OneToOne(mappedBy = "plan")
+    @OneToOne
+    @JoinColumn(name="plan")
     private SharedPlan sharedPlan;
 
     //==================================================================================================================
     @Builder
-    public Plan(String planName, String placeImage, LocalDateTime createdAt, User user) {
+    public Plan(String planName, String placeImage, LocalDateTime createdAt, Long userId) {
         this.planName = planName;
         this.placeImage = placeImage;
         this.createdAt = createdAt;
-        this.user = user;
+        this.userId = userId;
     }
 }

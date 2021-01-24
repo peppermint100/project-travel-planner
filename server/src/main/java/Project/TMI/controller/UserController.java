@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
+
+@CrossOrigin(origins="*")
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @RestController
@@ -41,6 +43,7 @@ public class UserController {
     public ResponseEntity<Success> signUp(@RequestParam String email, @RequestParam String password,
                                           @RequestParam String passwordConfirm, @RequestParam String name) {
 
+
         //입력 정보 중 비어있는 값이 있을 때
         if (email.isEmpty() || name.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
             throw new CEmptyValueException();
@@ -55,12 +58,15 @@ public class UserController {
         if (!password.equals(passwordConfirm)) {
             throw new CPasswordConfirmException();
         }
+        //기본 유저이미지
+        String userImage = "https://project-tmi.s3.ap-northeast-2.amazonaws.com/temp_logo.png";
 
         userService.userSave(
                 SignUpDto.builder()
                         .email(email)
                         .password(passwordEncoder.encode(password))
                         .name(name)
+                        .userImage(userImage)
                         .roles(Collections.singletonList("ROLE_USER"))
                         .build()
         );
@@ -106,6 +112,7 @@ public class UserController {
                 .userId(user.getUserId())
                 .email(user.getEmail())
                 .name(user.getName())
+                .userImage(user.getUserImage())
                 .build();
 
         return new ResponseEntity<>(meSuccess, HttpStatus.OK);

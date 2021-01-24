@@ -13,13 +13,15 @@ public class MeSuccess {
     private Long userId;
     private String email;
     private String name;
+    private String userImage;
 
     @Builder
-    public MeSuccess(boolean success, String msg, long userId, String email, String name) {
+    public MeSuccess(boolean success, String msg, long userId, String email, String name, String userImage) {
         this.success = success;
         this.msg = msg;
         this.userId = userId;
         this.email = email;
         this.name = name;
+        this.userImage = userImage;
     }
 }

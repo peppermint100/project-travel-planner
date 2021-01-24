@@ -1,12 +1,15 @@
 package Project.TMI.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class SharedPlan {
 
@@ -14,13 +17,10 @@ public class SharedPlan {
     private Long sharedPlanId;
 
     //planId
-    @OneToOne
-    @JoinColumn(name="sharedPlan")
+    @OneToOne(mappedBy = "sharedPlan")
     private Plan plan;
 
     //userId
-    @ManyToOne
-    @JoinColumn(name="sharedPlans")
-    private User user;
+    private Long userId;
 
 }

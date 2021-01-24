@@ -6,9 +6,8 @@ import Project.TMI.advice.exception.CUserNotFoundException;
 import Project.TMI.domain.Plan;
 import Project.TMI.domain.User;
 import Project.TMI.domain.dto.PlanSaveDto;
-import Project.TMI.model.CreatePlanSuccess;
-import Project.TMI.model.Success;
-import Project.TMI.repository.PlanRepository;
+import Project.TMI.domain.dto.SharePlanDto;
+import Project.TMI.model.*;
 import Project.TMI.service.PlanService;
 import Project.TMI.service.S3Service;
 import Project.TMI.service.UserService;
@@ -20,7 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
+
+@CrossOrigin(origins="*")
 @RequestMapping("/plan")
 @RequiredArgsConstructor
 @RestController
@@ -46,11 +48,10 @@ public class PlanController {
 
         //S3에 이미지 업로드 후 링크 가져옴.
         String imgPath = s3Service.upload(placeImage);
-        User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
 
         //Dto 생성
         PlanSaveDto planDto = PlanSaveDto.builder()
-                .user(user)
+                .userId(userId)
                 .planName(planName)
                 .placeImage(imgPath)
                 .createdAt(realTime)
@@ -75,4 +76,42 @@ public class PlanController {
 
         return new ResponseEntity<>(new Success(true, "플랜삭제 성공"), HttpStatus.OK);
     }
+
+    //3. 플랜리스트 가져오기
+    @GetMapping(value = "/getPlans/{userId}")
+    public ResponseEntity<GetPlansSuccess> getPlans(@PathVariable Long userId){
+
+        User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
+        List<Plan> plans = planService.plansGet(userId);
+
+        return new ResponseEntity<>(new GetPlansSuccess(true, "플랜리스트 가져오기 성공", plans), HttpStatus.OK);
+    }
+
+    //4. 플랜 공유하기 작업중...
+    /**@PostMapping(value = "/sharePlan")
+    public ResponseEntity<SharePlanSuccess> sharePlan(@RequestBody SharePlanDto sharePlanDto){
+
+        String userEmail= sharePlanDto.getEmail();
+        User user = userService.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
+        Plan plan = planService.findById(sharePlanDto.getPlanId());
+
+        sharePlanDto.setUserId(user.getUserId());
+        sharePlanDto.setPlan(plan);
+
+        Long sharePlanId = planService.planShare(sharePlanDto);
+
+        return new ResponseEntity<>(new SharePlanSuccess(true, "플랜공유 성공", sharePlanId), HttpStatus.OK);
+    }
+    */
+
+    //5. 공유플랜리스트 가져오기 작업중...
+    /**@GetMapping(value = "/getSharedPlans/{userId}")
+    public ResponseEntity<GetSharedPlansSuccess> getSharedPlans(@PathVariable Long userId){
+
+        List<Plan> sharedPlans = planService.sharedPlansGet(userId);
+
+        return new ResponseEntity<>(new GetSharedPlansSuccess(true, "공유플랜리스트 가져오기 성공", sharedPlans), HttpStatus.OK);
+    }
+    */
+
 }
