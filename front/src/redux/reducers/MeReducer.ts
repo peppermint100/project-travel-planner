@@ -1,6 +1,4 @@
-import { BasicResponse } from "../../types/api/BasicApiType";
-import { LoginResponse, MeResponse, SignUpResponse } from "../../types/api/UserType";
-import { LoginActionType, RECEIVE_LOG_IN } from "../actions/LoginAction";
+import { MeResponse} from "../../types/api/UserType";
 import { MeActionType, RECEIVE_ME } from "../actions/MeAction";
 
 const initialState: MeResponse = {

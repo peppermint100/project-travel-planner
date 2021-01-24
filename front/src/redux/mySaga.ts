@@ -8,10 +8,13 @@ import signUpSaga from "./saga/signUpSaga";
 import loginSaga from "./saga/loginSaga";
 import { REQUEST_ME } from "./actions/MeAction";
 import meSaga from "./saga/meSaga";
+import { REQUEST_RESET_PASSWORD } from "./actions/ResetPasswordAction";
+import resetPasswordSaga from "./saga/resetPasswordSaga";
 
 export default function* mySaga() {
     yield takeLatest(REQUEST_CHECK_CONNECTION, checkConnectionSaga);
     yield takeLatest(REQUEST_SIGN_UP as unknown as TakeableChannel<unknown>, signUpSaga)
     yield takeLatest(REQUEST_LOG_IN as unknown as TakeableChannel<unknown>, loginSaga)
     yield takeLatest(REQUEST_ME as unknown as TakeableChannel<unknown>, meSaga)
+    yield takeLatest(REQUEST_RESET_PASSWORD as unknown as TakeableChannel<unknown>, resetPasswordSaga)
 }

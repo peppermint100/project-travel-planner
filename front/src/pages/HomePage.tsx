@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
 import { Layout, message } from 'antd';
 import { Drawer, Button, Divider } from 'antd';
-import { MenuOutlined, HomeFilled, UserOutlined, SettingOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { MenuOutlined, HomeFilled, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
 import MyPlanContent from "./../components/Content/HomePageContent/MyPlanContent"
 import MyPageContent from "./../components/Content/HomePageContent/MyPageContent"
-import SettingContent from "./../components/Content/HomePageContent/SettingContent"
 import { RootReducerType } from '../redux/reducers/rootReducer';
 import UserProfileImage from '../components/Image/UserProfileImage';
+import Cookies from "universal-cookie"
+import { useHistory, withRouter, useLocation } from 'react-router-dom';
+import { _requestMe } from '../redux/actions/MeAction';
+import SharedPlanContent from '../components/Content/HomePageContent/SharedPlanContent';
+import { MeResponse } from '../types/api/UserType';
 
 const HomePage = () => {
   const defaultUserImage = "https://upload.wikimedia.org/wikipedia/commons/3/39/Kaya_Scodelario_%2814781570315%29_%28cropped%29.jpg"
+  const history = useHistory()
   const [isVisible, setIsVisible] = useState(false);
   const [currentContent, setCurrentContent] = useState({
       tabNumber: 0
   })
+
+  const location = useLocation<Partial<MeResponse>>()
 
   const meResponse = useSelector((state: RootReducerType) => state.MeReducer)
 
@@ -23,9 +30,16 @@ const HomePage = () => {
     setIsVisible(true);
   };
   // close the drawer
-  const closeDrawer = () => {
+  const closeDrawer = () =>{
     setIsVisible(false);
   };
+
+  const logout = () => {
+    console.log('clicking logout button')
+    const cookies = new Cookies()
+    cookies.remove("X-AUTH-TOKEN")
+    history.push("/login")
+  }
 
   const onTabClicked = (tabNumber: number) => {
         setCurrentContent( content => {
@@ -71,7 +85,7 @@ const styles = {
                             "나의 계획" : 
                             currentContent.tabNumber === 1 ?
                             "마이 페이지" :
-                            "설정"
+                            "공유 받은 계획"
                         } 
                     </p>
                 </div>
@@ -89,10 +103,19 @@ const styles = {
               </div>
               <div className="mb-2">
                 <span className="text-lg text-primary">
-                  <span className="text-xl font-bold mr-2">{ meResponse.name}</span>회원님</span>
+                  <span className="text-xl font-bold mr-2">
+                    {
+                      !meResponse.success && !!location.state
+                      ? location.state.name 
+                      : meResponse.name
+                    }</span>회원님</span>
               </div>
               <div>
-                <span className="font-semibold text-primary">{ meResponse.email }</span>
+                <span className="font-semibold text-primary">{ 
+                    !meResponse.success && !!location.state
+                    ? location.state.email
+                    : meResponse.email
+                  }</span>
               </div>
             </li>
             <Divider />
@@ -114,12 +137,21 @@ const styles = {
                 </div>
               </li>
               <Divider />
-              <li className="flex h-10" onClick={() => { onTabClicked(2)}}>
+               <li className="flex h-10" onClick={() => { onTabClicked(2)}}>
                 <div style={drawerMenuStyle}>
-                  <SettingOutlined className="text-3xl text-primary" />
+                  <UserOutlined className="text-3xl text-primary" />
                 </div>
                 <div style={drawerMenuStyle} className="text-xl text-primary font-semibold ml-4">
-                  설정
+                  공유받은 플랜
+                </div>
+              </li>
+              <Divider />
+              <li className="flex h-10" onClick={() => { logout()}}>
+                <div style={drawerMenuStyle}>
+                  <LogoutOutlined className="text-3xl text-primary" />
+                </div>
+                <div style={drawerMenuStyle} className="text-xl text-primary font-semibold ml-4">
+                  로그아웃
                 </div>
               </li>
               <Divider />
@@ -129,8 +161,8 @@ const styles = {
           { currentContent.tabNumber === 0 ? 
             <MyPlanContent userId={meResponse.userId} /> : 
             currentContent.tabNumber === 1 ?
-            <MyPageContent /> :
-            <SettingContent />
+            <MyPageContent /> : 
+            <SharedPlanContent />
           } 
       </Layout>
     </Layout>
@@ -142,4 +174,4 @@ const drawerMenuStyle: React.CSSProperties = {
 }
 
 
-export default HomePage
+export default withRouter(HomePage)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DefaultInput from '../Input/DefaultInput'
 import { Formik, Form, Field } from "formik";
 import DefaultButton from '../Button/DefaultButton';
@@ -15,14 +15,9 @@ import { _requestLogin } from '../../redux/actions/LoginAction';
  });
  
 const LoginForm = () => {
-
     const dispatch = useDispatch()
     const history = useHistory()
     const loginResponse = useSelector((state: RootReducerType) => state.LoginReducer);
-
-    if(loginResponse.success){
-        history.push("/home")
-    }
 
     return (
         <Formik 
@@ -30,7 +25,9 @@ const LoginForm = () => {
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
                 console.log('login data: ' , data);
-                dispatch(_requestLogin(data));
+                dispatch(_requestLogin(data, () => {
+                    history.push("/home")
+                }));
                 setSubmitting(false);
             }}
             validationSchema={loginSchema}
@@ -46,6 +43,12 @@ const LoginForm = () => {
                         </div>
                         <div className="w-2/3 mx-auto mt-8">
                             <DefaultButton text="로그인" />
+                        </div>
+                        <div className="w-2/3 mx-auto mt-8">
+                            {loginResponse.success ? 
+                                null : 
+                            <p className="text-sm text-red-500">{loginResponse.msg}</p>
+                            }
                         </div>
                     </Form>
                 )

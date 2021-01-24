@@ -29,7 +29,7 @@ const SignUpPage = () => {
                     </Link>
                 </span>
                 <span className="text-lg font-medium text-primary mb-3">
-                    <Link to={"/forgotpassword"}>
+                    <Link to={"/forgot-password"}>
                         비밀번호 찾기
                     </Link>
                 </span>

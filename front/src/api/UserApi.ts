@@ -1,5 +1,5 @@
 import { BasicResponse } from "../types/api/BasicApiType";
-import { LoginRequest, LoginResponse, MeResponse, SignUpReqeust } from "../types/api/UserType";
+import { LoginRequest, LoginResponse, MeResponse, ResetPasswordRequest, SignUpReqeust } from "../types/api/UserType";
 import { basicAxios } from "./axios";
 import Cookies from "universal-cookie";
 
@@ -21,7 +21,6 @@ export const sendSignUpRequest = async (signUpRequest: SignUpReqeust) => {
     const { success, msg } : BasicResponse = response.data;
 
     return { success, msg };
-
 }
 
 export const sendLoginRequest = async (loginRequest: LoginRequest) => {
@@ -42,11 +41,10 @@ export const sendLoginRequest = async (loginRequest: LoginRequest) => {
 }
 
 export const sendmeRequest = async () => {
-
     const token = cookies.get("X-AUTH-TOKEN")
     console.log('api token in cookie: ', token)
 
-    const response = await basicAxios.post(`/user/me`, null, {
+    const response = await basicAxios.get(`/user/me`, {
         headers: {
             "X-AUTH-TOKEN":  token
         }
@@ -57,4 +55,18 @@ export const sendmeRequest = async () => {
     const { success, msg, email, name, userId } : MeResponse = response.data;
 
     return { success, msg, email, name, userId };
+}
+
+export const sendResetPasswordRequest = async ({ email, name }: ResetPasswordRequest) => {
+    console.log('user api:', email, name)
+    const response = await basicAxios.post(`/user/sendMailPassword`, null, {
+        params: {
+            email,
+            name
+        }
+    });
+
+    const { msg, success } = response.data;
+
+    return { msg, success }
 }

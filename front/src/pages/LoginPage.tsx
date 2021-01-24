@@ -30,7 +30,7 @@ const LoginPage = () => {
                     </ReactRouterDom.Link>
                 </span>
                 <span className="text-lg font-medium text-primary mb-3">
-                    <ReactRouterDom.Link to={"/forgotpassword"}>
+                    <ReactRouterDom.Link to={"/forgot-password"}>
                         비밀번호 찾기
                     </ReactRouterDom.Link>
                 </span>

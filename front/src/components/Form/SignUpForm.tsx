@@ -69,6 +69,12 @@ const SignUpForm = () => {
                         <div className="w-2/3 mx-auto mt-8">
                             <DefaultButton text="회원가입" />
                         </div>
+                        <div className="w-2/3 mx-auto mt-8">
+                            {signUpResponse.success ? 
+                                null : 
+                            <p className="text-sm text-red-500">{signUpResponse.msg}</p>
+                            }
+                        </div>
                     </Form>
                 )
             }

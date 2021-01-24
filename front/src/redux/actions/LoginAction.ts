@@ -4,9 +4,10 @@ import { LoginRequest, LoginResponse } from "../../types/api/UserType";
 export const REQUEST_LOG_IN = "REQUEST_LOG_IN";
 export const RECEIVE_LOG_IN = "RECEIVE_LOG_IN";
 
-export const _requestLogin = (loginRequest: LoginRequest) => ({
+export const _requestLogin = (loginRequest: LoginRequest, cb: () => void) => ({
     type: REQUEST_LOG_IN,
-    loginRequest
+    loginRequest,
+    cb
 }) 
 
 export const _receiveLogin = (response: LoginResponse) => ({

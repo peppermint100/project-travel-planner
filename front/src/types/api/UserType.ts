@@ -29,3 +29,8 @@ export type MeResponse = {
     userId: number;
     name: string;
 }
+
+export type ResetPasswordRequest = {
+    email: string;
+    name: string;
+}

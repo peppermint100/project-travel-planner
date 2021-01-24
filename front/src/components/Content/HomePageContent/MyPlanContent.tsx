@@ -1,20 +1,19 @@
-import { Button } from 'antd'
 import React, { useState } from 'react'
 import DefaultInput from '../../Input/DefaultInput'
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-
 import sendCreatePlanRequest from '../../../api/PlanApi';
 import DefaultButton from '../../Button/DefaultButton';
+import { beforeUpload, getBase64 } from '../../../utils/imageProcess';
 
 interface Props {
   userId: number;
 }
+
 const MyPlanContent: React.FC<Props> = ({ userId }) => {
     const [imageLoading, setImageLoading] = useState(false);
     const [planImage, setPlanImage] = useState("");
     const [fileList, setFileList] = useState<Array<any>>([]);
-
 
     const handleSubmit = () => {
         const title = "제목입니다"
@@ -58,12 +57,14 @@ const MyPlanContent: React.FC<Props> = ({ userId }) => {
         );
       }
     };
+
     const uploadButton = (
       <div>
         {imageLoading ? <LoadingOutlined /> : <PlusOutlined />}
-        <div style={{ marginTop: 8 }}>사진 선택</div>
+        <div className="mt-3">대표 사진 선택</div>
       </div>
     );
+
     return (
         <div className="flex flex-col items-center bg-white w-3/4 mx-auto shadow-lg rounded p-10 mt-8">
           <div>
@@ -89,23 +90,5 @@ const MyPlanContent: React.FC<Props> = ({ userId }) => {
     )
 }
 
-function getBase64(img: any, callback: any) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
-
-function beforeUpload(file: File) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  if (!isJpgOrPng) {
-    message.error('JPG 또는 PNG 사진 파일만 올릴 수 있습니다.');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('사진 파일의 용량이 너무 큽니다.(2MB 이하의 파일만 올릴 수 있습니다.');
-  }
-
-  return isJpgOrPng && isLt2M;
-}
 
 export default MyPlanContent
