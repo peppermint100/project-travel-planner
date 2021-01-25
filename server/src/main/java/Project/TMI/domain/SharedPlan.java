@@ -9,18 +9,19 @@ import javax.persistence.*;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@Entity
+@Entity(name="SharedPlan")
 public class SharedPlan {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long sharedPlanId;
 
-    //planId
-    @OneToOne(mappedBy = "sharedPlan")
-    private Plan plan;
-
-    //userId
+    //user
     private Long userId;
+
+    //plan
+    private Long planId;
+
 
 }

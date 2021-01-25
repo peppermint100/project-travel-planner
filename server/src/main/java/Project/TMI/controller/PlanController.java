@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @CrossOrigin(origins="*")
@@ -32,6 +33,7 @@ public class PlanController {
     private final UserService userService;
     private final S3Service s3Service;
 
+    /** My Plan */
     //1.플랜 생성
     @PostMapping(value = "/createPlan")
     public ResponseEntity<CreatePlanSuccess> createPlan(@RequestParam String planName,
@@ -87,31 +89,31 @@ public class PlanController {
         return new ResponseEntity<>(new GetPlansSuccess(true, "플랜리스트 가져오기 성공", plans), HttpStatus.OK);
     }
 
-    //4. 플랜 공유하기 작업중...
-    /**@PostMapping(value = "/sharePlan")
+    /** Shared Plan */
+    //4. 플랜 공유하기
+    @PostMapping(value = "/sharePlan")
     public ResponseEntity<SharePlanSuccess> sharePlan(@RequestBody SharePlanDto sharePlanDto){
-
-        String userEmail= sharePlanDto.getEmail();
-        User user = userService.findByEmail(userEmail).orElseThrow(CUserNotFoundException::new);
-        Plan plan = planService.findById(sharePlanDto.getPlanId());
-
-        sharePlanDto.setUserId(user.getUserId());
-        sharePlanDto.setPlan(plan);
 
         Long sharePlanId = planService.planShare(sharePlanDto);
 
         return new ResponseEntity<>(new SharePlanSuccess(true, "플랜공유 성공", sharePlanId), HttpStatus.OK);
     }
-    */
 
-    //5. 공유플랜리스트 가져오기 작업중...
-    /**@GetMapping(value = "/getSharedPlans/{userId}")
+    //5. 공유플랜리스트 가져오기
+    @GetMapping(value = "/getSharedPlans/{userId}")
     public ResponseEntity<GetSharedPlansSuccess> getSharedPlans(@PathVariable Long userId){
 
         List<Plan> sharedPlans = planService.sharedPlansGet(userId);
 
         return new ResponseEntity<>(new GetSharedPlansSuccess(true, "공유플랜리스트 가져오기 성공", sharedPlans), HttpStatus.OK);
     }
-    */
 
+    //6. 공유된 플랜 삭제 => 지금은 이렇게 밖에 구현을 못하겠네..?
+    @DeleteMapping(value = "/deleteSharedPlan/{planId}/{userId}")
+    public ResponseEntity<Success> deleteSharedPlan(@PathVariable Long planId, @PathVariable Long userId){
+
+        planService.sharedPlanDelete(planId, userId);
+
+        return new ResponseEntity<>(new Success(true, "공유받은플랜 삭제 성공"), HttpStatus.OK);
+    }
 }

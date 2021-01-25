@@ -11,7 +11,7 @@ import java.util.*;
 
 @Getter
 @NoArgsConstructor
-@Entity
+@Entity(name="Plan")
 public class Plan {
 
     @Id
@@ -29,9 +29,8 @@ public class Plan {
     private List<Detail> details = new ArrayList<>();
 
     //공유된 플랜
-    @OneToOne
-    @JoinColumn(name="plan")
-    private SharedPlan sharedPlan;
+    @OneToMany(mappedBy = "planId")
+    private List<SharedPlan> sharedPlan = new ArrayList<>();
 
     //==================================================================================================================
     @Builder

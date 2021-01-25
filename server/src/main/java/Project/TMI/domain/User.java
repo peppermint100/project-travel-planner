@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Entity(name="User")
 public class User implements UserDetails {
 
     @Id
@@ -38,8 +38,7 @@ public class User implements UserDetails {
     @JoinColumn(name="userId")
     private List<Plan> userPlans = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name="userId")
+    @OneToMany(mappedBy = "userId")
     private List<SharedPlan> sharedPlans = new ArrayList<>();
 
     //updateUserInfo
