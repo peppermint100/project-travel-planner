@@ -34,8 +34,7 @@ public class User implements UserDetails {
 
     private String userImage;
 
-    @OneToMany
-    @JoinColumn(name="userId")
+    @OneToMany(mappedBy = "userId")
     private List<Plan> userPlans = new ArrayList<>();
 
     @OneToMany(mappedBy = "userId")

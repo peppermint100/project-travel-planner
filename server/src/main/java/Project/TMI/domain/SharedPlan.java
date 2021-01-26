@@ -17,11 +17,12 @@ public class SharedPlan {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long sharedPlanId;
 
-    //user
+    //userID(fk)
     private Long userId;
 
     //plan
-    private Long planId;
-
+    @OneToOne
+    @JoinColumn(name="planId")
+    private Plan plan;
 
 }

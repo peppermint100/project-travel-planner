@@ -29,7 +29,6 @@ public class Detail {
     @OneToMany(mappedBy = "detail")
     private List<Needs> needs = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "planId")
-    private Plan plan;
+    //planId(fk)
+    private Long planId;
 }

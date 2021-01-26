@@ -53,7 +53,6 @@ public class TrafficDto {
         return Traffic.builder()
                 .time(time)
                 .needs(needs)
-                .plan(plan)
                 .transpotation(transpotation)
                 .locationStart(locationStart)
                 .locationArrive(locationArrive)

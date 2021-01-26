@@ -4,6 +4,7 @@ import Project.TMI.advice.exception.CEmptyValueException;
 import Project.TMI.advice.exception.CPlanNotFoundException;
 import Project.TMI.advice.exception.CUserNotFoundException;
 import Project.TMI.domain.Plan;
+import Project.TMI.domain.SharedPlan;
 import Project.TMI.domain.User;
 import Project.TMI.domain.dto.PlanSaveDto;
 import Project.TMI.domain.dto.SharePlanDto;
@@ -79,14 +80,15 @@ public class PlanController {
         return new ResponseEntity<>(new Success(true, "플랜삭제 성공"), HttpStatus.OK);
     }
 
-    //3. 플랜리스트 가져오기
+    //3. 플랜리스트 가져오기 (공유받은플랜 포함)
     @GetMapping(value = "/getPlans/{userId}")
     public ResponseEntity<GetPlansSuccess> getPlans(@PathVariable Long userId){
 
         User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
         List<Plan> plans = planService.plansGet(userId);
+        List<SharedPlan> sharedPlans = planService.sharedPlansGet(userId);
 
-        return new ResponseEntity<>(new GetPlansSuccess(true, "플랜리스트 가져오기 성공", plans), HttpStatus.OK);
+        return new ResponseEntity<>(new GetPlansSuccess(true, "플랜리스트 가져오기 성공", plans, sharedPlans), HttpStatus.OK);
     }
 
     /** Shared Plan */
@@ -103,16 +105,16 @@ public class PlanController {
     @GetMapping(value = "/getSharedPlans/{userId}")
     public ResponseEntity<GetSharedPlansSuccess> getSharedPlans(@PathVariable Long userId){
 
-        List<Plan> sharedPlans = planService.sharedPlansGet(userId);
+        List<SharedPlan> sharedPlans = planService.sharedPlansGet(userId);
 
         return new ResponseEntity<>(new GetSharedPlansSuccess(true, "공유플랜리스트 가져오기 성공", sharedPlans), HttpStatus.OK);
     }
 
-    //6. 공유된 플랜 삭제 => 지금은 이렇게 밖에 구현을 못하겠네..?
-    @DeleteMapping(value = "/deleteSharedPlan/{planId}/{userId}")
-    public ResponseEntity<Success> deleteSharedPlan(@PathVariable Long planId, @PathVariable Long userId){
+    //6. 공유된플랜 삭제
+    @DeleteMapping(value = "/deleteSharedPlan/{sharedPlanId}")
+    public ResponseEntity<Success> deleteSharedPlan(@PathVariable Long sharedPlanId){
 
-        planService.sharedPlanDelete(planId, userId);
+        planService.sharedPlanDelete(sharedPlanId);
 
         return new ResponseEntity<>(new Success(true, "공유받은플랜 삭제 성공"), HttpStatus.OK);
     }

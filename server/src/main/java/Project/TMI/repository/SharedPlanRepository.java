@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SharedPlanRepository extends JpaRepository<SharedPlan, Long> {
-    Optional<SharedPlan> findByPlanIdAndUserId(Long planId, Long userId);
+    List<SharedPlan> findAllByUserId(Long userId);
 }

@@ -7,7 +7,6 @@ import Project.TMI.domain.SharedPlan;
 import Project.TMI.domain.User;
 import Project.TMI.domain.dto.PlanSaveDto;
 import Project.TMI.domain.dto.SharePlanDto;
-import Project.TMI.repository.PlanCustomRepository;
 import Project.TMI.repository.PlanRepository;
 import Project.TMI.repository.SharedPlanRepository;
 import Project.TMI.repository.UserRepository;
@@ -16,14 +15,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PlanService {
 
     private final PlanRepository planRepository;
-    private final PlanCustomRepository planCustomRepository;
     private final SharedPlanRepository sharedPlanRepository;
     private final UserRepository userRepository;
 
@@ -33,8 +30,7 @@ public class PlanService {
     }
 
     /** My Plan */
-    //플랜 생성
-    @Transactional
+    @Transactional //플랜 생성
     public Long planSave(PlanSaveDto planDto){
         //planDto를 이용한 plan생성
         Plan plan = planRepository.save(planDto.toEntity());
@@ -43,28 +39,30 @@ public class PlanService {
 
     //플랜리스트 가져오기
     public List<Plan> plansGet(Long userId){
-        return planRepository.findAllByUserId(userId);
+        User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
+        return user.getUserPlans();
     }
 
-    //플랜 삭제하기
-    @Transactional
+    @Transactional //플랜 삭제하기
     public void planDelete(Long planId){
         Plan plan = planRepository.findById(planId).orElseThrow(CPlanNotFoundException::new);
         planRepository.delete(plan);
     }
 
     /** Shared Plan */
-    //플랜 공유하기
+    @Transactional //플랜 공유하기
     public Long planShare(SharePlanDto sharePlanDto){
 
         Long planId = sharePlanDto.getPlanId();
         String email = sharePlanDto.getEmail();
 
-        User byEmail = userRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new);
+        //Exception
+        Plan plan = planRepository.findById(planId).orElseThrow(CPlanNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new);
 
         SharedPlan sharedPlan = SharedPlan.builder()
-                .planId(planId)
-                .userId(byEmail.getUserId())
+                .plan(plan)
+                .userId(user.getUserId())
                 .build();
 
         SharedPlan result = sharedPlanRepository.save(sharedPlan);
@@ -73,14 +71,20 @@ public class PlanService {
     }
 
     //공유받은플랜 리스트 가져오기
-    public List<Plan> sharedPlansGet(Long userId){
-        return planCustomRepository.findSharedPlans(userId);
+    public List<SharedPlan> sharedPlansGet(Long userId){
+
+        User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
+
+        return user.getSharedPlans();
     }
 
-    //공유받은플랜 삭제하기
-    public void sharedPlanDelete(Long planId, Long userId){
-        SharedPlan sharedPlan = sharedPlanRepository.findByPlanIdAndUserId(planId, userId).orElseThrow(CPlanNotFoundException::new);
-        sharedPlanRepository.delete(sharedPlan);
 
+    @Transactional //공유받은플랜 삭제하기
+    public void sharedPlanDelete(Long sharedPlanId){
+
+        //sharedPlanId를 이용한 엔티티 찾기
+        SharedPlan sharedPlan = sharedPlanRepository.findById(sharedPlanId).orElseThrow(CPlanNotFoundException::new);
+        //찾은 엔티티를 삭제해줍니다.
+        sharedPlanRepository.delete(sharedPlan);
     }
 }
