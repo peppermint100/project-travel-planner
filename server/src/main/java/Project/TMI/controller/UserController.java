@@ -8,6 +8,7 @@ import Project.TMI.domain.User;
 import Project.TMI.domain.dto.UpdateUserInfoDto;
 import Project.TMI.model.*;
 import Project.TMI.service.MailService;
+import Project.TMI.service.S3Service;
 import Project.TMI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collections;
 
 
@@ -26,6 +29,7 @@ import java.util.Collections;
 @RestController
 public class UserController {
 
+    private final S3Service s3Service;
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -161,10 +165,10 @@ public class UserController {
     @PutMapping(value = "/updateUserInfo/{userId}")
     public ResponseEntity<Success> updateUserInfo(@PathVariable Long userId, @RequestParam String passwordBefore,
                                                   @RequestParam String password, @RequestParam String passwordConfirm,
-                                                  @RequestParam String name) {
+                                                  @RequestParam String name, MultipartFile userImage) throws IOException {
 
         //필수 입력값 들중에 빈 칸이 있을 경우 빈값오류
-        if (name.isEmpty()) {
+        if (name.isEmpty()){
             throw new CEmptyValueException();
         }
 
@@ -189,6 +193,8 @@ public class UserController {
                 throw new CPasswordDisMatchException();
             }
 
+            String newImage = s3Service.upload(userImage);
+
             //비밀번호 변경값이 존재한다면 변경값을, 존재하지 않는다면 기존의 값을 inputPassword에 담아줍니다.
             String inputPassword = "";
             //위에서 판단을 통해 password가 빈값이 아니라면 password와 passwordConfirm은 빈값이 아니며 일치하게 입력을 했다는 것을 검증했음.
@@ -202,6 +208,7 @@ public class UserController {
             UpdateUserInfoDto userInfoDto = UpdateUserInfoDto.builder()
                     .password(inputPassword)
                     .name(name)
+                    .userImage(newImage)
                     .build();
             userService.userInfoUpdate(userId, userInfoDto);
 
@@ -219,7 +226,6 @@ public class UserController {
         //비밀번호가 입력되지 않았다는 것은 수정을 진행하지 않았다는 것이므로 아무 동작도 수행하지 않습니다.
         return new ResponseEntity<>(new Success(true, "변경한 정보가 없습니다."), HttpStatus.OK);
     }
-
 }
 
 

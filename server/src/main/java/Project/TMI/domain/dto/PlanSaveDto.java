@@ -11,13 +11,15 @@ public class PlanSaveDto {
     private Long userId;
     private String planName;
     private String placeImage;
+    private String planOwner;
     private LocalDateTime createdAt;
 
     @Builder
-    public PlanSaveDto(Long userId, String planName, String placeImage, LocalDateTime createdAt) {
+    public PlanSaveDto(Long userId, String planName, String planOwner, String placeImage, LocalDateTime createdAt) {
         this.userId = userId;
         this.planName = planName;
         this.placeImage = placeImage;
+        this.planOwner = planOwner;
         this.createdAt = createdAt;
     }
 
@@ -27,6 +29,7 @@ public class PlanSaveDto {
                 .userId(userId)
                 .planName(planName)
                 .placeImage(placeImage)
+                .planOwner(planOwner)
                 .createdAt(createdAt)
                 .build();
     }

@@ -7,16 +7,24 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Room extends Detail{
+@DiscriminatorValue("accommodation")
+public class accommodation  extends Detail{
 
     @OneToOne
-    @JoinColumn(name="positionId")
+    @JoinColumn(name="positionId") //위치
     private Position location;
 
-    private String comment;
+    //숙박이름
+    private String activityName;
 
+    //입실시간
     private LocalDateTime timeCheckIn;
+
+    //퇴실시간
     private LocalDateTime timeCheckOut;
+
+    //퇴실날짜
+    private Date checkOutDate;
 
     //feature 객실 제공 ex)WIFI, 침대, 수건 ...
     @OneToOne

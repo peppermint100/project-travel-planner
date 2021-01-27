@@ -20,6 +20,7 @@ public class Plan {
 
     private String planName;
     private String placeImage;
+    private String planOwner;
     private LocalDateTime createdAt;
 
     //userId(fk)
@@ -31,9 +32,10 @@ public class Plan {
 
     //==================================================================================================================
     @Builder
-    public Plan(String planName, String placeImage, LocalDateTime createdAt, Long userId) {
+    public Plan(String planName, String placeImage, String planOwner, LocalDateTime createdAt, Long userId) {
         this.planName = planName;
         this.placeImage = placeImage;
+        this.planOwner = planOwner;
         this.createdAt = createdAt;
         this.userId = userId;
     }

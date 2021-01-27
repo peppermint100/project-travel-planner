@@ -44,7 +44,7 @@ public class UserService {
         //비밀번호를 passwordEncoder이용해 암호화 해줍니다.
         String encodePassword = passwordEncoder.encode(userInfoDto.getPassword());
         //유저정보 변경 실행
-        user.updateUserInfo(userInfoDto.getName(), encodePassword);
+        user.updateUserInfo(userInfoDto.getName(), encodePassword, userInfoDto.getUserImage());
     }
 
     //임시비밀번호 생성

@@ -2,6 +2,7 @@ package Project.TMI.controller;
 
 import Project.TMI.advice.exception.CEmptyValueException;
 import Project.TMI.advice.exception.CPlanNotFoundException;
+import Project.TMI.advice.exception.CPlanNotSharedMeException;
 import Project.TMI.advice.exception.CUserNotFoundException;
 import Project.TMI.domain.Plan;
 import Project.TMI.domain.SharedPlan;
@@ -15,6 +16,8 @@ import Project.TMI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,11 +55,14 @@ public class PlanController {
         //S3에 이미지 업로드 후 링크 가져옴.
         String imgPath = s3Service.upload(placeImage);
 
+        User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
+
         //Dto 생성
         PlanSaveDto planDto = PlanSaveDto.builder()
                 .userId(userId)
                 .planName(planName)
                 .placeImage(imgPath)
+                .planOwner(user.getName()) //planOwner 추가
                 .createdAt(realTime)
                 .build();
 
@@ -95,6 +101,20 @@ public class PlanController {
     //4. 플랜 공유하기
     @PostMapping(value = "/sharePlan")
     public ResponseEntity<SharePlanSuccess> sharePlan(@RequestBody SharePlanDto sharePlanDto){
+
+        /** 내 정보를 토큰으로 가져온다면
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        User user = userService.findByEmail(email).orElseThrow(CUserNotFoundException::new);
+        */
+
+        User user = userService.findByEmail(sharePlanDto.getEmail()).orElseThrow(CUserNotFoundException::new);
+
+        //만약 현재 내 계정과 공유하려는 계정이 같다면 공유불가.
+        if(sharePlanDto.getUserId().equals(user.getUserId())){
+            throw new CPlanNotSharedMeException();
+        }
 
         Long sharePlanId = planService.planShare(sharePlanDto);
 

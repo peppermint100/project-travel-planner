@@ -21,5 +21,5 @@ public class Feature {
 
     //필요할 경우 추가
     @OneToOne(mappedBy = "feature")
-    private Room room;
+    private accommodation accommodation;
 }

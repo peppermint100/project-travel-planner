@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
+@DiscriminatorColumn(name="detailType")
 @SuperBuilder //상속받은 객체의 builder를 한번에 생성하기 위함
 public class Detail {
 
@@ -23,11 +23,14 @@ public class Detail {
     @GeneratedValue
     private Long detailId;
 
-    private LocalDateTime time;
+    //날짜
+    private LocalDateTime date;
 
     //준비물
     @OneToMany(mappedBy = "detail")
     private List<Needs> needs = new ArrayList<>();
+
+    private String comment;
 
     //planId(fk)
     private Long planId;

@@ -81,4 +81,10 @@ public class ExceptionAdvice {
     protected ResponseEntity<Failure> CPlanNotFoundException(HttpServletRequest request, CPlanNotFoundException e) {
         return new ResponseEntity<>(new Failure("해당 Plan을 찾을 수 없습니다."), HttpStatus.OK);
     }
+
+    //Plan 조회 오류
+    @ExceptionHandler(CPlanNotSharedMeException.class)
+    protected ResponseEntity<Failure> CPlanNotSharedMeException(HttpServletRequest request, CPlanNotSharedMeException e) {
+        return new ResponseEntity<>(new Failure("자신에게 Plan을 공유할 수 없습니다."), HttpStatus.OK);
+    }
 }

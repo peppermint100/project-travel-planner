@@ -41,9 +41,10 @@ public class User implements UserDetails {
     private List<SharedPlan> sharedPlans = new ArrayList<>();
 
     //updateUserInfo
-    public void updateUserInfo(String name, String password){
+    public void updateUserInfo(String name, String password, String userImage){
         this.name = name;
         this.password = password;
+        this.userImage = userImage;
     }
 
     //인증관련===========================================================================================================
