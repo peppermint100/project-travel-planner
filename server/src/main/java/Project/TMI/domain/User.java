@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Entity(name="User")
 public class User implements UserDetails {
 
     @Id
@@ -32,19 +32,22 @@ public class User implements UserDetails {
 
     private String name;
 
-    @OneToMany(mappedBy = "user")
+    private String userImage;
+
+    @OneToMany(mappedBy = "userId")
     private List<Plan> userPlans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userId")
     private List<SharedPlan> sharedPlans = new ArrayList<>();
 
     //updateUserInfo
-    public void updateUserInfo(String name, String password){
+    public void updateUserInfo(String name, String password, String userImage){
         this.name = name;
         this.password = password;
+        this.userImage = userImage;
     }
 
-    //인증관련========================================
+    //인증관련===========================================================================================================
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

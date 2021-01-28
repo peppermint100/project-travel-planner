@@ -1,20 +1,28 @@
 package Project.TMI.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
-@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity(name="SharedPlan")
 public class SharedPlan {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long sharedPlanId;
 
-    //planId
-    @OneToOne
-    private Plan plan;
+    //userID(fk)
+    private Long userId;
 
-    //userId
-    @ManyToOne
-    @JoinColumn(name="sharedPlans")
-    private User user;
+    //plan
+    @OneToOne
+    @JoinColumn(name="planId")
+    private Plan plan;
 
 }
