@@ -5,7 +5,7 @@ const initialState: GetAllPlansResponseType = {
     success: false,
     msg: "",
     plans: [],
-    sharedPlan: []
+    sharedPlans: []
 }
 
 const GetAllPlansReducer = (state = initialState, action: GetAllPlansActionType) => {

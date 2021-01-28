@@ -35,3 +35,12 @@ export type ResetPasswordRequest = {
     email: string;
     name: string;
 }
+
+export type UpdateUserInfoRequest = {
+    userId: number;
+    name: string;
+    passwordBefore: string;
+    password: string;
+    passwordConfirm: string;
+    formData: FormData;
+}

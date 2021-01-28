@@ -1,7 +1,7 @@
 import React, { useState }  from 'react'
 import { useSelector } from 'react-redux';
 import { RootReducerType } from '../../../redux/reducers/rootReducer';
-import { Plan, SharePlanResponseType } from '../../../types/api/PlanType';
+import { Plan, SharedPlan, SharePlanResponseType } from '../../../types/api/PlanType';
 import CreatePlanForm from '../../Form/CreatePlanForm';
 import PlanView from '../PlanView/PlanView';
 import { Modal, Button } from 'antd';
@@ -13,7 +13,6 @@ import { sendSharePlanRequest } from "../../../api/PlanApi";
 interface Props {
   userId: number
 }
-
 
 const SharedPlanView: React.FC<Props> = ({ userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -50,8 +49,6 @@ const SharedPlanView: React.FC<Props> = ({ userId }) => {
 
   return (
     <div>
-        <section className="flex flex-col items-center bg-white w-3/4 mx-auto shadow-lg rounded p-10 mt-8">
-        </section>
         <Modal 
           visible={isModalVisible} 
           onOk={handleOk} 
@@ -98,11 +95,12 @@ const SharedPlanView: React.FC<Props> = ({ userId }) => {
             getAllPlansResponse.success ? 
             <ul className="w-full">
               {
-                getAllPlansResponse.plans.map((plan: Plan) => (
-                  <li key={plan.planId} className="w-full">
-                    <PlanView plan={plan} openModal={showModal} />
+                getAllPlansResponse.sharedPlans.map((plan: SharedPlan) => {
+                  console.log(plan)
+                return (<li key={plan.sharedPlanId} className="w-full">
+                    <PlanView plan={plan.plan} openModal={showModal} sharedPlanId={plan.sharedPlanId} />
                   </li>
-                ))
+                )})
               }
             </ul>
             : null

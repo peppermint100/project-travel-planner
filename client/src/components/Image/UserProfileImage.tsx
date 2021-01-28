@@ -7,9 +7,7 @@ interface Props {
 
 const UserProfileImage:React.FC<Props> = ({ src }) => {
     return (
-        <div className="w-full h-full rounded-full overflow-hidden">
-            <img src={src} alt="user=profile-img" draggable="false"/>
-        </div>
+            <img className="w-full h-full rounded-full object-cover" src={src} alt="user=profile-img" draggable="false"/>
     )
 }
 

@@ -1,7 +1,8 @@
 import { BasicResponse } from "../types/api/BasicApiType";
-import { LoginRequest, LoginResponse, MeResponse, ResetPasswordRequest, SignUpReqeust } from "../types/api/UserType";
+import { LoginRequest, LoginResponse, MeResponse, ResetPasswordRequest, SignUpReqeust, UpdateUserInfoRequest } from "../types/api/UserType";
 import { basicAxios } from "./axios";
-import Cookies from "universal-cookie";
+import { useCookies } from "react-cookie"
+import Cookies from "universal-cookie"
 
 const cookies = new Cookies();
 
@@ -36,6 +37,7 @@ export const sendLoginRequest = async (loginRequest: LoginRequest) => {
     const { success, msg, token} : LoginResponse = response.data;
 
     cookies.set("X-AUTH-TOKEN", token)
+    
 
     return { success, msg, token };
 }
@@ -57,7 +59,8 @@ export const sendmeRequest = async () => {
     return { success, msg, email, name, userId, userImage };
 }
 
-export const sendResetPasswordRequest = async ({ email, name }: ResetPasswordRequest) => {
+export const sendResetPasswordRequest = async (resetPasswordRequest: ResetPasswordRequest) => {
+    const { email, name } = resetPasswordRequest;
     console.log('user api:', email, name)
     const response = await basicAxios.post(`/user/sendMailPassword`, null, {
         params: {
@@ -69,4 +72,25 @@ export const sendResetPasswordRequest = async ({ email, name }: ResetPasswordReq
     const { msg, success } = response.data;
 
     return { msg, success }
+}
+
+export const sendUpdateUserInfoRequest = async (updateUserInfoRequest: UpdateUserInfoRequest) => {
+
+    const { userId, name, passwordBefore, password, passwordConfirm, formData } = updateUserInfoRequest;
+    
+    const response = await basicAxios.put(`/user/updateUserInfo/${userId}`, formData, {
+        params : {
+            userId,
+            name,
+            passwordBefore,
+            password,
+            passwordConfirm
+        }
+    })
+
+    const resToReturn: BasicResponse = response.data;
+
+    console.log('user api update user info response: ', resToReturn);
+
+    return resToReturn;
 }

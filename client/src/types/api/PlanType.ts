@@ -9,7 +9,13 @@ export type GetAllPlansResponseType = {
     success: boolean,
     msg: string,
     plans: Array<Plan>
-    sharedPlan: Array<Plan>
+    sharedPlans: Array<SharedPlan>
+}
+
+export type SharedPlan = {
+    sharedPlanId: number,
+    userId: number,
+    plan: Plan
 }
 
 export type Plan = {
@@ -18,6 +24,7 @@ export type Plan = {
     placeImage: string,
     createAt: Date,
     userId: number,
+    planOwner: string,
     details: Array<any>
 }
 

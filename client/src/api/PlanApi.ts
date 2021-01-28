@@ -51,3 +51,19 @@ export const sendSharePlanRequest = async (userId: number, planId: number, email
 
     return resToReturn;
 }
+
+export const sendDeleteSharedPlanRequest = async (sharedPlanId: number) => {
+    const token = cookies.get("X-AUTH-TOKEN");
+
+    const response = await basicAxios.delete(`/plan/deleteSharedPlan/${sharedPlanId.toString()}`, {
+        headers: {
+            "X-AUTH-TOKEN": token
+        }
+    })
+
+    const resToReturn: BasicResponse = response.data;
+
+    console.log('delete shard plan api: ', resToReturn);
+
+    return resToReturn
+}

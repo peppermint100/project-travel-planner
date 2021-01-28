@@ -1,43 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { Layout } from 'antd';
 import { Drawer, Button, Divider } from 'antd';
-import { MenuOutlined, HomeFilled, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import { MenuOutlined, HomeFilled, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MyPlanView from "../components/View/HomePageView/MyPlanView"
 import MyPageView from "../components/View/HomePageView/MyPageView"
 import { RootReducerType } from '../redux/reducers/rootReducer';
 import UserProfileImage from '../components/Image/UserProfileImage';
 import Cookies from "universal-cookie"
-import { useHistory, withRouter, useLocation } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { _requestMe } from '../redux/actions/MeAction';
 import SharedPlanView from '../components/View/HomePageView/SharedPlanView';
-import { MeResponse } from '../types/api/UserType';
 import { _requestGetAllPlans } from '../redux/actions/GetAllPlansAction';
 
 const HomePage = () => {
-  const defaultUserImage = "https://upload.wikimedia.org/wikipedia/commons/3/39/Kaya_Scodelario_%2814781570315%29_%28cropped%29.jpg"
   const dispatch = useDispatch()
   const history = useHistory()
+  const cookies = new Cookies()
   const [isVisible, setIsVisible] = useState(false);
   const [currentContent, setCurrentContent] = useState({
       tabNumber: 0
   })
-  const location = useLocation<Partial<MeResponse>>()
   const meResponse = useSelector((state: RootReducerType) => state.MeReducer)
 
   useEffect(() => {
     console.log('home page meresponse: ', meResponse)
-    console.log('home page location.state: ', location.state)
-
-    if(meResponse.success == false  && location.state){
-      console.log('fetching my plans with location')
-      dispatch(_requestGetAllPlans(location.state.userId!!))
-    }else{
-      console.log('fetching my plans with meresponse')
-      console.log('and meresponse is ', meResponse)
-      dispatch(_requestGetAllPlans(meResponse.userId))
-    }
-  }, [])
+    dispatch(_requestGetAllPlans(meResponse.userId))
+  }, [meResponse])
 
   // trigger this function to open the drawer
   const showDrawer = () => {
@@ -50,8 +39,7 @@ const HomePage = () => {
 
   const logout = () => {
     console.log('clicking logout button')
-    const cookies = new Cookies()
-    cookies.remove("X-AUTH-TOKEN")
+    cookies.set("X-AUTH-TOKEN", "")
     history.push("/login")
   }
 
@@ -103,7 +91,6 @@ const styles = {
                         } 
                     </p>
                 </div>
-                <div></div>
         </nav>
         <Drawer
             visible={isVisible}
@@ -113,27 +100,17 @@ const styles = {
           <ul>
             <li className="flex flex-col items-center">
               <div className="w-28 h-28 mb-2">
-                {
-                  !meResponse.success && !!location.state
-                    ? <UserProfileImage src={location.state.userImage} />
-                    : <UserProfileImage src={meResponse.userImage} />
-                }
+                  <UserProfileImage src={meResponse.userImage} />
               </div>
               <div className="mb-2">
                 <span className="text-lg text-primary">
                   <span className="text-xl font-bold mr-2">
-                    {
-                      !meResponse.success && !!location.state
-                      ? location.state.name 
-                      : meResponse.name
-                    }</span>회원님</span>
+                       { meResponse.name }
+                    </span>회원님</span>
               </div>
               <div>
-                <span className="font-semibold text-primary">{ 
-                    !meResponse.success && !!location.state
-                    ? location.state.email
-                    : meResponse.email
-                  }</span>
+                <span className="font-semibold text-primary">
+                  { meResponse.email }</span>
               </div>
             </li>
             <Divider />
@@ -164,7 +141,7 @@ const styles = {
                 </div>
               </li>
               <Divider />
-              <li className="flex h-10" onClick={() => { logout()}}>
+              <li className="flex h-10" onClick={logout}>
                 <div style={drawerMenuStyle}>
                   <LogoutOutlined className="text-3xl text-primary" />
                 </div>
@@ -179,7 +156,7 @@ const styles = {
           { currentContent.tabNumber === 0 ? 
             <MyPlanView userId={meResponse.userId} /> : 
             currentContent.tabNumber === 1 ?
-            <MyPageView /> : 
+            <MyPageView meResponse={meResponse} /> : 
             <SharedPlanView userId={meResponse.userId} />
           } 
       </Layout>
