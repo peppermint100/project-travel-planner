@@ -193,7 +193,14 @@ public class UserController {
                 throw new CPasswordDisMatchException();
             }
 
+            String setImage = "";
             String newImage = s3Service.upload(userImage);
+            if(!newImage.equals(user.getUserImage())){
+                setImage = newImage;
+            } else {
+                setImage = user.getUserImage();
+            }
+
 
             //비밀번호 변경값이 존재한다면 변경값을, 존재하지 않는다면 기존의 값을 inputPassword에 담아줍니다.
             String inputPassword = "";
@@ -208,7 +215,7 @@ public class UserController {
             UpdateUserInfoDto userInfoDto = UpdateUserInfoDto.builder()
                     .password(inputPassword)
                     .name(name)
-                    .userImage(newImage)
+                    .userImage(setImage)
                     .build();
             userService.userInfoUpdate(userId, userInfoDto);
 
