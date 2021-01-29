@@ -1,13 +1,11 @@
 package Project.TMI.domain;
 
-import Project.TMI.domain.PlanDetail.Detail;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -21,18 +19,16 @@ public class Plan {
     private String planName;
     private String placeImage;
     private String planOwner;
-    private LocalDateTime createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     //userId(fk)
     private Long userId;
 
-    //디테일
-    @OneToMany(mappedBy = "planId")
-    private List<Detail> details = new ArrayList<>();
-
     //==================================================================================================================
     @Builder
-    public Plan(String planName, String placeImage, String planOwner, LocalDateTime createdAt, Long userId) {
+    public Plan(String planName, String placeImage, String planOwner, Date createdAt, Long userId) {
         this.planName = planName;
         this.placeImage = placeImage;
         this.planOwner = planOwner;

@@ -1,4 +1,4 @@
-package Project.TMI.domain.dto;
+package Project.TMI.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

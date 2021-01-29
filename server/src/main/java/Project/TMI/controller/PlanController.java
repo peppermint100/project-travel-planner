@@ -1,14 +1,11 @@
 package Project.TMI.controller;
 
-import Project.TMI.advice.exception.CEmptyValueException;
-import Project.TMI.advice.exception.CPlanNotFoundException;
-import Project.TMI.advice.exception.CPlanNotSharedMeException;
-import Project.TMI.advice.exception.CUserNotFoundException;
+import Project.TMI.advice.exception.*;
 import Project.TMI.domain.Plan;
 import Project.TMI.domain.SharedPlan;
 import Project.TMI.domain.User;
-import Project.TMI.domain.dto.PlanSaveDto;
-import Project.TMI.domain.dto.SharePlanDto;
+import Project.TMI.dto.PlanSaveDto;
+import Project.TMI.dto.SharePlanDto;
 import Project.TMI.model.*;
 import Project.TMI.service.PlanService;
 import Project.TMI.service.S3Service;
@@ -16,15 +13,12 @@ import Project.TMI.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @CrossOrigin(origins="*")
@@ -50,7 +44,7 @@ public class PlanController {
         }
 
         //시간을 담아줍니다.
-        LocalDateTime realTime = LocalDateTime.now();
+        Date time = new Date();
 
         //S3에 이미지 업로드 후 링크 가져옴.
         String imgPath = s3Service.upload(placeImage);
@@ -63,7 +57,7 @@ public class PlanController {
                 .planName(planName)
                 .placeImage(imgPath)
                 .planOwner(user.getName()) //planOwner 추가
-                .createdAt(realTime)
+                .createdAt(time)
                 .build();
 
         //플랜 생성 후 planId 가져옴.
@@ -112,8 +106,13 @@ public class PlanController {
         User user = userService.findByEmail(sharePlanDto.getEmail()).orElseThrow(CUserNotFoundException::new);
 
         //만약 현재 내 계정과 공유하려는 계정이 같다면 공유불가.
-        if(sharePlanDto.getUserId().equals(user.getUserId())){
+        if(sharePlanDto.getUserId().equals(user.getUserId())){  //sharePlanDto.getUserId() 현재 로그인되어 있는 userId
             throw new CPlanNotSharedMeException();
+        }
+
+        //만약 이 유저가 이 플랜을 이미 공유 받았다면!
+        if(planService.getSharedPlan(user.getUserId(), sharePlanDto.getPlanId()) != null){
+            throw new CPlanAlreadySharedExcption();
         }
 
         Long sharePlanId = planService.planShare(sharePlanDto);

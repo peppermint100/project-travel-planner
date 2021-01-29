@@ -69,7 +69,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(CPasswordNotInputException.class)
     protected ResponseEntity<Failure> CPasswordNotInputException(HttpServletRequest request, CPasswordNotInputException e) {
-        return new ResponseEntity<>(new Failure("회원 정보를 변경하려면 비밀번호를 입력 해주세요."), HttpStatus.OK);
+        return new ResponseEntity<>(new Failure("회원정보를 변경하려면 비밀번호를 입력 해주세요."), HttpStatus.OK);
     }
 
     //========================================================================================================================================
@@ -80,6 +80,12 @@ public class ExceptionAdvice {
     @ExceptionHandler(CPlanNotFoundException.class)
     protected ResponseEntity<Failure> CPlanNotFoundException(HttpServletRequest request, CPlanNotFoundException e) {
         return new ResponseEntity<>(new Failure("해당 Plan을 찾을 수 없습니다."), HttpStatus.OK);
+    }
+
+    //Plan 조회 오류
+    @ExceptionHandler(CPlanAlreadySharedExcption.class)
+    protected ResponseEntity<Failure> CPlanAlreadySharedExcption(HttpServletRequest request, CPlanAlreadySharedExcption e) {
+        return new ResponseEntity<>(new Failure("해당 회원에게 이미 공유된 계획입니다."), HttpStatus.OK);
     }
 
     //Plan 조회 오류

@@ -1,9 +1,9 @@
 package Project.TMI.service;
 
 import Project.TMI.advice.exception.CUserNotFoundException;
-import Project.TMI.domain.dto.SignUpDto;
 import Project.TMI.domain.User;
-import Project.TMI.domain.dto.UpdateUserInfoDto;
+import Project.TMI.dto.SignUpDto;
+import Project.TMI.dto.UpdateUserInfoDto;
 import Project.TMI.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,10 +1,9 @@
-package Project.TMI.domain.dto;
+package Project.TMI.dto;
 
 import Project.TMI.domain.Plan;
-import Project.TMI.domain.User;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class PlanSaveDto {
 
@@ -12,10 +11,10 @@ public class PlanSaveDto {
     private String planName;
     private String placeImage;
     private String planOwner;
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Builder
-    public PlanSaveDto(Long userId, String planName, String planOwner, String placeImage, LocalDateTime createdAt) {
+    public PlanSaveDto(Long userId, String planName, String planOwner, String placeImage, Date createdAt) {
         this.userId = userId;
         this.planName = planName;
         this.placeImage = placeImage;

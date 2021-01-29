@@ -1,6 +1,6 @@
 package Project.TMI.service;
 
-import Project.TMI.domain.dto.MailDto;
+import Project.TMI.dto.MailDto;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

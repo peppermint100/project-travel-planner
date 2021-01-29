@@ -1,4 +1,4 @@
-package Project.TMI.domain.dto;
+package Project.TMI.dto;
 
 import Project.TMI.domain.User;
 import lombok.Builder;

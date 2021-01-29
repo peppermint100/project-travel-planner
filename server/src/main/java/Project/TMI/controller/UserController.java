@@ -2,10 +2,10 @@ package Project.TMI.controller;
 
 import Project.TMI.advice.exception.*;
 import Project.TMI.config.security.JwtTokenProvider;
-import Project.TMI.domain.dto.MailDto;
-import Project.TMI.domain.dto.SignUpDto;
+import Project.TMI.dto.MailDto;
+import Project.TMI.dto.SignUpDto;
 import Project.TMI.domain.User;
-import Project.TMI.domain.dto.UpdateUserInfoDto;
+import Project.TMI.dto.UpdateUserInfoDto;
 import Project.TMI.model.*;
 import Project.TMI.service.MailService;
 import Project.TMI.service.S3Service;
@@ -193,14 +193,13 @@ public class UserController {
                 throw new CPasswordDisMatchException();
             }
 
-            String setImage = "";
-            String newImage = s3Service.upload(userImage);
-            if(!newImage.equals(user.getUserImage())){
-                setImage = newImage;
+            String inputImage = "";
+            //MultipartFile이 비어있는지 아닌지 판단, 비어있지 않을 경우 새로운 이미지 url을 담아준다.
+            if(!userImage.isEmpty()){
+                inputImage = s3Service.upload(userImage);
             } else {
-                setImage = user.getUserImage();
+                inputImage =  user.getUserImage();
             }
-
 
             //비밀번호 변경값이 존재한다면 변경값을, 존재하지 않는다면 기존의 값을 inputPassword에 담아줍니다.
             String inputPassword = "";
@@ -215,16 +214,20 @@ public class UserController {
             UpdateUserInfoDto userInfoDto = UpdateUserInfoDto.builder()
                     .password(inputPassword)
                     .name(name)
-                    .userImage(setImage)
+                    .userImage(inputImage)
                     .build();
             userService.userInfoUpdate(userId, userInfoDto);
 
             return new ResponseEntity<>(new Success(true, "회원정보 변경 성공"), HttpStatus.OK);
 
-        } else {
+        } else { //만약 현재비밀번호를 입력하지 않고 정보를 변경했을 때, 비밀번호를 입력해 달라고 오류 발생
 
             User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
             if(!user.getName().equals(name)){
+                throw new CPasswordNotInputException();
+            }
+
+            if(!userImage.isEmpty()){
                 throw new CPasswordNotInputException();
             }
 
