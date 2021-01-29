@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useCallback, useState }  from 'react'
 import { useSelector } from 'react-redux';
 import { RootReducerType } from '../../../redux/reducers/rootReducer';
 import { Plan, SharePlanResponseType } from '../../../types/api/PlanType';
@@ -26,11 +26,11 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
     sharePlanId: 0
   })
 
-  const showModal = (planId: number, planName: string) => {
+  const showModal = useCallback((planId: number, planName: string) => {
     setCurrentSelectedPlanId(planId);
     setCurrentSelectedPlanName(planName);
     setIsModalVisible(true);
-  };
+  }, []);
 
   const handleOk = () => {
     setIsModalVisible(false);

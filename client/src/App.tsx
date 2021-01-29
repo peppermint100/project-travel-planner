@@ -10,8 +10,13 @@ import { _requestMe } from './redux/actions/MeAction';
 import Auth from "./hoc/Auth"
 import 'antd/dist/antd.css';
 import { CookiesProvider } from "react-cookie";
+import PlanDetailPage from "./pages/PlanDetailPage";
+import dotenv from "dotenv"
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
+
+  dotenv.config()
 
   return (
     <CookiesProvider>
@@ -21,8 +26,10 @@ function App() {
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignUpPage} />
-          <Route exact path="/home" component={Auth(HomePage, "/home")} />
+          <Route exact path="/home" component={Auth(HomePage)} />
           <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+          <Route exact path="/plan/:planId" component={Auth(PlanDetailPage)} />
+          <Route component={NotFoundPage} />
         </Switch>
       </Router>
     </CookiesProvider>
