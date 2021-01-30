@@ -2,18 +2,29 @@ import { MapStateType } from './../types/map/MapType';
 import Geocode from "react-geocode"
 import env from "../configs/env";
 
-const LEVEL = "administrative_area_level_2"
+const LEVEL_1 = "administrative_area_level_1"
+const LEVEL_2 = "administrative_area_level_2"
 Geocode.setApiKey(env.GOOGLE_API_KEY!!)
 
-export const getPlace = (addressArray: Array<any>) => {
+export const getPlaceLevel1 = (addressArray: Array<any>) => {
     for(let i=0; i<addressArray.length; i++){
         for(let j=0; j<addressArray[i].types.length; j++){
-            if(addressArray[i].types[j] == LEVEL){
+            if(addressArray[i].types[j] === LEVEL_1){
                 return addressArray[i].long_name;
             }
         }
     }
 }
+export const getPlaceLevel2 = (addressArray: Array<any>) => {
+    for(let i=0; i<addressArray.length; i++){
+        for(let j=0; j<addressArray[i].types.length; j++){
+            if(addressArray[i].types[j] === LEVEL_2){
+                return addressArray[i].long_name;
+            }
+        }
+    }
+}
+
 export const onMarkerDragEnd = (e: any, state:MapStateType, setState: (prevState: MapStateType) => void) => {
     let newLat = e.latLng.lat();
     let newLng = e.latLng.lng();
@@ -23,7 +34,7 @@ export const onMarkerDragEnd = (e: any, state:MapStateType, setState: (prevState
         console.log("marker dragend response : ", response)
         const address = response.results[0].formatted_address
         const addressArray = response.results[0].address_components
-        const place = getPlace(addressArray)
+        const place = getPlaceLevel2(addressArray)
         setState({
             ...state,
             address,
@@ -38,4 +49,29 @@ export const onMarkerDragEnd = (e: any, state:MapStateType, setState: (prevState
             }
         })
     })
+}
+
+export const onPlaceSelected = (term: any, state: MapStateType, setState: (prevState: MapStateType) => void) => {
+    console.log(term)
+
+    const address = term.formatted_address;
+    const addressArray = term.address_components;
+    const place = getPlaceLevel1(addressArray);
+    console.log('place : ', place)
+    const lat = term.geometry.location.lat();
+    const lng = term.geometry.location.lng();
+
+    setState({
+            ...state,
+            address,
+            place,
+            mapPosition: {
+                lat,
+                lng
+            },
+            markerPosition: {
+                lat,
+                lng
+            }
+        })
 }

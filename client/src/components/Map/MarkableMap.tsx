@@ -8,14 +8,16 @@ import {
 } from "react-google-maps";
 import env from "../../configs/env";
 import { MapStateType, Position } from "../../types/map/MapType";
-import {  onMarkerDragEnd } from "../../utils/map";
+import { onMarkerDragEnd, onPlaceSelected } from "../../utils/map";
+
+import AutoComplete from "react-google-autocomplete";
 
 interface Props {
     mapState: MapStateType;
     setMapState: (prevState:MapStateType) => void;
 }
 
-const MarkableAccomodationMap: React.FC<Props> = ({ mapState, setMapState }) => {
+const MarkableMap: React.FC<Props> = ({ mapState, setMapState }) => {
 
     const MapWithAMarker: React.ComponentClass<any, string | Element> = withScriptjs(withGoogleMap(props =>
         <GoogleMap
@@ -37,6 +39,20 @@ const MarkableAccomodationMap: React.FC<Props> = ({ mapState, setMapState }) => 
                     <div>{mapState.place}</div>
                 </InfoWindow>
             </Marker>
+            <AutoComplete
+                style={{
+                    width: "100%",
+                    height: "40px",
+                    paddingLeft: 16,
+                    marginTop: 2,
+                    marginBottom: "2rem",
+                    border: "2px solid #8791EB",
+                    borderRadius: "5px"
+                }}
+                onPlaceSelected={(term: any) => {
+                    onPlaceSelected(term, mapState, setMapState)
+                }}
+            />
         </GoogleMap>
     ));
 
@@ -52,7 +68,7 @@ const MarkableAccomodationMap: React.FC<Props> = ({ mapState, setMapState }) => 
     )
 }
 
-export default MarkableAccomodationMap;
+export default MarkableMap;
 
 
 

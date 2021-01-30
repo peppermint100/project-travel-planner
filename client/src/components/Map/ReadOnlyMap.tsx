@@ -7,18 +7,21 @@ import {
   InfoWindow
 } from "react-google-maps";
 import env from "../../configs/env";
-import { MapStateType } from "../../types/map/MapType";
+import { MapStateType, Position } from "../../types/map/MapType";
 import {  onMarkerDragEnd } from "../../utils/map";
 
+interface Props {
+    position: Position
+}
 
-const ReadOnlyMap = () => {
-    const [mapState, setMapState] = useState<MapStateType>({
+const ReadOnlyMap: React.FC<Props> = ({ position }) => {
+    const [mapState, _] = useState<MapStateType>({
         address: "",
         place: "",
         zoom: 15,
         height: 400,
-        mapPosition: { lat: -34.397, lng: 150.644 },
-        markerPosition: { lat: -34.397, lng: 150.644 },
+        mapPosition: position,
+        markerPosition: position,
     });
 
     console.log("mapState: ", mapState)
@@ -33,10 +36,7 @@ const ReadOnlyMap = () => {
             }}
         >
             <Marker
-                draggable={true}
-                onDragEnd={(e) => {
-                    onMarkerDragEnd(e, mapState, setMapState)
-                }}
+                draggable={false}
                 position={{ lat: mapState.mapPosition.lat, lng: mapState.mapPosition.lng }}
             >
                 <InfoWindow>
@@ -59,5 +59,4 @@ const ReadOnlyMap = () => {
 }
 
 export default ReadOnlyMap;
-
 
