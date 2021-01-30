@@ -1,10 +1,14 @@
 package Project.TMI.controller;
 
+import Project.TMI.domain.Plan;
 import Project.TMI.domain.PlanDetail.Detail;
 import Project.TMI.domain.PlanDetail.Position;
+import Project.TMI.dto.AccommodationSaveDto;
+import Project.TMI.dto.ActivitySaveDto;
 import Project.TMI.dto.TranspotationSaveDto;
 import Project.TMI.model.GetAllDetailSuccess;
 import Project.TMI.model.GetDetailSuccess;
+import Project.TMI.model.GetPlanDetailSuccess;
 import Project.TMI.model.Success;
 import Project.TMI.service.DetailService;
 import Project.TMI.service.PlanService;
@@ -25,7 +29,18 @@ public class DetailController {
     private final DetailService detailService;
 
     /** common apis */
-    //1. 디테일 하나 조회하기
+    //1. plan 정보 가져오기
+    @GetMapping("/getPlanDetail/{planId}")
+    public ResponseEntity<GetPlanDetailSuccess> getPlan(@PathVariable Long planId){
+
+        Plan plan = planService.findById(planId);
+        List<Detail> allDetail = detailService.getAllDetail(planId);
+
+        return new ResponseEntity<>(new GetPlanDetailSuccess(true, "plan detail 정보조회 성공", plan, allDetail), HttpStatus.OK);
+    }
+
+
+    //2. 디테일 하나 조회하기
     @GetMapping("/getDetail/{detailId}")
     public ResponseEntity<GetDetailSuccess> getTranspotation (@PathVariable Long detailId){
 
@@ -34,7 +49,7 @@ public class DetailController {
         return new ResponseEntity<>(new GetDetailSuccess(true, "detail 조회 성공", detail), HttpStatus.OK);
     }
 
-    //2. 디테일리스트 가져오기
+    //3. 디테일리스트 가져오기
     @GetMapping("/getAllDetail/{planId}")
     public ResponseEntity<GetAllDetailSuccess> getAllDetail(@PathVariable Long planId){
 
@@ -43,7 +58,7 @@ public class DetailController {
         return new ResponseEntity<>(new GetAllDetailSuccess(true, "all detail 조회 성공", allDetail), HttpStatus.OK);
     }
 
-    //3. 디테일 삭제하기
+    //4. 디테일 삭제하기
     @DeleteMapping("/deleteDetail/{detailId}")
     public ResponseEntity<Success> deleteDetail (@PathVariable Long detailId){
         detailService.deleteDetail(detailId);
@@ -79,5 +94,58 @@ public class DetailController {
         detailService.updateTranspotation(detailId, transpotationSaveDto);
 
         return new ResponseEntity<>(new Success(true, "Transpotation 수정성공"), HttpStatus.OK);
+    }
+
+    /** Accommodation apis */
+    //1. Accommodation 생성하기
+    @PostMapping("/createAccommodation")
+    public ResponseEntity<Success> createAccommodation(@RequestBody AccommodationSaveDto accommodationSaveDto){
+
+        Position location = new Position(accommodationSaveDto.getLocationLat(), accommodationSaveDto.getLocationLng());
+
+        accommodationSaveDto.setLocation(location);
+
+        detailService.saveAccommodation(accommodationSaveDto);
+
+        return new ResponseEntity<>(new Success(true, "Accommodation 등록성공"), HttpStatus.OK);
+    }
+
+    //2. Accommodation 수정하기
+    @PutMapping("/updateAccommodation/{detailId}")
+    public ResponseEntity<Success> updateAccommodation(@PathVariable Long detailId, @RequestBody AccommodationSaveDto accommodationSaveDto){
+
+        Position location = new Position(accommodationSaveDto.getLocationLat(), accommodationSaveDto.getLocationLng());
+
+        accommodationSaveDto.setLocation(location);
+
+        detailService.updateAccommodation(detailId, accommodationSaveDto);
+
+        return new ResponseEntity<>(new Success(true, "Accommodation 수정성공"), HttpStatus.OK);
+    }
+    /** Activity apis */
+    //1. Activity 생성하기
+    @PostMapping("/createActivity")
+    public ResponseEntity<Success> createActivity(@RequestBody ActivitySaveDto activitySaveDto){
+
+        Position location = new Position(activitySaveDto.getLocationLat(), activitySaveDto.getLocationLng());
+
+        activitySaveDto.setLocation(location);
+
+        detailService.saveActivity(activitySaveDto);
+
+        return new ResponseEntity<>(new Success(true, "Activity 등록성공"), HttpStatus.OK);
+    }
+
+    //2. Activity 수정하기
+    @PutMapping("/updateActivity/{detailId}")
+    public ResponseEntity<Success> updateActivity(@PathVariable Long detailId, @RequestBody ActivitySaveDto activitySaveDto){
+
+        Position location = new Position(activitySaveDto.getLocationLat(), activitySaveDto.getLocationLng());
+
+        activitySaveDto.setLocation(location);
+
+        detailService.updateActivity(detailId, activitySaveDto);
+
+        return new ResponseEntity<>(new Success(true, "Activity 수정성공"), HttpStatus.OK);
     }
 }

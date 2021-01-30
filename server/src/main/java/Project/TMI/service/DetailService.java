@@ -1,7 +1,11 @@
 package Project.TMI.service;
 
+import Project.TMI.domain.PlanDetail.Accommodation;
+import Project.TMI.domain.PlanDetail.Activity;
 import Project.TMI.domain.PlanDetail.Detail;
 import Project.TMI.domain.PlanDetail.Transpotation;
+import Project.TMI.dto.AccommodationSaveDto;
+import Project.TMI.dto.ActivitySaveDto;
 import Project.TMI.dto.TranspotationSaveDto;
 import Project.TMI.repository.DetailRepository;
 import Project.TMI.repository.TranspotationRepository;
@@ -50,6 +54,34 @@ public class DetailService {
     public void updateTranspotation(Long detailId, TranspotationSaveDto transpotationSaveDto){
         Transpotation transpotation = (Transpotation)detailRepository.findById(detailId).orElseThrow();
         transpotation.updateTranspotation(transpotationSaveDto);
+    }
+
+    /** Accommodation */
+    //Accommodation 생성
+    @Transactional
+    public void saveAccommodation(AccommodationSaveDto accommodationSaveDto){
+        detailRepository.save(accommodationSaveDto.toEntity());
+    }
+
+    @Transactional
+    //Accommodation 수정
+    public void updateAccommodation(Long detailId, AccommodationSaveDto accommodationSaveDto){
+        Accommodation accommodation = (Accommodation)detailRepository.findById(detailId).orElseThrow();
+        accommodation.updateAccommodation(accommodationSaveDto);
+    }
+
+    /** Activity */
+    //Activity 생성
+    @Transactional
+    public void saveActivity(ActivitySaveDto activitySaveDto){
+        detailRepository.save(activitySaveDto.toEntity());
+    }
+
+    @Transactional
+    //Activity 수정
+    public void updateActivity(Long detailId, ActivitySaveDto activitySaveDto){
+        Activity activity = (Activity)detailRepository.findById(detailId).orElseThrow();
+        activity.updateActivity(activitySaveDto);
     }
 
 }

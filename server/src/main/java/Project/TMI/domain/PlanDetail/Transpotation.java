@@ -14,19 +14,19 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @DiscriminatorValue("transpotation")
-public class Transpotation extends Detail{
+public class Transpotation extends Detail {
 
     @Enumerated(EnumType.STRING)
     private TranspotationType transpotationType;
 
     @Embedded
-    @AttributeOverride(name="lat", column = @Column(name="startLat"))
-    @AttributeOverride(name="lng", column = @Column(name="startLng"))
+    @AttributeOverride(name = "lat", column = @Column(name = "startLat"))
+    @AttributeOverride(name = "lng", column = @Column(name = "startLng"))
     private Position locationStart;
 
     @Embedded
-    @AttributeOverride(name="lat", column = @Column(name="arriveLat"))
-    @AttributeOverride(name="lng", column = @Column(name="arriveLng"))
+    @AttributeOverride(name = "lat", column = @Column(name = "arriveLat"))
+    @AttributeOverride(name = "lng", column = @Column(name = "arriveLng"))
     private Position locationArrive;
 
     @JsonFormat(pattern = "hh:mm:ss", timezone = "Asia/Seoul")
