@@ -18,6 +18,7 @@ import java.util.List;
 public class TranspotationSaveDto {
 
     private Date date;
+    private LocalTime time;
     private List<String> needs;
     private Long planId;
     private String comment;
@@ -54,6 +55,7 @@ public class TranspotationSaveDto {
     public Transpotation toEntity(){
         return Transpotation.builder()
                 .date(date)
+                .time(timeStart)
                 .needs(needs)
                 .planId(planId)
                 .comment(comment)

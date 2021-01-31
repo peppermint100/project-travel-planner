@@ -1,10 +1,12 @@
 package Project.TMI.domain.PlanDetail;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +26,9 @@ public class Detail {
     //날짜
     @Temporal(TemporalType.DATE)
     private Date date;
+
+    @JsonFormat(pattern = "hh:mm:ss", timezone = "Asia/Seoul")
+    private LocalTime time;
 
     //준비물
     @ElementCollection
@@ -45,4 +50,6 @@ public class Detail {
         this.needs = needs;
         this.comment = comment;
     }
+
+
 }

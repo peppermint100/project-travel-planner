@@ -19,6 +19,7 @@ import java.util.List;
 public class AccommodationSaveDto {
 
     private Date date;
+    private LocalTime time;
     private List<String> needs;
     private Long planId;
     private String comment;
@@ -52,6 +53,7 @@ public class AccommodationSaveDto {
     public Accommodation toEntity(){
         return Accommodation.builder()
                 .date(date)
+                .time(timeCheckIn)
                 .needs(needs)
                 .planId(planId)
                 .comment(comment)

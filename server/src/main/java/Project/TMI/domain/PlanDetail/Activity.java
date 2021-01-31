@@ -23,7 +23,7 @@ public class Activity extends Detail {
 
     //시간
     @JsonFormat(pattern = "hh:mm:ss", timezone = "Asia/Seoul")
-    private LocalTime time;
+    private LocalTime timeStart;
 
     //활동명
     private String activityName;
@@ -31,7 +31,7 @@ public class Activity extends Detail {
     public void updateActivity(ActivitySaveDto activitySaveDto) {
         updateDetail(activitySaveDto.getDate(), activitySaveDto.getNeeds(), activitySaveDto.getComment());
         this.location = activitySaveDto.getLocation();
-        this.time = activitySaveDto.getTime();
+        this.timeStart = activitySaveDto.getTimeStart();
         this.activityName = activitySaveDto.getActivityName();
     }
 }

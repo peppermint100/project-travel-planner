@@ -10,6 +10,7 @@ import Project.TMI.dto.TranspotationSaveDto;
 import Project.TMI.repository.DetailRepository;
 import Project.TMI.repository.TranspotationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,7 +32,7 @@ public class DetailService {
 
     //detail List 가져오기
     public List<Detail> getAllDetail(Long planId){
-        List details = detailRepository.findAllByPlanId(planId);
+        List details = detailRepository.findAllByPlanId(planId, sortByDateAndTime());
         return details;
     }
 
@@ -82,6 +83,12 @@ public class DetailService {
     public void updateActivity(Long detailId, ActivitySaveDto activitySaveDto){
         Activity activity = (Activity)detailRepository.findById(detailId).orElseThrow();
         activity.updateActivity(activitySaveDto);
+    }
+
+    /** others */
+    //Detail 리스트의 정렬을 지정해 줍니다.
+    private Sort sortByDateAndTime(){
+        return Sort.by(Sort.Order.asc("date"), Sort.Order.asc("time"));
     }
 
 }

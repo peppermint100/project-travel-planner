@@ -17,6 +17,7 @@ import java.util.List;
 public class ActivitySaveDto {
 
     private Date date;
+    private LocalTime time;
     private List<String> needs;
     private Long planId;
     private String comment;
@@ -26,10 +27,10 @@ public class ActivitySaveDto {
     private int locationLng;
 
     private String activityName;
-    private LocalTime time;
+    private LocalTime timeStart;
 
     @Builder
-    public ActivitySaveDto(Date date, List<String> needs, Long planId, String comment, Position location, int locationLat, int locationLng, String activityName, LocalTime time) {
+    public ActivitySaveDto(Date date, List<String> needs, Long planId, String comment, Position location, int locationLat, int locationLng, String activityName, LocalTime timeStart) {
         this.date = date;
         this.needs = needs;
         this.planId = planId;
@@ -38,17 +39,18 @@ public class ActivitySaveDto {
         this.locationLat = locationLat;
         this.locationLng = locationLng;
         this.activityName = activityName;
-        this.time = time;
+        this.timeStart = timeStart;
     }
 
     public Activity toEntity(){
         return Activity.builder()
                 .date(date)
+                .time(timeStart)
                 .needs(needs)
                 .planId(planId)
                 .comment(comment)
                 .location(location)
-                .time(time)
+                .timeStart(timeStart)
                 .activityName(activityName)
                 .build();
     }
