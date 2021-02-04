@@ -12,13 +12,10 @@ export default function (SpecificComponent: any) {
     function AuthenticationCheck(props: any) {
         useEffect(() => {
             sendmeRequest().then(response => {
-                console.log("auth tsx response: ", response)
                 if (!response.success && !cookies.get("X-AUTH-TOKEN")) {
                     props.history.push('/login')
                 } else {
                     dispatch(_receiveMe(response))
-                    console.log("in hoc said you're logged in")
-                    console.log("in hoc : ", response.email, response.name, response.userImage)
                 }
             })
         }, [])

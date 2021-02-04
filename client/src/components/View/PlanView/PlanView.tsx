@@ -61,10 +61,12 @@ const PlanView: React.FC<Props> = ({ plan, openModal, sharedPlanId }) => {
                     </section>
                 ) : 
                 <section className="w-3/4 mx-auto h-full z-10" onClick={() => {
-                    history.push(`/plan/${plan.planId}`)
+                    history.push(`/plan/${plan.planId}`, {
+                        plan
+                    })
                 }}>
                     <p className=
-                        "text-white absolute top-1/2 left-1/2 font-semibold text-2xl text-center transform -translate-x-1/2 -translate-y-1/2"
+                        "w-full text-white absolute top-1/2 left-1/2 text-2xl text-center transform -translate-x-1/2 -translate-y-1/2"
                     >
                         { plan.planName }
                     </p>

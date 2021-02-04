@@ -1,7 +1,6 @@
 import { BasicResponse } from "../types/api/BasicApiType";
 import { LoginRequest, LoginResponse, MeResponse, ResetPasswordRequest, SignUpReqeust, UpdateUserInfoRequest } from "../types/api/UserType";
 import { basicAxios } from "./axios";
-import { useCookies } from "react-cookie"
 import Cookies from "universal-cookie"
 
 const cookies = new Cookies();
@@ -38,13 +37,11 @@ export const sendLoginRequest = async (loginRequest: LoginRequest) => {
 
     cookies.set("X-AUTH-TOKEN", token)
     
-
     return { success, msg, token };
 }
 
 export const sendmeRequest = async () => {
     const token = cookies.get("X-AUTH-TOKEN")
-    console.log('api token in cookie: ', token)
 
     const response = await basicAxios.get(`/user/me`, {
         headers: {

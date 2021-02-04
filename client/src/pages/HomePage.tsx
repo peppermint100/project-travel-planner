@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Layout } from 'antd';
 import { Drawer, Button, Divider } from 'antd';
-import { MenuOutlined, HomeFilled, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { MenuOutlined, HomeFilled, UserOutlined, LogoutOutlined, LinkOutlined, HomeOutlined, SmileFilled, ApiFilled, TagFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MyPlanView from "../components/View/HomePageView/MyPlanView"
 import MyPageView from "../components/View/HomePageView/MyPageView"
@@ -24,7 +24,6 @@ const HomePage = () => {
   const meResponse = useSelector((state: RootReducerType) => state.MeReducer)
 
   useEffect(() => {
-    console.log('home page meresponse: ', meResponse)
     dispatch(_requestGetAllPlans(meResponse.userId))
   }, [meResponse])
 
@@ -96,56 +95,54 @@ const styles = {
             visible={isVisible}
             onClose={closeDrawer}
             placement="left"
+            width="300"
         >
           <ul>
-            <li className="flex flex-col items-center">
-              <div className="w-28 h-28 mb-2">
-                  <UserProfileImage src={meResponse.userImage} />
-              </div>
-              <div className="mb-2">
-                <span className="text-lg text-primary">
-                  <span className="text-xl font-bold mr-2">
-                       { meResponse.name }
-                    </span>회원님</span>
+            <li className="flex flex-col items-start">
+              <div className="w-20 h-20 mb-2">
+                  <UserProfileImage src={meResponse.userImage} width="70px" height="70px" />
               </div>
               <div>
-                <span className="font-semibold text-primary">
-                  { meResponse.email }</span>
+                <span className="text-2xl font-bold">
+                      { meResponse.name }
+                </span>
+              </div>
+              <div className="mb-4">
+                <span className="text-lg text-gray-500">
+                  { meResponse.email }
+                </span>
               </div>
             </li>
             <Divider />
-              <li className="flex h-10" onClick={() => { onTabClicked(0)}}>
+              <li className="flex h-16 items-center" onClick={() => { onTabClicked(0)}}>
                 <div style={drawerMenuStyle}>
-                  <HomeFilled className="text-3xl text-primary"/> 
+                  <HomeFilled className="text-2xl text-gray-500"/> 
                 </div>
-                <div style={drawerMenuStyle} className="text-primary text-xl font-semibold ml-4">
+                <div style={drawerMenuStyle} className="text-black font-semibold text-lg ml-4">
                   홈
                 </div>
               </li>
-              <Divider />
-              <li className="flex h-10" onClick={() => { onTabClicked(1)}}>
+              <li className="flex h-16 items-center" onClick={() => { onTabClicked(1)}}>
                 <div style={drawerMenuStyle}>
-                  <UserOutlined className="text-3xl text-primary" />
+                  <SmileFilled className="text-2xl text-gray-500" />
                 </div>
-                <div style={drawerMenuStyle} className="text-xl text-primary font-semibold ml-4">
+                <div style={drawerMenuStyle} className="text-lg font-semibold text-black ml-4">
                   마이페이지
                 </div>
               </li>
-              <Divider />
-               <li className="flex h-10" onClick={() => { onTabClicked(2)}}>
+               <li className="flex h-16 items-center" onClick={() => { onTabClicked(2)}}>
                 <div style={drawerMenuStyle}>
-                  <UserOutlined className="text-3xl text-primary" />
+                  <TagFilled className="text-2xl text-gray-500" />
                 </div>
-                <div style={drawerMenuStyle} className="text-xl text-primary font-semibold ml-4">
+                <div style={drawerMenuStyle} className="text-lg font-semibold text-black ml-4">
                   공유받은 플랜
                 </div>
               </li>
-              <Divider />
-              <li className="flex h-10" onClick={logout}>
+              <li className="flex h-16 items-center" onClick={logout}>
                 <div style={drawerMenuStyle}>
-                  <LogoutOutlined className="text-3xl text-primary" />
+                  <ApiFilled className="text-2xl text-gray-500" />
                 </div>
-                <div style={drawerMenuStyle} className="text-xl text-primary font-semibold ml-4">
+                <div style={drawerMenuStyle} className="text-lg font-semibold text-black ml-4">
                   로그아웃
                 </div>
               </li>
@@ -165,7 +162,8 @@ const styles = {
 }
 
 const drawerMenuStyle: React.CSSProperties = {
-  lineHeight: "2.5rem"
+  lineHeight: "2.5rem",
+  marginRight: ".5rem"
 }
 
 

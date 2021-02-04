@@ -7,7 +7,6 @@ import { _receiveGetAllPlans } from '../actions/GetAllPlansAction';
 function* getAllPlansSaga({ userId }: { userId: number }){
     const response: GetAllPlansResponseType = yield call(sendGetAllPlansRequest, userId)
 
-    console.log(" get all plans saga response : ", response)
 
     yield put(_receiveGetAllPlans(response))
 }

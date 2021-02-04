@@ -1,9 +1,8 @@
 import { MapStateType } from './../types/map/MapType';
 import Geocode from "react-geocode"
 import env from "../configs/env";
+import { LEVEL_1, LEVEL_2 } from "./constants";
 
-const LEVEL_1 = "administrative_area_level_1"
-const LEVEL_2 = "administrative_area_level_2"
 Geocode.setApiKey(env.GOOGLE_API_KEY!!)
 
 export const getPlaceLevel1 = (addressArray: Array<any>) => {
@@ -73,5 +72,5 @@ export const onPlaceSelected = (term: any, state: MapStateType, setState: (prevS
                 lat,
                 lng
             }
-        })
+    })
 }

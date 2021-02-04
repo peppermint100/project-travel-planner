@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   withScriptjs,
   withGoogleMap,
@@ -11,13 +11,16 @@ import { MapStateType, Position } from "../../types/map/MapType";
 import { onMarkerDragEnd, onPlaceSelected } from "../../utils/map";
 
 import AutoComplete from "react-google-autocomplete";
+import { useDispatch, useSelector } from "react-redux";
+import { RootReducerType } from "../../redux/reducers/rootReducer";
+import { _setMapState } from "../../redux/actions/MapAction";
 
 interface Props {
     mapState: MapStateType;
     setMapState: (prevState:MapStateType) => void;
 }
 
-const MarkableMap: React.FC<Props> = ({ mapState, setMapState }) => {
+const MarkableMap: React.FC<Props> = ({mapState, setMapState}) => {
 
     const MapWithAMarker: React.ComponentClass<any, string | Element> = withScriptjs(withGoogleMap(props =>
         <GoogleMap
@@ -57,7 +60,7 @@ const MarkableMap: React.FC<Props> = ({ mapState, setMapState }) => {
     ));
 
     return (
-        <div>
+        <div className="w-full h-full">
             <MapWithAMarker
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
                 loadingElement={<div style={{ height: `100%` }} />}
@@ -68,7 +71,7 @@ const MarkableMap: React.FC<Props> = ({ mapState, setMapState }) => {
     )
 }
 
-export default MarkableMap;
+export default React.memo(MarkableMap);
 
 
 

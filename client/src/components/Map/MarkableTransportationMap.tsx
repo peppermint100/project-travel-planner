@@ -8,7 +8,8 @@ import {
 } from "react-google-maps";
 import env from "../../configs/env";
 import { MapStateType, Position } from "../../types/map/MapType";
-import {  onMarkerDragEnd } from "../../utils/map";
+import {  onMarkerDragEnd, onPlaceSelected } from "../../utils/map";
+import AutoComplete from "react-google-autocomplete"
 
 interface Props {
     startMapState: MapStateType;
@@ -36,7 +37,7 @@ const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMap
                 }}
             >
                 <InfoWindow>
-                    <div>{startMapState.place}</div>
+                    <div>출발 지점{startMapState.place}</div>
                 </InfoWindow>
             </Marker>
             <Marker
@@ -47,9 +48,19 @@ const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMap
                 }}
             >
                 <InfoWindow>
-                    <div>{endMapState.place}</div>
+                    <div>도착 지점{endMapState.place}</div>
                 </InfoWindow>
             </Marker>
+            <AutoComplete
+                onPlaceSelected={(term: any) => {
+                    onPlaceSelected(term, startMapState, setStartMapState)
+                }}
+            />
+            <AutoComplete
+                onPlaceSelected={(term: any) => {
+                    onPlaceSelected(term, endMapState, setEndMapState)
+                }}
+            />
         </GoogleMap>
     ));
 

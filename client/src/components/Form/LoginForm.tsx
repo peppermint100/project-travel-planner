@@ -24,7 +24,6 @@ const LoginForm = () => {
             initialValues={{ email: "", password: ""}}
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
-                console.log('login data: ' , data);
                 dispatch(_requestLogin(data, () => {
                     history.push("/home")
                 }));

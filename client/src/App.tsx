@@ -13,6 +13,7 @@ import { CookiesProvider } from "react-cookie";
 import PlanDetailPage from "./pages/PlanDetailPage";
 import dotenv from "dotenv"
 import NotFoundPage from "./pages/NotFoundPage";
+import NewDetailPage from "./pages/NewDetailPage";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/home" component={Auth(HomePage)} />
           <Route exact path="/forgot-password" component={ForgotPasswordPage} />
           <Route exact path="/plan/:planId" component={Auth(PlanDetailPage)} />
+          <Route exact path="/plan/:planId/:planName/new-detail" component={Auth(NewDetailPage)} />
           <Route component={NotFoundPage} />
         </Switch>
       </Router>
