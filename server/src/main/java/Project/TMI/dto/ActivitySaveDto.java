@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -16,17 +18,23 @@ import java.util.List;
 @NoArgsConstructor
 public class ActivitySaveDto {
 
+    @FutureOrPresent(message = "과거의 날짜는 설정할 수 없습니다.")
+    @NotNull(message = "해당 계획의 날짜를 설정해 주세요.")
     private Date date;
-    private LocalTime time;
     private List<String> needs;
+    @NotNull(message = "planId 값이 비었습니다.")
     private Long planId;
     private String comment;
 
     private Position location;
+    @NotNull(message = "활동 위치를 선택해 주세요.")
     private int locationLat;
+    @NotNull(message = "활동 위치를 선택해 주세요.")
     private int locationLng;
 
+    @NotNull(message = "활동 이름을 입력해 주세요.")
     private String activityName;
+    @NotNull(message = "시작 시간을 입력해 주세요.")
     private LocalTime timeStart;
 
     @Builder

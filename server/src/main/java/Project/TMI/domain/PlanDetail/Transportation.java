@@ -1,6 +1,6 @@
 package Project.TMI.domain.PlanDetail;
 
-import Project.TMI.dto.TranspotationSaveDto;
+import Project.TMI.dto.TransportationSaveDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +13,11 @@ import java.time.LocalTime;
 @SuperBuilder //상속받은 객체의 builder를 한번에 생성하기 위함
 @NoArgsConstructor
 @Getter
-@DiscriminatorValue("transpotation")
-public class Transpotation extends Detail {
+@DiscriminatorValue("0")
+public class Transportation extends Detail {
 
-    @Enumerated(EnumType.STRING)
-    private TranspotationType transpotationType;
+    @Enumerated(EnumType.ORDINAL)
+    private TransportationType transportationType;
 
     @Embedded
     @AttributeOverride(name = "lat", column = @Column(name = "startLat"))
@@ -35,12 +35,12 @@ public class Transpotation extends Detail {
     @JsonFormat(pattern = "hh:mm:ss", timezone = "Asia/Seoul")
     private LocalTime timeArrive;
 
-    public void updateTranspotation(TranspotationSaveDto transpotationSaveDto) {
-        updateDetail(transpotationSaveDto.getDate(), transpotationSaveDto.getNeeds(), transpotationSaveDto.getComment());
-        this.transpotationType = transpotationSaveDto.getTranspotationType();
-        this.locationStart = transpotationSaveDto.getLocationStart();
-        this.locationArrive = transpotationSaveDto.getLocationArrive();
-        this.timeStart = transpotationSaveDto.getTimeStart();
-        this.timeArrive = transpotationSaveDto.getTimeArrive();
+    public void updateTransportation(TransportationSaveDto transportationSaveDto) {
+        updateDetail(transportationSaveDto.getDate(), transportationSaveDto.getNeeds(), transportationSaveDto.getComment());
+        this.transportationType = transportationSaveDto.getTransportationType();
+        this.locationStart = transportationSaveDto.getLocationStart();
+        this.locationArrive = transportationSaveDto.getLocationArrive();
+        this.timeStart = transportationSaveDto.getTimeStart();
+        this.timeArrive = transportationSaveDto.getTimeArrive();
     }
 }

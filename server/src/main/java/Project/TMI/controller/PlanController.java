@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/plan")
 @RequiredArgsConstructor
 @RestController
@@ -31,7 +31,9 @@ public class PlanController {
     private final UserService userService;
     private final S3Service s3Service;
 
-    /** My Plan */
+    /**
+     * My Plan
+     */
     //1.플랜 생성
     @PostMapping(value = "/createPlan")
     public ResponseEntity<CreatePlanSuccess> createPlan(@RequestParam String planName,
@@ -52,6 +54,7 @@ public class PlanController {
         User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
 
         //Dto 생성
+        //작업 마무리할 때 RequestBody 로 받도록 변경
         PlanSaveDto planDto = PlanSaveDto.builder()
                 .userId(userId)
                 .planName(planName)
@@ -68,10 +71,10 @@ public class PlanController {
 
     //2. 플랜 삭제
     @DeleteMapping(value = "/deletePlan/{planId}")
-    public ResponseEntity<Success> deletePlan(@PathVariable Long planId){
+    public ResponseEntity<Success> deletePlan(@PathVariable Long planId) {
 
         //planId의 plan이 존재하지 않는다면.
-        if(planService.findById(planId) == null){
+        if (planService.findById(planId) == null) {
             throw new CPlanNotFoundException();
         }
 
@@ -82,7 +85,7 @@ public class PlanController {
 
     //3. 플랜리스트 가져오기 (공유받은플랜 포함)
     @GetMapping(value = "/getPlans/{userId}")
-    public ResponseEntity<GetPlansSuccess> getPlans(@PathVariable Long userId){
+    public ResponseEntity<GetPlansSuccess> getPlans(@PathVariable Long userId) {
 
         User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
         List<Plan> plans = planService.plansGet(userId);
@@ -91,27 +94,29 @@ public class PlanController {
         return new ResponseEntity<>(new GetPlansSuccess(true, "플랜리스트 가져오기 성공", plans, sharedPlans), HttpStatus.OK);
     }
 
-    /** Shared Plan */
+    /**
+     * Shared Plan
+     */
     //4. 플랜 공유하기
     @PostMapping(value = "/sharePlan")
-    public ResponseEntity<SharePlanSuccess> sharePlan(@RequestBody SharePlanDto sharePlanDto){
+    public ResponseEntity<SharePlanSuccess> sharePlan(@RequestBody SharePlanDto sharePlanDto) {
 
         /** 내 정보를 토큰으로 가져온다면
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
+         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+         String email = authentication.getName();
 
-        User user = userService.findByEmail(email).orElseThrow(CUserNotFoundException::new);
-        */
+         User user = userService.findByEmail(email).orElseThrow(CUserNotFoundException::new);
+         */
 
         User user = userService.findByEmail(sharePlanDto.getEmail()).orElseThrow(CUserNotFoundException::new);
 
         //만약 현재 내 계정과 공유하려는 계정이 같다면 공유불가.
-        if(sharePlanDto.getUserId().equals(user.getUserId())){  //sharePlanDto.getUserId() 현재 로그인되어 있는 userId
+        if (sharePlanDto.getUserId().equals(user.getUserId())) {  //sharePlanDto.getUserId() 현재 로그인되어 있는 userId
             throw new CPlanNotSharedMeException();
         }
 
         //만약 이 유저가 이 플랜을 이미 공유 받았다면!
-        if(planService.getSharedPlan(user.getUserId(), sharePlanDto.getPlanId()) != null){
+        if (planService.getSharedPlan(user.getUserId(), sharePlanDto.getPlanId()) != null) {
             throw new CPlanAlreadySharedExcption();
         }
 
@@ -122,7 +127,7 @@ public class PlanController {
 
     //5. 공유플랜리스트 가져오기
     @GetMapping(value = "/getSharedPlans/{userId}")
-    public ResponseEntity<GetSharedPlansSuccess> getSharedPlans(@PathVariable Long userId){
+    public ResponseEntity<GetSharedPlansSuccess> getSharedPlans(@PathVariable Long userId) {
 
         List<SharedPlan> sharedPlans = planService.sharedPlansGet(userId);
 
@@ -131,7 +136,7 @@ public class PlanController {
 
     //6. 공유된플랜 삭제
     @DeleteMapping(value = "/deleteSharedPlan/{sharedPlanId}")
-    public ResponseEntity<Success> deleteSharedPlan(@PathVariable Long sharedPlanId){
+    public ResponseEntity<Success> deleteSharedPlan(@PathVariable Long sharedPlanId) {
 
         planService.sharedPlanDelete(sharedPlanId);
 

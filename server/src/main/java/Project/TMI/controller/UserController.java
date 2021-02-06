@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @RestController
@@ -54,7 +54,7 @@ public class UserController {
         }
 
         //회원가입시 이미 가입한 이메일 체크
-        if(userService.findByEmail(email).isPresent()){
+        if (userService.findByEmail(email).isPresent()) {
             throw new CSignUpEmailExistException();
         }
 
@@ -168,7 +168,7 @@ public class UserController {
                                                   @RequestParam String name, MultipartFile userImage) throws IOException {
 
         //필수 입력값 들중에 빈 칸이 있을 경우 빈값오류
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             throw new CEmptyValueException();
         }
 
@@ -195,10 +195,10 @@ public class UserController {
 
             String inputImage = "";
             //MultipartFile이 비어있는지 아닌지 판단, 비어있지 않을 경우 새로운 이미지 url을 담아준다.
-            if(!userImage.isEmpty()){
+            if (!userImage.isEmpty()) {
                 inputImage = s3Service.upload(userImage);
             } else {
-                inputImage =  user.getUserImage();
+                inputImage = user.getUserImage();
             }
 
             //비밀번호 변경값이 존재한다면 변경값을, 존재하지 않는다면 기존의 값을 inputPassword에 담아줍니다.
@@ -223,11 +223,11 @@ public class UserController {
         } else { //만약 현재비밀번호를 입력하지 않고 정보를 변경했을 때, 비밀번호를 입력해 달라고 오류 발생
 
             User user = userService.findById(userId).orElseThrow(CUserNotFoundException::new);
-            if(!user.getName().equals(name)){
+            if (!user.getName().equals(name)) {
                 throw new CPasswordNotInputException();
             }
 
-            if(!userImage.isEmpty()){
+            if (!userImage.isEmpty()) {
                 throw new CPasswordNotInputException();
             }
 

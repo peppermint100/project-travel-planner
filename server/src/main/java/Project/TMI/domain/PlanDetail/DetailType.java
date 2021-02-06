@@ -1,5 +1,5 @@
 package Project.TMI.domain.PlanDetail;
 
 public enum DetailType {
-    transpotation, accommodation, activity
+    TRANSPORTATION, ACCOMMODATION, ACTIVITY
 }

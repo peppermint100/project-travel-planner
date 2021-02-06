@@ -39,7 +39,7 @@ public class PlanService {
 
     //플랜리스트 가져오기
     public List<Plan> plansGet(Long userId){
-        User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(CPlanNotFoundException::new);
         return user.getUserPlans();
     }
 

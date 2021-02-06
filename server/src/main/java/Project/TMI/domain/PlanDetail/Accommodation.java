@@ -16,7 +16,7 @@ import java.util.List;
 @SuperBuilder //상속받은 객체의 builder를 한번에 생성하기 위함
 @NoArgsConstructor
 @Getter
-@DiscriminatorValue("accommodation")
+@DiscriminatorValue("1")
 public class Accommodation extends Detail {
 
     @Embedded
@@ -41,7 +41,7 @@ public class Accommodation extends Detail {
     @ElementCollection
     @CollectionTable(name = "feature", joinColumns = @JoinColumn(name = "detailId"))
     @Column(name = "features")
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private List<Feature> feature = new ArrayList<>();
 
     public void updateAccommodation(AccommodationSaveDto accommodationSaveDto) {

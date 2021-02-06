@@ -41,7 +41,7 @@ public class Detail {
     //planId(fk)
     private Long planId;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "detailType", insertable = false, updatable = false)
     private DetailType detailType;
 

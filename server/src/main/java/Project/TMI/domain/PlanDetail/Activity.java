@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @SuperBuilder //상속받은 객체의 builder를 한번에 생성하기 위함
 @NoArgsConstructor
 @Getter
-@DiscriminatorValue("activity")
+@DiscriminatorValue("2")
 public class Activity extends Detail {
 
     @Embedded
