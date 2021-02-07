@@ -2,17 +2,17 @@ import { Plan } from './PlanType';
 import { Position } from './../map/MapType';
 
 export enum DetailType {
-    TRANSPORTATION = 0,
-    ACCOMODATION = 1,
-    ACTIVITY = 2
+    TRANSPORTATION = "TRANSPORTATION",
+    ACCOMMODATION = "ACCOMMODATION",
+    ACTIVITY = "ACTIVITY" 
 }
 
 export enum TransportationType {
-    BUS = 0,
-    SUBWAY = 1,
-    TAXI = 2,
-    WALK = 3,
-    AIRPLANE = 4
+    BUS = "BUS",
+    SUBWAY = "SUBWAY",
+    TAXI = "TAXI",
+    WALK = "WALK",
+    AIRPLANE = "AIRPLANE" 
 }
 
 export type GetPlanByPlanIdResponseType = {
@@ -35,13 +35,13 @@ export interface CreateTransportationType extends CreateDetailType {
     locationStartLng: number;
     locationArriveLat: number;
     locationArriveLng: number;
-    timeStart: Date;
-    timeArrive: Date;
+    timeStart: string;
+    timeArrive: string;
 }
 
 export interface Detail {
     detailId: number;
-    date: Date;
+    date: string;
     needs: Array<string>;
     planId: number;
     comment: string;
@@ -51,9 +51,24 @@ export interface Detail {
 export interface Transportation extends Detail {
     locationStart: Position;
     locationArrive: Position;
-    timeStart: Date;
-    timeArrive: Date;
+    timeStart: string;
+    timeArrive: string;
     transportationType: TransportationType; 
+}
+
+export interface Activity extends Detail {
+    activityName: string;
+    location: Position;
+    timeStart: string;
+}
+
+export interface Accommodation extends Detail {
+    accommodationName: string;
+    checkOutDate: string;
+    feature: Array<Feature>;
+    location: Position;
+    timeCheckIn: string;
+    timeCheckOut: string;
 }
 
 export type CreateActivityRequest = {
@@ -63,10 +78,10 @@ export type CreateActivityRequest = {
     timeStart: string
 } & CreateDetailType
 
-export type CreateAccomodationRequest = {
+export type CreateAccommodationRequest = {
     locationLat: number,
     locationLng: number,
-    accomodationName: string,
+    accommodationName: string,
     timeCheckIn: string,
     timeCheckOut: string,
     checkOutDate: string,

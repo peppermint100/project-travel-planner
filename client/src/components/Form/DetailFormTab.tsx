@@ -3,16 +3,15 @@ import _ from "lodash"
 import { _setMapState } from "../../redux/actions/MapAction";
 import { _setActivityName, _setActivityTime } from "../../redux/actions/ActivityFormAction";
 import { DetailType} from "../../types/api/DetailType";
-import { _addAccomodationFeature, _removeAccomodationFeature, _setAccomodationCheckInTime, _setAccomodationCheckOutDate, _setAccomodationCheckOutTime, _setAccomodationName } from "../../redux/actions/AccomodationAction";
 import ActivityForm from "./ActivityForm";
 import TransportationForm from "./TransportationForm";
-import AccomodationForm from "./AccomodationForm";
+import AccomodationForm from "./AccommodationForm";
 
 const DetailFormTab: React.FC<{dType: DetailType}> = ({ dType }) => {
     switch(dType){
         case DetailType.ACTIVITY:
             return <ActivityForm />
-        case DetailType.ACCOMODATION:
+        case DetailType.ACCOMMODATION:
             return <AccomodationForm />
         case DetailType.TRANSPORTATION:
             return <TransportationForm />

@@ -6,8 +6,8 @@ export type ActivitiyFormType = {
     time: string,
 }
 
-export type AccomodationFormType = {
-    accomodationName: string;
+export type AccommodationFormType = {
+    accommodationName: string;
     checkOutDate: string;
     checkInTime: string;
     checkOutTime: string;

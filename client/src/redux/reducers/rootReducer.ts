@@ -7,7 +7,7 @@ import ResetPasswordReducer from "./ResetPasswordReducer"
 import GetAllPlansReducer from "./GetAllPlansReducer"
 import MapReducer from "./MapReducer"
 import ActivityFormReducer from "./ActivityFormReducer"
-import AccomodationReducer from "./AccomodationReducer"
+import AccommodationReducer from "./AccommodationReducer"
 import EndMapReducer from "./EndMapReducer"
 import TransportationReducer from "./TransportationReducer"
 
@@ -20,7 +20,7 @@ export const rootReducer = combineReducers({
     GetAllPlansReducer,
     MapReducer,
     ActivityFormReducer,
-    AccomodationReducer,
+    AccommodationReducer,
     EndMapReducer,
     TransportationReducer
 })

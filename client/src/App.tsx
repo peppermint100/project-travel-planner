@@ -14,6 +14,8 @@ import PlanDetailPage from "./pages/PlanDetailPage";
 import dotenv from "dotenv"
 import NotFoundPage from "./pages/NotFoundPage";
 import NewDetailPage from "./pages/NewDetailPage";
+import DetailPage from "./pages/DetailPage";
+import UpdateDetailPage from "./pages/UpdateDetailPage";
 
 function App() {
 
@@ -31,6 +33,8 @@ function App() {
           <Route exact path="/forgot-password" component={ForgotPasswordPage} />
           <Route exact path="/plan/:planId" component={Auth(PlanDetailPage)} />
           <Route exact path="/plan/:planId/:planName/new-detail" component={Auth(NewDetailPage)} />
+          <Route exact path="/plan/:planId/update-detail/:detailId/:detailType" component={Auth(UpdateDetailPage)} />
+          <Route exact path="/plan/:planId/detail/:detailId/:detailType" component={Auth(DetailPage)} />
           <Route component={NotFoundPage} />
         </Switch>
       </Router>

@@ -4,7 +4,7 @@ import { _setEndMapState, _setMapState } from "../../redux/actions/MapAction"
 import { RootReducerType } from "../../redux/reducers/rootReducer"
 import { MapStateType } from "../../types/map/MapType"
 import MarkableTransportationMap from "../Map/MarkableTransportationMap"
-import { Radio, TimePicker } from 'antd';
+import { Divider, Radio, TimePicker } from 'antd';
 import { TransportationType } from "../../types/api/DetailType"
 import { RadioChangeEvent } from "antd/lib/radio"
 import { _setTransportationTimeArrive, _setTransportationTimeStart, _setTransportationType } from "../../redux/actions/TransportationAction"
@@ -38,7 +38,7 @@ const TransportationForm = () => {
 
     return(
         <div>
-            <div>
+            <div className="my-2">
                 {/* transportation type */}
                 <Radio.Group onChange={onSelectTransportationType} defaultValue={WALK} buttonStyle="solid">
                     <Radio.Button value={WALK}>도보</Radio.Button>
@@ -48,11 +48,23 @@ const TransportationForm = () => {
                     <Radio.Button value={TAXI}>택시</Radio.Button>
                 </Radio.Group>
             </div>
-            <div>
+            <Divider style={{ margin: 0}} />
+            <div className="w-full">
                 {/* time start time arrive */}
-                <TimePicker onChange={onChangeTimeStart} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-                <TimePicker onChange={onChangeTimeArrive} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+                <TimePicker 
+                    className="w-1/2"
+                    bordered={false}
+                    placeholder="출발 시간 선택"
+                    onChange={onChangeTimeStart} 
+                    defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+                <TimePicker 
+                    className="w-1/2"
+                    bordered={false}
+                    placeholder="도착 시간 선택"
+                    onChange={onChangeTimeArrive} 
+                    defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
             </div>
+            <Divider style={{ margin: 0 }} />
             <div>
                 <MarkableTransportationMap 
                     startMapState={mapState} 

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {  useParams } from "react-router-dom"
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Divider } from 'antd';
 import { Select } from 'antd';
 import { Input, Tag } from 'antd';
 import { DetailType } from "../../types/api/DetailType";
-import { PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -95,29 +95,45 @@ const CommonDetailForm: React.FC<Props> = ({
 
     return (
         <div>
-            <div>
-                <Space>
-                    <DatePicker onChange={onSelectDate} />
-                </Space>
+            <div className="w-full">
+                    <DatePicker 
+                        className="w-full"
+                        onChange={onSelectDate} 
+                        bordered={false} 
+                        placeholder={"날짜를 선택해 주세요."}
+                        style={{
+                            width: "100%",
+                            padding: "15px",
+                        }}
+                    />
+                    <Divider style={{ margin: 0}}/>
             </div>
-            <div>
+            <div className="w-full py-3 px-1">
                 <Select
-                    style={{ width: 200 }}
-                    placeholder="계획의 종류를 선택해주세요."
+                    className="text-gray-400"
+                    style={{ 
+                        width: "100%",
+                    }}
+                    placeholder={"계획의 종류를 선택해주세요."}
                     onChange={onSelectDetailType}
                     value={detailType}
+                    bordered={false}
+                    dropdownStyle= {{ }}
                 >
                     <Option value={DetailType.ACTIVITY}>액티비티, 여행지</Option>
                     <Option value={DetailType.TRANSPORTATION}>교통</Option>
-                    <Option value={DetailType.ACCOMODATION}>숙박</Option>
+                    <Option value={DetailType.ACCOMMODATION}>숙박</Option>
                 </Select>
+                <Divider style={{ margin: 0}} />
             </div>
-            <div>
+            <div className="ml-2">
                 {
                     tags.map((tag, index) => (
                         <Tag
+                            className="border-primary border-2 p-1 m-1 text-center align-middle text-md font-semibold rounded-lg"
                             key={tag}
                             closable={index >= 0}
+                            closeIcon={<CloseOutlined className="transform -translate-y-1 ml-2 text-md" />}
                             onClose={() => {
                                 handleClose(tag)
                             }}
@@ -140,17 +156,28 @@ const CommonDetailForm: React.FC<Props> = ({
                     />
                     )}
                     {!inputVisible && (
-                    <Tag className="site-tag-plus" onClick={showInput}>
-                        <PlusOutlined /> New Tag
+                    <Tag 
+                        className="border-primary border-2 p-1 m-1 text-center align-middle text-md font-semibold rounded-lg"
+                        onClick={showInput}
+                        >
+                        <PlusOutlined className="transform -translate-y-1 text-md px-4"/>
                     </Tag>
                     )}
                 </div>
-                
+                <Divider style={{margin: "12px 0"}} />
             </div>
             <div>
-                <TextArea showCount maxLength={100} onChange={(e) => {
-                    onChangeComment(e.target.value);
-                }} />
+                <label className="text-lg font-semibold p-3 text-primary">메모</label>
+                <TextArea 
+                    maxLength={100} 
+                    bordered={false}
+                    placeholder=" 메모할 것이 있다면 메모해주세요."
+                    onChange={(e) => {
+                        onChangeComment(e.target.value);
+                    }} 
+                    
+                    />
+                <Divider style={{margin: "12px 0"}} />
             </div>
         </div>
     )

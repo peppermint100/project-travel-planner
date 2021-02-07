@@ -1,30 +1,14 @@
-import { ArrowLeftOutlined } from "@ant-design/icons"
-import React, {  useEffect, useState } from 'react'
+import { ArrowLeftOutlined, CarOutlined, FireOutlined, HomeOutlined } from "@ant-design/icons"
+import { Details } from "@material-ui/icons"
+import React, {  useEffect, useRef, useState } from 'react'
 import { useHistory,  useParams } from "react-router-dom"
+import { string } from "yup/lib/locale"
 import { sendGetPlanByPlanId } from "../api/DetailApi"
 import FloatingCircleButton from "../components/Button/FloatingCircleButton"
-import { Detail, GetPlanByPlanIdResponseType } from "../types/api/DetailType"
+import DetailView from "../components/View/DetailView/DetailView"
+import { Accommodation, Activity, Detail, DetailType, GetPlanByPlanIdResponseType, Transportation } from "../types/api/DetailType"
 import { Plan } from "../types/api/PlanType"
 import noDetailsIcon from "./../assets/no_details_icon.svg";
-
-// const [startPosition, setStartPosition] = useState<MapStateType>({
-//         address: "",
-//         place: "",
-//         zoom: 15,
-//         height: 400,
-//         mapPosition: { lat: 34, lng: 34 },
-//         markerPosition: { lat: 34, lng: 34 },
-//     });
-
-//     const [endPosition, setEndPosition] = useState<MapStateType>({
-//         address: "",
-//         place: "",
-//         zoom: 15,
-//         height: 400,
-//         mapPosition: { lat: 36, lng: 36 },
-//         markerPosition: { lat: 36, lng: 36 },
-//     });
-
 
 type DetailPagePlanType = {
     details: Array<Detail>,
@@ -39,7 +23,12 @@ const PlanDetailPage = () => {
         plan: {},
         success: false
     })
+
     const history = useHistory()
+
+    const toHome = () => {
+        history.push("/home")
+    }
 
     useEffect(() => {
         console.log('params', params)
@@ -55,29 +44,36 @@ const PlanDetailPage = () => {
     }, [])
 
     return (
-        <div className="w-full h-full bg-backgroundGray min-h-screen">
-            <nav className="flex justify-between h-16">
-                <div className="text-3xl text-primary h-full flex items-center" onClick={() => {
-                    history.push("/home")
-                }}>
-                    <ArrowLeftOutlined className="p-3" />
+        <div className="w-full min-h-screen">
+            <div className="w-full h-96 relative">
+                <div className="w-full h-full object-cover absolute" style={{
+                    filter: "brightness(50%)",
+                    backgroundImage: `url(${planDetail.plan.placeImage})`
+                }}></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="text-white font-semibold text-2xl leading-2">{ planDetail.plan.planName }</div>
                 </div>
-                <div className="h-full flex items-center">
-                    <span className="text-lg font-semibold transform -translate-x-6">{ planDetail.plan?.planName }</span>
+                <div className="absolute top-12 right-5 text-3xl text-white" onClick={toHome}>
+                        <ArrowLeftOutlined />
                 </div>
-                <div></div>
-            </nav>
-            <section className="w-full mt-5">
-                <img className="w-full h-52 object-bottom object-cover overflow-hidden" src={planDetail.plan?.placeImage} alt="place-image" />
-            </section>
-            <section className="w-full flex justify-center items-center" style={{ minHeight: "20rem"}}>
+            </div>
+            <section className="w-full flex justify-center items-center">
                 {
                     planDetail.details && planDetail.details.length === 0 ?
-                    <div>
+                    <div className="mt-20" style={{minHeight: "20rem"}}>
                         <img className="mx-auto" src={noDetailsIcon} alt="no-detail-icon" />
                         <p className="text-xl mt-5" style={{color: "#C4C4C4"}}>계획이 텅~비어 있어요.</p>
                     </div>
-                    : <div> details exist</div>
+                    : 
+                    <ul className="w-full"> 
+                        {
+                            planDetail.details.map((detail, idx) => {
+                                return (
+                                    <DetailView detail={detail}/>
+                                )
+                            })
+                        }
+                    </ul>
                 }
             </section>
             <FloatingCircleButton onClick={() => {

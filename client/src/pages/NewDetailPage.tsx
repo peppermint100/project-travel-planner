@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import React, {  useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
@@ -8,9 +8,9 @@ import { RootReducerType } from "../redux/reducers/rootReducer";
 import { DetailType } from "../types/api/DetailType";
 import _ from "lodash"
 import { IActivityFormAction, _setActivityName, _setActivityTime } from "../redux/actions/ActivityFormAction";
-import { AccomodationFormType, TransportationFormType } from "../types/detail/FormType";
-import { sendCreateAccomodationRequest, sendCreateActivityRequest, sendCreateTransportationRequest } from "../api/DetailApi";
-import { _addAccomodationFeature, _removeAccomodationFeature, _setAccomodationCheckInTime, _setAccomodationCheckOutDate, _setAccomodationCheckOutTime, _setAccomodationName } from "../redux/actions/AccomodationAction";
+import { AccommodationFormType, TransportationFormType } from "../types/detail/FormType";
+import { sendCreateAccommodationRequest, sendCreateActivityRequest, sendCreateTransportationRequest } from "../api/DetailApi";
+import { _addAccommodationFeature, _removeAccommodationFeature, _setAccommodationCheckInTime, _setAccommodationCheckOutDate, _setAccommodationCheckOutTime, _setAccommodationName } from "../redux/actions/AccomodationAction";
 import DetailFormTab from "../components/Form/DetailFormTab";
 
 const NewDetailPage = () => {
@@ -23,11 +23,11 @@ const NewDetailPage = () => {
     const [comment, setComment] = useState("");
     const mapState = useSelector((state: RootReducerType) => state.MapReducer)
     const activityState: IActivityFormAction = useSelector((state: RootReducerType) => state.ActivityFormReducer)
-    const accomodationState: AccomodationFormType = useSelector((state: RootReducerType) => state.AccomodationReducer) 
+    const accommodationState: AccommodationFormType = useSelector((state: RootReducerType) => state.AccommodationReducer) 
     const transportationState: TransportationFormType = useSelector((state: RootReducerType) => state.TransportationReducer)
     const endMapState = useSelector((state: RootReducerType) => state.EndMapReducer)
 
-    const onClickSubmitButton = () => {
+    const onClickSubmitButton = async () => {
         console.log('date : ', date)
         console.log('detailType : ', detailType)
         console.log('needs : ', needs)
@@ -38,7 +38,7 @@ const NewDetailPage = () => {
         if(detailType == DetailType.ACTIVITY){
             console.log('activity create request')
             
-            const createActivityResponse = sendCreateActivityRequest(
+            const createActivityResponse = await sendCreateActivityRequest(
                 { date, 
                 needs, 
                 planId: params.planId,
@@ -50,11 +50,14 @@ const NewDetailPage = () => {
             })
 
             console.log("create activity response: ", createActivityResponse)
+            if(!createActivityResponse.success){
+                message.warn(createActivityResponse.msg)
+            }
         }
         else if(detailType == DetailType.TRANSPORTATION){
             console.log('transportation create request')
 
-            const createTransportationResponse = sendCreateTransportationRequest({
+            const createTransportationResponse = await sendCreateTransportationRequest({
                 date,
                 needs,
                 planId: params.planId,
@@ -70,25 +73,33 @@ const NewDetailPage = () => {
 
             console.log(transportationState)
             console.log('transportation response: ', createTransportationResponse)
+            if(!createTransportationResponse.success){
+                message.warn(createTransportationResponse.msg)
+            }
 
         }else {
             console.log('accomodation request')
-            const createAccomodationResponse = sendCreateAccomodationRequest({
+            const createAccommodationResponse = await sendCreateAccommodationRequest({
                 date,
                 needs,
                 planId: params.planId,
                 comment,
-                accomodationName: accomodationState.accomodationName,
+                accommodationName: accommodationState.accommodationName,
                 locationLat: mapState.mapPosition.lat,
                 locationLng: mapState.mapPosition.lng,
-                timeCheckIn: accomodationState.checkInTime,
-                timeCheckOut: accomodationState.checkOutTime,
-                checkOutDate: accomodationState.checkOutDate,
-                feature: accomodationState.features
+                timeCheckIn: accommodationState.checkInTime,
+                timeCheckOut: accommodationState.checkOutTime,
+                checkOutDate: accommodationState.checkOutDate,
+                feature: accommodationState.features
             })
-
-            console.log(createAccomodationResponse)
+            console.log(accommodationState)
+            console.log(createAccommodationResponse)
+            if(!createAccommodationResponse.success){
+                message.warn(createAccommodationResponse.msg)
+            }
         }
+
+        history.push(`/plan/${params.planId}`)
     }
 
     const onClickCancleButton = () => {
@@ -97,8 +108,8 @@ const NewDetailPage = () => {
 
     return (
         <div className="min-h-screen">
-            <div>
-                { params.planName }
+            <div className="h-20 bg-primary flex justify-center items-center shadow-md">
+                <span className="text-white text-xl font-semibold">{ params.planName }</span>
             </div>
             <div>
                 <CommonDetailForm 
@@ -120,12 +131,18 @@ const NewDetailPage = () => {
                     }}
                 />
             </div>
-            <div className="my-10">
+            <div>
                 <DetailFormTab dType={detailType} />
             </div>
-            <div>
-                <Button onClick={onClickSubmitButton}>생성완료</Button>
-                <Button onClick={onClickCancleButton}>취소</Button>
+            <div className="p-3 flex justify-center">
+                <button 
+                    onClick={onClickSubmitButton}
+                    className="px-16 py-3 bg-primary text-white mr-5 text-lg text-semibold rounded-md text-center shadow-2xl"
+                >생성 완료</button>
+                <button
+                    className="px-8 py-3 bg-gray-300 text-white text-lg text-semibold rounded-md text-center shadow-2xl"
+                    onClick={onClickCancleButton}
+                >취소</button>
             </div>
         </div>
     )

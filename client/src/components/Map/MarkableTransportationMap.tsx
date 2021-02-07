@@ -21,6 +21,7 @@ interface Props {
 const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMapState, endMapState, setEndMapState }) => {
 
     const MapWithAMarker: React.ComponentClass<any, string | Element> = withScriptjs(withGoogleMap(props =>
+
         <GoogleMap
             defaultZoom={8}
             defaultCenter={{ lat: endMapState.mapPosition.lat, lng: endMapState.mapPosition.lng }}
@@ -29,6 +30,20 @@ const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMap
                 mapTypeControl: false
             }}
         >
+            <AutoComplete
+                className="w-1/2 p-2 placeholder-gray-300"
+                placeholder=" 출발 지점 주소로 검색"
+                onPlaceSelected={(term: any) => {
+                    onPlaceSelected(term, startMapState, setStartMapState)
+                }}
+                />
+            <AutoComplete
+                className="w-1/2 p-2 placeholder-gray-300"
+                placeholder=" 도착 지점 주소로 검색"
+                onPlaceSelected={(term: any) => {
+                    onPlaceSelected(term, endMapState, setEndMapState)
+                }}
+            />
             <Marker
                 draggable={true}
                 position={{ lat: startMapState.mapPosition.lat, lng: startMapState.mapPosition.lng }}
@@ -51,21 +66,12 @@ const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMap
                     <div>도착 지점{endMapState.place}</div>
                 </InfoWindow>
             </Marker>
-            <AutoComplete
-                onPlaceSelected={(term: any) => {
-                    onPlaceSelected(term, startMapState, setStartMapState)
-                }}
-            />
-            <AutoComplete
-                onPlaceSelected={(term: any) => {
-                    onPlaceSelected(term, endMapState, setEndMapState)
-                }}
-            />
+     
         </GoogleMap>
     ));
 
     return (
-        <div>
+        <div className="pb-10">
             <MapWithAMarker
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
                 loadingElement={<div style={{ height: `100%` }} />}

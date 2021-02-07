@@ -14,6 +14,7 @@ import AutoComplete from "react-google-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducerType } from "../../redux/reducers/rootReducer";
 import { _setMapState } from "../../redux/actions/MapAction";
+import { Divider } from "antd";
 
 interface Props {
     mapState: MapStateType;
@@ -31,6 +32,13 @@ const MarkableMap: React.FC<Props> = ({mapState, setMapState}) => {
                 mapTypeControl: false
             }}
         >
+            <AutoComplete
+                className="w-full p-2"
+                placeholder=" 주소로 검색"
+                onPlaceSelected={(term: any) => {
+                    onPlaceSelected(term, mapState, setMapState)
+                }}
+            />
             <Marker
                 draggable={true}
                 position={{ lat: mapState.mapPosition.lat, lng: mapState.mapPosition.lng }}
@@ -42,25 +50,12 @@ const MarkableMap: React.FC<Props> = ({mapState, setMapState}) => {
                     <div>{mapState.place}</div>
                 </InfoWindow>
             </Marker>
-            <AutoComplete
-                style={{
-                    width: "100%",
-                    height: "40px",
-                    paddingLeft: 16,
-                    marginTop: 2,
-                    marginBottom: "2rem",
-                    border: "2px solid #8791EB",
-                    borderRadius: "5px"
-                }}
-                onPlaceSelected={(term: any) => {
-                    onPlaceSelected(term, mapState, setMapState)
-                }}
-            />
+         
         </GoogleMap>
     ));
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full pb-10">
             <MapWithAMarker
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${env.GOOGLE_API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
                 loadingElement={<div style={{ height: `100%` }} />}
