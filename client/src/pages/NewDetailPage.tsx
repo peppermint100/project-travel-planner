@@ -35,8 +35,18 @@ const NewDetailPage = () => {
         console.log('map state: ', mapState)
         console.log('activity state: ', activityState)
 
+        if(!date){
+            message.warn('날짜 선택은 필수입니다.')
+            return
+        }
+
         if(detailType == DetailType.ACTIVITY){
             console.log('activity create request')
+
+            if(!activityState.activityName){
+                message.warn('활동의 제목을 입력해주세요.')
+                return
+            }
             
             const createActivityResponse = await sendCreateActivityRequest(
                 { date, 
@@ -79,6 +89,10 @@ const NewDetailPage = () => {
 
         }else {
             console.log('accomodation request')
+            if(!accommodationState.accommodationName){
+                message.warn('숙박 시설의 이름을 입력해주세요.')
+                return
+            }
             const createAccommodationResponse = await sendCreateAccommodationRequest({
                 date,
                 needs,

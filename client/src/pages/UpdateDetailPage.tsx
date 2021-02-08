@@ -100,9 +100,9 @@ const UpdateDetailPage = () => {
         sendGetDetailByDetailIdReqeust(detailId)
         .then(response => {
             console.log(response)
-            setDate(response.date)
-            setNeeds(response.needs)
-            setComment(response.comment)
+            setDate(response.detail.date)
+            setNeeds(response.detail.needs)
+            setComment(response.detail.comment)
         })
     }, [])
 

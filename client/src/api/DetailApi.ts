@@ -2,7 +2,7 @@ import { Position } from './../types/map/MapType';
 import { TransportationType } from './../types/detail/Transportation';
 import { TOKEN_HEADER } from './../utils/constants';
 import { BasicResponse } from './../types/api/BasicApiType';
-import { GetPlanByPlanIdResponseType, CreateActivityRequest, CreateAccommodationRequest, CreateTransportationRequest, DetailType } from './../types/api/DetailType';
+import { GetPlanByPlanIdResponseType, CreateActivityRequest, CreateAccommodationRequest, CreateTransportationRequest, DetailType, Detail } from './../types/api/DetailType';
 import { basicAxios } from "./axios";
 import Cookies from "universal-cookie";
 
@@ -31,7 +31,7 @@ export const sendGetDetailByDetailIdReqeust = async (detailId: string) => {
         }
     })
 
-    const resToReturn: getDetailByDetailIdResponse = response.data
+    const resToReturn: BasicResponse & { detail: Detail } = response.data
     console.log('get detail by detailid api response : ', resToReturn)
 
     return resToReturn

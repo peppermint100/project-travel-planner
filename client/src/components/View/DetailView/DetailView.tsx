@@ -34,21 +34,25 @@ const DetailView: React.FC<Props> = ({ detail }) => {
         }else if(detail.detailType === DetailType.TRANSPORTATION){
             const typedDetail = detail as Transportation;
             console.log(typedDetail)
-            setTitle(typedDetail.transportationType + "를 탑승");
             switch(typedDetail.transportationType){
                 case TransportationType.WALK:
+                    setTitle("도보로 이동");
                     setIcon(<FontAwesomeIcon icon={faWalking} />)
                     return;
                 case TransportationType.BUS:
+                    setTitle("버스로 이동");
                     setIcon(<FontAwesomeIcon icon={faBus} />)
                     return;
                 case TransportationType.TAXI:
+                    setTitle("택시로 이동");
                     setIcon(<FontAwesomeIcon icon={faTaxi} />)
                     return;
                 case TransportationType.AIRPLANE:
+                    setTitle("비행기로 이동");
                     setIcon(<FontAwesomeIcon icon={faPlane} />)
                     return;
                 case TransportationType.SUBWAY:
+                    setTitle("지하철(전철)로 이동");
                     setIcon(<FontAwesomeIcon icon={faSubway} />)
                     return;
                 default:

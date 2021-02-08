@@ -106,7 +106,7 @@ const CommonDetailForm: React.FC<Props> = ({
                             padding: "15px",
                         }}
                     />
-                    <Divider style={{ margin: 0}}/>
+                    <Divider style={{ margin: 0 }}/>
             </div>
             <div className="w-full py-3 px-1">
                 <Select

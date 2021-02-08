@@ -10,6 +10,7 @@ import { ActivitiyFormType } from "../../types/detail/FormType";
 import { _setActivityName, _setActivityTime } from "../../redux/actions/ActivityFormAction";
 import MarkableMap from "../Map/MarkableMap";
 import { _addAccommodationFeature, _removeAccommodationFeature, _setAccommodationCheckInTime, _setAccommodationCheckOutDate, _setAccommodationCheckOutTime, _setAccommodationName } from "../../redux/actions/AccomodationAction";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const ActivityForm = React.memo(() => {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const ActivityForm = React.memo(() => {
 
     const onChangeText = useCallback(
         _.debounce((text: string) => {
+            console.log(text)
             dispatch(_setActivityName(text));
         }, 1000), []);
 
