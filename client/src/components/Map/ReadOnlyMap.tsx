@@ -39,9 +39,6 @@ const ReadOnlyMap: React.FC<Props> = ({ position }) => {
                 draggable={false}
                 position={{ lat: mapState.mapPosition.lat, lng: mapState.mapPosition.lng }}
             >
-                <InfoWindow>
-                    <div>{mapState.place}</div>
-                </InfoWindow>
             </Marker>
         </GoogleMap>
     ));

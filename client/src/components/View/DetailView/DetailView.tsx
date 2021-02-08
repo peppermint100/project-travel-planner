@@ -68,7 +68,7 @@ const DetailView: React.FC<Props> = ({ detail }) => {
     }, [])
 
     return (
-        <div onClick={toDetailPage}>
+        <div onClick={toDetailPage} className="max-w-xl mx-auto hover: cursor-pointer">
             <div className="flex justify-between p-4">
                 <div className="flex h-10">
                     <div className="text-xl font-semibold leading-10 px-2">

@@ -52,7 +52,7 @@ const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMap
                 }}
             >
                 <InfoWindow>
-                    <div>출발 지점{startMapState.place}</div>
+                    <div>출발 지점</div>
                 </InfoWindow>
             </Marker>
             <Marker
@@ -63,7 +63,7 @@ const MarkableTransportationMap: React.FC<Props> = ({ startMapState, setStartMap
                 }}
             >
                 <InfoWindow>
-                    <div>도착 지점{endMapState.place}</div>
+                    <div>도착 지점</div>
                 </InfoWindow>
             </Marker>
      

@@ -107,7 +107,7 @@ const UpdateDetailPage = () => {
     }, [])
 
     return (
-        <div className="h-screen flex flex-col justify-between">
+        <div className="max-w-xl mx-auto h-screen flex flex-col justify-between">
             <div className="h-20 bg-primary flex justify-center items-center shadow-md">
                 <span className="text-white text-xl font-semibold">계획 수정하기</span>
             </div>

@@ -59,12 +59,12 @@ const DetailPage = () => {
     }, [])
 
     return (
-        <div>
+        <div className="max-w-xl mx-auto">
             <div>
                 { detailComponent }
             </div>
             <Divider />
-            <div className="w-3/4 mx-auto mb-3">
+            <div className="w-3/4 mx-auto mb-3 flex justify-center">
                 <button 
                     onClick={toUpdateDetailPage}
                     className="px-8 py-2 bg-primary text-white mr-5  text-semibold rounded-md text-center shadow-2xl"

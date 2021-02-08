@@ -33,7 +33,7 @@ const LoginForm = () => {
         >
             {
                 ({ handleChange, errors: { email, password } }) => (
-                    <Form className="h-full">
+                    <Form className="h-full max-w-lg mx-auto">
                         <div className="w-2/3 mx-auto">
                             <Field name="email" type="email" placeholder="E-Mail" helperText={email} onChange={handleChange} as={DefaultInput} />
                         </div>

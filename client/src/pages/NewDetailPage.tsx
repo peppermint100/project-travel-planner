@@ -121,7 +121,7 @@ const NewDetailPage = () => {
     }
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen max-w-xl mx-auto">
             <div className="h-20 bg-primary flex justify-center items-center shadow-md">
                 <span className="text-white text-xl font-semibold">{ params.planName }</span>
             </div>

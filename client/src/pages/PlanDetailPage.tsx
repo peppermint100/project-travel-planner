@@ -44,7 +44,7 @@ const PlanDetailPage = () => {
     }, [])
 
     return (
-        <div className="w-full min-h-screen">
+        <div className="max-w-xl mx-auto min-h-screen relative">
             <div className="w-full h-96 relative">
                 <div className="w-full h-full object-cover absolute" style={{
                     filter: "brightness(50%)",
@@ -76,11 +76,13 @@ const PlanDetailPage = () => {
                     </ul>
                 }
             </section>
-            <FloatingCircleButton onClick={() => {
-                history.push(`/plan/${planDetail.plan.planId}/${planDetail.plan.planName}/new-detail`, {
-                    planName: planDetail.plan.planName
-                })
-            }} />
+            <div className="absolute bottom-7 right-7">
+                <FloatingCircleButton onClick={() => {
+                    history.push(`/plan/${planDetail.plan.planId}/${planDetail.plan.planName}/new-detail`, {
+                        planName: planDetail.plan.planName
+                    })
+                }} />
+            </div>
         </div>
     )
 }

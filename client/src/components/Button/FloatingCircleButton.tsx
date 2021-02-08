@@ -14,7 +14,6 @@ const FloatingCircleButton: React.FC<Props> = ({ onClick }) => {
               bg-primary
                 w-12 h-12
                 flex justify-center items-center 
-                fixed bottom-7 right-7
                 rounded-full
             ">
             <PlusOutlined size={24} style={{ color: "#fff" }} />

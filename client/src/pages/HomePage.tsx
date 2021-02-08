@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Layout } from 'antd';
 import { Drawer, Button, Divider } from 'antd';
-import { MenuOutlined, HomeFilled, UserOutlined, LogoutOutlined, LinkOutlined, HomeOutlined, SmileFilled, ApiFilled, TagFilled } from '@ant-design/icons';
+import { MenuOutlined, HomeFilled, SmileFilled, ApiFilled, TagFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MyPlanView from "../components/View/HomePageView/MyPlanView"
 import MyPageView from "../components/View/HomePageView/MyPageView"
@@ -37,7 +37,6 @@ const HomePage = () => {
   };
 
   const logout = () => {
-    console.log('clicking logout button')
     cookies.set("X-AUTH-TOKEN", "")
     history.push("/login")
   }
@@ -71,7 +70,7 @@ const styles = {
 };
 
   return (
-    <Layout>
+    <Layout className="max-w-xl mx-auto">
         <nav 
             className="relative h-20 flex">
                 <div className="ml-8 mt-4">
@@ -149,7 +148,7 @@ const styles = {
               <Divider />
             </ul>
         </Drawer>
-      <Layout className="min-h-screen">
+      <Layout className="min-h-screen max-w-lg mx-auto">
           { currentContent.tabNumber === 0 ? 
             <MyPlanView userId={meResponse.userId} /> : 
             currentContent.tabNumber === 1 ?

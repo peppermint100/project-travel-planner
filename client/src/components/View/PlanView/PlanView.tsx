@@ -34,7 +34,7 @@ const PlanView: React.FC<Props> = ({ plan, openModal, sharedPlanId }) => {
     }
 
     return (
-        <div className="relative w-full h-44 mb-8 transform transition-transform hover:-translate-y-5">
+        <div className="relative w-full h-44 mb-8 transform hover: cursor-pointer">
             <div className="absolute w-full h-full bg-no-repeat rounded shadow-lg" 
                 style={{
                     backgroundImage: `url(${plan.placeImage})`,
@@ -52,11 +52,11 @@ const PlanView: React.FC<Props> = ({ plan, openModal, sharedPlanId }) => {
                         {
                             !sharedPlanId && 
                             <div className="w-full text-white font-semibold text-2xl text-center z-10">
-                                <button onClick={() => { openModal(plan.planId, plan.planName) }} className="w-3/4 py-1 bg-gray-200 text-primary rounded-lg font-bold mb-5">공유하기</button>
+                                <button onClick={() => { openModal(plan.planId, plan.planName) }} className="w-3/4 py-1 bg-gray-200 text-primary rounded-lg font-semibold mb-5">공유하기</button>
                             </div>
                         }
                        <div className="w-full text-white font-semibold text-2xl text-center">
-                            <button onClick={deletePlan} className="w-3/4 py-1 bg-gray-200 text-primary rounded-lg font-bold">삭제하기</button>
+                            <button onClick={deletePlan} className="w-3/4 py-1 bg-gray-200 text-primary rounded-lg font-semibold">삭제하기</button>
                         </div>
                     </section>
                 ) : 

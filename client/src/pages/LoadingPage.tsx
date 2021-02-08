@@ -28,7 +28,7 @@ const LoadingPage = () => {
     }, [loadingResult])
 
     return (
-        <div className="w-screen h-screen bg-primary flex flex-col justify-center items-center">
+        <div className="max-w-xl mx-auto h-screen bg-primary flex flex-col justify-center items-center">
             <section>
                 <MainLogo />
             </section>

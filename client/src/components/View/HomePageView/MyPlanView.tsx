@@ -49,8 +49,8 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
   const getAllPlansResponse = useSelector((state: RootReducerType) => state.GetAllPlansReducer)
 
   return (
-    <div>
-        <section className="flex flex-col items-center bg-white w-3/4 mx-auto shadow-lg rounded p-10 mt-8">
+    <div className="w-full">
+        <section className="flex flex-col items-center bg-white mx-auto shadow-lg rounded p-10 mt-8">
             <CreatePlanForm userId={userId}/>
         </section>
         <Modal 
@@ -94,7 +94,7 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
           </section>
         </div>
       </Modal>
-        <section className="flex flex-col items-center w-3/4 mx-auto mt-8">
+        <section className="flex flex-col items-center mx-auto mt-8">
           {
             getAllPlansResponse.success ? 
             <ul className="w-full">
