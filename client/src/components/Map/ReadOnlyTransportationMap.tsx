@@ -24,8 +24,6 @@ const ReadOnlyTransportationMap: React.FC<Props> = ({ startPosition, endPosition
         markerPosition: endPosition,
     });
 
-    console.log("mapState: ", mapState)
-
     const MapWithAMarker: React.ComponentClass<any, string | Element> = withScriptjs(withGoogleMap(props =>
         <GoogleMap
             defaultZoom={8}

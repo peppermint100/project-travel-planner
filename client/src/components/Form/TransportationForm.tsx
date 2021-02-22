@@ -18,7 +18,7 @@ const TransportationForm = () => {
 
     const setMapState = useCallback((state: MapStateType) => {
         dispatch(_setMapState(state))
-    }, [])
+    }, [dispatch])
 
     const setEndMapState = useCallback((state: MapStateType) => {
         dispatch(_setEndMapState(state))

@@ -13,10 +13,6 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
 sagaMiddleware.run(mySaga);
 
-store.subscribe(() => {
-  console.log("redux store : ", store.getState());
-});
-
 ReactDOM.render(
   <React.StrictMode>
   <Provider store={store}>

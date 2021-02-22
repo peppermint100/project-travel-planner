@@ -36,19 +36,16 @@ const DetailPage = () => {
             switch(detailType){
                 case DetailType.ACTIVITY:
                     const activityDetail = response.detail as Activity
-                    console.log('activity detail', activityDetail)
                     setTitle(activityDetail.activityName + "에서의 활동")
                     setDetailComponent(<ActivityDetailView detail={activityDetail} />)
                     return
                 case DetailType.ACCOMMODATION:
                     const accommodationDetail = response.detail as Accommodation
-                    console.log('activity detail', accommodationDetail)
                     setTitle(accommodationDetail.accommodationName + "에서 숙박")
                     setDetailComponent(<AccommodationDetailView detail={accommodationDetail} />)
                     return
                 case DetailType.TRANSPORTATION:
                     const transportationDetail = response.detail as Transportation
-                    console.log('activity detail', transportationDetail)
                     setTitle(transportationDetail.transportationType + "로 이동")
                     setDetailComponent(<TransportationDetailView detail={transportationDetail}/>)
                     return

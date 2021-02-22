@@ -13,7 +13,7 @@ const ActivityFormReducer = (state = initialState, action: ITransportationAction
         case SET_TRANSPORTATION_TYPE:
             return {
                 ...state,
-                tType: action.tType
+                transportationType: action.transportationType
             }
 
         case SET_TRANSPORTATION_TIME_START:

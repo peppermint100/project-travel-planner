@@ -3,9 +3,9 @@ export const SET_TRANSPORTATION_TYPE = "SET_TRANSPORTATION_TYPE"
 export const SET_TRANSPORTATION_TIME_START = "SET_TRANSPORTATION_TIME_START"
 export const SET_TRANSPORTATION_TIME_ARRIVE = "SET_TRANSPORTATION_TIME_ARRIVE"
 
-export const _setTransportationType = (tType: TransportationType) => ({
+export const _setTransportationType = (transportationType: TransportationType) => ({
     type: SET_TRANSPORTATION_TYPE,
-    tType
+    transportationType
 })
 
 export const _setTransportationTimeStart = (timeStart: string) => ({
@@ -20,7 +20,7 @@ export const _setTransportationTimeArrive = (timeArrive: string) => ({
 
 export interface ITransportationAction {
     type: string;
-    tType: TransportationType;
+    transportationType: TransportationType;
     timeStart?: string;
     timeArrive?: string;
 }

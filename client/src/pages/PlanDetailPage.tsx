@@ -29,7 +29,6 @@ const PlanDetailPage = () => {
     }
 
     useEffect(() => {
-        console.log('params', params)
         sendGetPlanByPlanId(params.planId)
         .then((response: GetPlanByPlanIdResponseType) => {
             setPlanDetail({

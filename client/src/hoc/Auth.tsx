@@ -13,10 +13,8 @@ export default function (SpecificComponent: any) {
         useEffect(() => {
             sendmeRequest().then(response => {
                 if (!response.success && !cookies.get("X-AUTH-TOKEN")) {
-                    console.log('auth off')
                     props.history.push('/login')
                 } else {
-                    console.log('auth on')
                     dispatch(_receiveMe(response))
                 }
             })

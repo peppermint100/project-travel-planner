@@ -30,7 +30,6 @@ export const onMarkerDragEnd = (e: any, state:MapStateType, setState: (prevState
 
     Geocode.fromLatLng(newLat, newLng)
     .then((response: any) => {
-        console.log("marker dragend response : ", response)
         const address = response.results[0].formatted_address
         const addressArray = response.results[0].address_components
         const place = getPlaceLevel2(addressArray)
