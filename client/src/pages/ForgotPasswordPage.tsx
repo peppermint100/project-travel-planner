@@ -6,7 +6,7 @@ import ForgotPasswordForm from '../components/Form/ForgotPasswordForm';
 
 const ForgotPasswordPage = () => {
     return (
-        <div className="h-screen bg-backgroundGray">
+        <div className="h-screen bg-backgroundGray max-w-xl mx-auto">
             {/* logo */}
             <section className="h-1/5 flex justify-center items-center"> 
                 <MainLogo />

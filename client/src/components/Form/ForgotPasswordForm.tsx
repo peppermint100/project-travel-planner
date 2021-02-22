@@ -24,7 +24,6 @@ const ForgotPasswordForm = () => {
         <Formik 
             initialValues={{ name: "", email: ""}}
             onSubmit={(data, { setSubmitting }) => {
-                console.log('resetpassword data: ' , data);
                 const { email, name } = data
                 dispatch(_requestResetPassword({email, name}))
             }}

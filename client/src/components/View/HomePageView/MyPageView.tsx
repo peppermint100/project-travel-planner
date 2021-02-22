@@ -20,15 +20,10 @@ const MyPageContent: React.FC<Props> = ({ meResponse }) => {
         msg: ""
     }); 
 
-    useEffect(() => {
-        console.log("mypage meResponse: ", meResponse)
-    }, [])
- 
     return (
         <Formik
             initialValues={{ imageUrl: "", imageFile: "", name: "", passwordBefore: "", password: "", passwordConfirm: "" }}
             onSubmit={(data) => {
-                console.log("update user profile data", data)
                 const { imageFile, name, passwordBefore, password, passwordConfirm } = data;
 
                 const formData = new FormData();
@@ -48,8 +43,8 @@ const MyPageContent: React.FC<Props> = ({ meResponse }) => {
             }}
         >
             {({values : { imageUrl }, setFieldValue }) => (
-                <Form>
-                    <section className="flex flex-col items-center">
+                <Form className="w-full mx-auto">
+                    <section className="w-full flex flex-col items-center">
                         {/* user info */}
                         <label htmlFor="userProfileImage" className="w-40 h-40 flex justify-centerflex-col items-center tracking-wide cursor-pointer">
                             <input id="userProfileImage" type='file' className="w-40 h-40 hidden" name="imageFile" onChange={(e: React.ChangeEvent<any>) => {
@@ -62,30 +57,33 @@ const MyPageContent: React.FC<Props> = ({ meResponse }) => {
                                         { imageUrl }
                                     </div>
                                 </div>
-                                : <UserProfileImage src={meResponse.userImage} />
+                                : 
+                                <div className="w-full flex justify-center">
+                                    <UserProfileImage src={meResponse.userImage} width="100px" height="100px" />
+                                </div>
                             }
                         </label>
                         <div>
-                            <span className="text-xl font-semibold text-primary mt-2">
+                            <span className="text-xl font-semibold text-black mt-2">
                                 { meResponse.name }
                             </span>
                         </div>
                         <div>
-                            <span className="text-lg font-semibold text-primary mt-2">
+                            <span className="text-lg text-gray-400 mt-2">
                                 { meResponse.email}
                             </span>
                         </div>
-                        <div className="mt-10">
-                            <div className="w-full">
+                        <div className="mt-10 w-full flex flex-col items-center">
+                            <div>
                                 <Field as={DefaultInput} placeholder="유저 이름" name="name" /> 
                             </div>
-                            <div className="w-full">
+                            <div>
                                 <Field as={DefaultInput} placeholder="기존 비밀번호" name="passwordBefore" type="password" /> 
                             </div>
-                            <div className="w-full">
+                            <div>
                                 <Field as={DefaultInput} placeholder="새 비밀번호" name="password" type="password"/> 
                             </div>
-                            <div className="w-full">
+                            <div>
                                 <Field as={DefaultInput} placeholder="새 비밀번호 확인" name="passwordConfirm" type="password"/> 
                             </div>
                         </div>

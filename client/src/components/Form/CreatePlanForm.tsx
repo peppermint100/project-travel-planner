@@ -22,18 +22,15 @@ const CreatePlanForm: React.FC<Props> = ({ userId }) => {
         <Formik initialValues={{ imageFile: "", planName: "", fileName: ""}} onSubmit={(data) => {
 
             setLoading(true)
-            console.log('data : ', data)
             const formData = new FormData()
 
             formData.append("placeImage", data.imageFile)
             formData.append("planName", data.planName)
             formData.append("userId", userId.toString())
 
-            console.log("create plan form : ", formData)
             sendCreatePlanRequest(formData)
             .then((response: CreatePlanResponseType) => {
                 if(response.succees == true){
-                    console.log('response success : ', response)
                     message.info('새로운 계획을 추가했습니다.')
                     setLoading(false)
                 }else {

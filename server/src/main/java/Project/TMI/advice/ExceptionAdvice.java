@@ -5,8 +5,10 @@ import Project.TMI.model.Failure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,10 +71,9 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(CPasswordNotInputException.class)
     protected ResponseEntity<Failure> CPasswordNotInputException(HttpServletRequest request, CPasswordNotInputException e) {
-        return new ResponseEntity<>(new Failure("회원 정보를 변경하려면 비밀번호를 입력 해주세요."), HttpStatus.OK);
+        return new ResponseEntity<>(new Failure("회원정보를 변경하려면 비밀번호를 입력 해주세요."), HttpStatus.OK);
     }
 
-    //========================================================================================================================================
     //========================================================================================================================================
     //Plan
 
@@ -83,8 +84,38 @@ public class ExceptionAdvice {
     }
 
     //Plan 조회 오류
+    @ExceptionHandler(CPlanAlreadySharedExcption.class)
+    protected ResponseEntity<Failure> CPlanAlreadySharedExcption(HttpServletRequest request, CPlanAlreadySharedExcption e) {
+        return new ResponseEntity<>(new Failure("해당 회원에게 이미 공유된 계획입니다."), HttpStatus.OK);
+    }
+
+    //Plan 조회 오류
     @ExceptionHandler(CPlanNotSharedMeException.class)
     protected ResponseEntity<Failure> CPlanNotSharedMeException(HttpServletRequest request, CPlanNotSharedMeException e) {
         return new ResponseEntity<>(new Failure("자신에게 Plan을 공유할 수 없습니다."), HttpStatus.OK);
+    }
+    //========================================================================================================================================
+    //Detail
+
+    //Detail 조회 오류
+    @ExceptionHandler(CDetailNotFoundException.class)
+    protected ResponseEntity<Failure> CDetailNotFoundException(HttpServletRequest request, CDetailNotFoundException e) {
+        return new ResponseEntity<>(new Failure("해당 Detail을 찾을 수 없습니다."), HttpStatus.OK);
+    }
+
+    //========================================================================================================================================
+    //Valid
+
+    //Dto 조회 오류 (ValidException)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<Failure> MethodArgumentValidException(HttpServletRequest request, MethodArgumentNotValidException e) {
+        //ValidException 의 error 정보를 가져옵니다.
+        BindingResult bindingResult = e.getBindingResult();
+
+        //해당 Valid에 설정된 메시지를 가져옵니다.
+        String message = bindingResult.getFieldError().getDefaultMessage();
+
+        //메시지를 담아 failure 을 발생시킵니다.
+        return new ResponseEntity<>(new Failure(message), HttpStatus.OK);
     }
 }

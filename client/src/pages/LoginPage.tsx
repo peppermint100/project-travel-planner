@@ -23,7 +23,7 @@ const LoginPage = () => {
             </section>
 
             {/* navigator */}
-            <section className="h-1/5 flex items-end justify-evenly">
+            <section className="h-1/5 max-w-lg mx-auto flex items-end justify-evenly">
                 <span className="text-lg font-medium text-primary mb-3">
                     <ReactRouterDom.Link to={"/signup"}>
                         회원가입

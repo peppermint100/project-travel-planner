@@ -1,10 +1,9 @@
 import React, { useState }  from 'react'
 import { useSelector } from 'react-redux';
 import { RootReducerType } from '../../../redux/reducers/rootReducer';
-import { Plan, SharedPlan, SharePlanResponseType } from '../../../types/api/PlanType';
-import CreatePlanForm from '../../Form/CreatePlanForm';
+import { SharedPlan, SharePlanResponseType } from '../../../types/api/PlanType';
 import PlanView from '../PlanView/PlanView';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import DefaultButton from '../../Button/DefaultButton';
 import MainLogo from '../../Image/MainLogo';
 import DefaultInput from '../../Input/DefaultInput';
@@ -41,7 +40,6 @@ const SharedPlanView: React.FC<Props> = ({ userId }) => {
 
   const handleSharePlan = async (userId: number, planId: number, email: string) => {
     const response = await sendSharePlanRequest(userId, planId, email);
-    console.log('share plan response', response)
     setSharePlanResponse(response)
   }
 

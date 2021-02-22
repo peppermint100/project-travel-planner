@@ -1,14 +1,14 @@
 package Project.TMI.domain.PlanDetail;
 
-import Project.TMI.domain.Plan;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -24,14 +24,32 @@ public class Detail {
     private Long detailId;
 
     //날짜
-    private LocalDateTime date;
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    @JsonFormat(pattern = "hh:mm:ss", timezone = "Asia/Seoul")
+    private LocalTime time;
 
     //준비물
-    @OneToMany(mappedBy = "detail")
-    private List<Needs> needs = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "needs", joinColumns = @JoinColumn(name ="detailId"))
+    @Column(name="need")
+    private List<String> needs = new ArrayList<>();
 
     private String comment;
 
     //planId(fk)
     private Long planId;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "detailType", insertable = false, updatable = false)
+    private DetailType detailType;
+
+    public void updateDetail(Date date, List<String> needs, String comment) {
+        this.date = date;
+        this.needs = needs;
+        this.comment = comment;
+    }
+
+
 }

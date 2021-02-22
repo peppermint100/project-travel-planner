@@ -1,7 +1,5 @@
-package Project.TMI.domain.dto;
+package Project.TMI.dto;
 
-import Project.TMI.domain.Plan;
-import Project.TMI.domain.SharedPlan;
 import lombok.*;
 
 @Getter

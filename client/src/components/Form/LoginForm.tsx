@@ -24,7 +24,6 @@ const LoginForm = () => {
             initialValues={{ email: "", password: ""}}
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
-                console.log('login data: ' , data);
                 dispatch(_requestLogin(data, () => {
                     history.push("/home")
                 }));
@@ -34,7 +33,7 @@ const LoginForm = () => {
         >
             {
                 ({ handleChange, errors: { email, password } }) => (
-                    <Form className="h-full">
+                    <Form className="h-full max-w-lg mx-auto">
                         <div className="w-2/3 mx-auto">
                             <Field name="email" type="email" placeholder="E-Mail" helperText={email} onChange={handleChange} as={DefaultInput} />
                         </div>

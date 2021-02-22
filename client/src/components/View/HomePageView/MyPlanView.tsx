@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useCallback, useState }  from 'react'
 import { useSelector } from 'react-redux';
 import { RootReducerType } from '../../../redux/reducers/rootReducer';
 import { Plan, SharePlanResponseType } from '../../../types/api/PlanType';
@@ -14,7 +14,6 @@ interface Props {
   userId: number;
 }
 
-
 const MyPlanView: React.FC<Props> = ({ userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentSelectedPlanId, setCurrentSelectedPlanId] = useState(0);
@@ -26,11 +25,11 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
     sharePlanId: 0
   })
 
-  const showModal = (planId: number, planName: string) => {
+  const showModal = useCallback((planId: number, planName: string) => {
     setCurrentSelectedPlanId(planId);
     setCurrentSelectedPlanName(planName);
     setIsModalVisible(true);
-  };
+  }, []);
 
   const handleOk = () => {
     setIsModalVisible(false);
@@ -42,15 +41,14 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
 
   const handleSharePlan = async (userId: number, planId: number, email: string) => {
     const response = await sendSharePlanRequest(userId, planId, email);
-    console.log('share plan response', response)
     setSharePlanResponse(response)
   }
 
   const getAllPlansResponse = useSelector((state: RootReducerType) => state.GetAllPlansReducer)
 
   return (
-    <div>
-        <section className="flex flex-col items-center bg-white w-3/4 mx-auto shadow-lg rounded p-10 mt-8">
+    <div className="w-full">
+        <section className="flex flex-col items-center bg-white mx-auto shadow-lg rounded p-10 mt-8">
             <CreatePlanForm userId={userId}/>
         </section>
         <Modal 
@@ -59,7 +57,6 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
           onCancel={handleCancel}
           footer={[
             <DefaultButton text="공유하기" onClick={() => {
-              console.log('current plan id: ', currentSelectedPlanId)
               handleSharePlan(userId, currentSelectedPlanId, modalEmailInput)
             }}/>
           ]}
@@ -94,7 +91,7 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
           </section>
         </div>
       </Modal>
-        <section className="flex flex-col items-center w-3/4 mx-auto mt-8">
+        <section className="flex flex-col items-center mx-auto mt-8">
           {
             getAllPlansResponse.success ? 
             <ul className="w-full">

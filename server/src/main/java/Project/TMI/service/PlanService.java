@@ -5,8 +5,8 @@ import Project.TMI.advice.exception.CUserNotFoundException;
 import Project.TMI.domain.Plan;
 import Project.TMI.domain.SharedPlan;
 import Project.TMI.domain.User;
-import Project.TMI.domain.dto.PlanSaveDto;
-import Project.TMI.domain.dto.SharePlanDto;
+import Project.TMI.dto.PlanSaveDto;
+import Project.TMI.dto.SharePlanDto;
 import Project.TMI.repository.PlanRepository;
 import Project.TMI.repository.SharedPlanRepository;
 import Project.TMI.repository.UserRepository;
@@ -39,7 +39,7 @@ public class PlanService {
 
     //플랜리스트 가져오기
     public List<Plan> plansGet(Long userId){
-        User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(CPlanNotFoundException::new);
         return user.getUserPlans();
     }
 
@@ -76,6 +76,16 @@ public class PlanService {
         User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
 
         return user.getSharedPlans();
+    }
+
+    //해당 회원에게 해당 계획이 공유되어있는지 판단하는 메소드
+    public SharedPlan getSharedPlan(Long userId, Long planId){
+
+        Plan plan = planRepository.findById(planId).orElseThrow(CPlanNotFoundException::new);
+
+        SharedPlan sharedPlan = sharedPlanRepository.findByUserIdAndPlan(userId, plan);
+
+        return sharedPlan;
     }
 
 

@@ -8,8 +8,6 @@ const cookies = new Cookies();
 export const sendCreatePlanRequest = async (formData: FormData) => {
     const response = await basicAxios.post("/plan/createPlan", formData)
 
-    console.log("create plan api : ", response)
-
     const resToReturn: CreatePlanResponseType = response.data;
     
     return resToReturn;
@@ -25,8 +23,6 @@ export const sendGetAllPlansRequest = async (userId: number) => {
     })
 
     const resToReturn: GetAllPlansResponseType = response.data;
-
-    console.log("send get all plans api response : ", response);
 
     return resToReturn;
 }
@@ -62,8 +58,6 @@ export const sendDeleteSharedPlanRequest = async (sharedPlanId: number) => {
     })
 
     const resToReturn: BasicResponse = response.data;
-
-    console.log('delete shard plan api: ', resToReturn);
 
     return resToReturn
 }

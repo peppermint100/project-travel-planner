@@ -5,7 +5,6 @@ import { _receiveLogin } from "../actions/LoginAction";
 import { _receiveSignUp } from "../actions/SignUpAction";
 
 function* loginSaga( { loginRequest, cb } : { loginRequest: LoginRequest, cb: () => void }) {
-    console.log("from saga: ", loginRequest.email)
     const response: LoginResponse = yield call(sendLoginRequest, loginRequest);
     if(response.success){
         cb()
