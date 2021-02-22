@@ -28,12 +28,6 @@ const NewDetailPage = () => {
     const endMapState = useSelector((state: RootReducerType) => state.EndMapReducer)
 
     const onClickSubmitButton = async () => {
-        console.log('date : ', date)
-        console.log('detailType : ', detailType)
-        console.log('needs : ', needs)
-        console.log('comment : ', comment)
-        console.log('map state: ', mapState)
-        console.log('activity state: ', activityState)
 
         if(!date){
             message.warn('날짜 선택은 필수입니다.')
@@ -41,7 +35,6 @@ const NewDetailPage = () => {
         }
 
         if(detailType == DetailType.ACTIVITY){
-            console.log('activity create request')
 
             if(!activityState.activityName){
                 message.warn('활동의 제목을 입력해주세요.')
@@ -59,13 +52,11 @@ const NewDetailPage = () => {
                 timeStart: activityState.time!!
             })
 
-            console.log("create activity response: ", createActivityResponse)
             if(!createActivityResponse.success){
                 message.warn(createActivityResponse.msg)
             }
         }
         else if(detailType == DetailType.TRANSPORTATION){
-            console.log('transportation create request')
 
             const createTransportationResponse = await sendCreateTransportationRequest({
                 date,
@@ -81,14 +72,11 @@ const NewDetailPage = () => {
                 locationArriveLng: endMapState.mapPosition.lng
             })
 
-            console.log(transportationState)
-            console.log('transportation response: ', createTransportationResponse)
             if(!createTransportationResponse.success){
                 message.warn(createTransportationResponse.msg)
             }
 
         }else {
-            console.log('accomodation request')
             if(!accommodationState.accommodationName){
                 message.warn('숙박 시설의 이름을 입력해주세요.')
                 return
@@ -106,8 +94,6 @@ const NewDetailPage = () => {
                 checkOutDate: accommodationState.checkOutDate,
                 feature: accommodationState.features
             })
-            console.log(accommodationState)
-            console.log(createAccommodationResponse)
             if(!createAccommodationResponse.success){
                 message.warn(createAccommodationResponse.msg)
             }

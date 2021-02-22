@@ -43,7 +43,7 @@ const UpdateDetailPage = () => {
                     message.warn(response.msg)
                 }
             })
-        }else if(detailType == DetailType.ACCOMMODATION){
+        }else if(detailType === DetailType.ACCOMMODATION){
             const updateRequestInput: CreateAccommodationRequest = {
                 date,
                 needs,
@@ -99,12 +99,11 @@ const UpdateDetailPage = () => {
     useEffect(() => {
         sendGetDetailByDetailIdReqeust(detailId)
         .then(response => {
-            console.log(response)
             setDate(response.detail.date)
             setNeeds(response.detail.needs)
             setComment(response.detail.comment)
         })
-    }, [])
+    }, [detailId])
 
     return (
         <div className="max-w-xl mx-auto h-screen flex flex-col justify-between">

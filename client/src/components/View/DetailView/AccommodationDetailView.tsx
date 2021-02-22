@@ -1,11 +1,8 @@
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Divider, Tag } from "antd"
+import { Divider } from "antd"
 import React from 'react'
 import { Accommodation } from "../../../types/api/DetailType"
 import ReadOnlyMap from "../../Map/ReadOnlyMap"
-import LabeledDetailInfo from "./LabeledDetailInfo"
-import NeedsView from "./NeedsView"
+import ListView from "./ListView"
 
 interface Props {
     detail: Accommodation
@@ -13,7 +10,7 @@ interface Props {
 
 const AccommodationDetailView: React.FC<Props> = ({ detail }) => {
     return (
-     <div>
+        <div>
             <div>
                 <ReadOnlyMap position={detail.location} />
             </div>
@@ -46,7 +43,11 @@ const AccommodationDetailView: React.FC<Props> = ({ detail }) => {
             </div>
             <Divider />
             <div className="ml-6">
-                <NeedsView needs={detail.needs} />
+                <ListView contents={detail.feature} />
+            </div>
+            <Divider />
+            <div className="ml-6">
+                <ListView contents={detail.needs} />
             </div>
         </div>
     )

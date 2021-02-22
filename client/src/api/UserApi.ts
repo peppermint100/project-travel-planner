@@ -6,7 +6,6 @@ import Cookies from "universal-cookie"
 const cookies = new Cookies();
 
 export const sendSignUpRequest = async (signUpRequest: SignUpReqeust) => {
-    console.log("api:", signUpRequest.email, signUpRequest.name)
     const response = await basicAxios.post(`/user/signup`, null, {
         params: {
             email: signUpRequest.email,
@@ -15,8 +14,6 @@ export const sendSignUpRequest = async (signUpRequest: SignUpReqeust) => {
             passwordConfirm: signUpRequest.passwordConfirm
         }
     });
-
-    console.log('signup response: ', response);
 
     const { success, msg } : BasicResponse = response.data;
 
@@ -30,8 +27,6 @@ export const sendLoginRequest = async (loginRequest: LoginRequest) => {
             password: loginRequest.password,
         }
     });
-
-    console.log('login response: ', response);
 
     const { success, msg, token} : LoginResponse = response.data;
 
@@ -49,8 +44,6 @@ export const sendmeRequest = async () => {
         }
     });
 
-    console.log('me response: ', response);
-
     const { success, msg, email, name, userId, userImage } : MeResponse = response.data;
 
     return { success, msg, email, name, userId, userImage };
@@ -58,7 +51,6 @@ export const sendmeRequest = async () => {
 
 export const sendResetPasswordRequest = async (resetPasswordRequest: ResetPasswordRequest) => {
     const { email, name } = resetPasswordRequest;
-    console.log('user api:', email, name)
     const response = await basicAxios.post(`/user/sendMailPassword`, null, {
         params: {
             email,
@@ -86,8 +78,6 @@ export const sendUpdateUserInfoRequest = async (updateUserInfoRequest: UpdateUse
     })
 
     const resToReturn: BasicResponse = response.data;
-
-    console.log('user api update user info response: ', resToReturn);
 
     return resToReturn;
 }

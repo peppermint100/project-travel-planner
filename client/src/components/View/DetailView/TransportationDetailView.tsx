@@ -1,10 +1,8 @@
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Divider } from "antd"
 import React, { useEffect, useState } from 'react'
 import { Transportation, TransportationType } from "../../../types/api/DetailType"
 import ReadOnlyTransportationMap from "../../Map/ReadOnlyTransportationMap"
-import NeedsView from "./NeedsView"
+import ListView from "./ListView"
 
 interface Props {
     detail: Transportation
@@ -69,7 +67,7 @@ const TransportationDetailView: React.FC<Props> = ({ detail }) => {
             </div>
             <Divider />
             <div className="ml-6">
-                <NeedsView needs={detail.needs} />
+                <ListView contents={detail.needs} />
             </div>
         </div>
     )

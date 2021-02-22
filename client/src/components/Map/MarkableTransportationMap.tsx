@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   withScriptjs,
   withGoogleMap,
@@ -7,7 +7,7 @@ import {
   InfoWindow
 } from "react-google-maps";
 import env from "../../configs/env";
-import { MapStateType, Position } from "../../types/map/MapType";
+import { MapStateType } from "../../types/map/MapType";
 import {  onMarkerDragEnd, onPlaceSelected } from "../../utils/map";
 import AutoComplete from "react-google-autocomplete"
 

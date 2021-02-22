@@ -10,7 +10,6 @@ import { ActivitiyFormType } from "../../types/detail/FormType";
 import { _setActivityName, _setActivityTime } from "../../redux/actions/ActivityFormAction";
 import MarkableMap from "../Map/MarkableMap";
 import { _addAccommodationFeature, _removeAccommodationFeature, _setAccommodationCheckInTime, _setAccommodationCheckOutDate, _setAccommodationCheckOutTime, _setAccommodationName } from "../../redux/actions/AccomodationAction";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const ActivityForm = React.memo(() => {
     const dispatch = useDispatch()
@@ -18,7 +17,6 @@ const ActivityForm = React.memo(() => {
     const setMapState = useCallback((state: MapStateType) => {
         dispatch(_setMapState(state))
     }, [])
-    const activityState: ActivitiyFormType = useSelector((state: RootReducerType) => state.ActivityFormReducer)
 
     const onSelectTime = (_: any, timeString: any) => {
         dispatch(_setActivityTime(timeString))
@@ -30,9 +28,6 @@ const ActivityForm = React.memo(() => {
             dispatch(_setActivityName(text));
         }, 1000), []);
 
-    useEffect(() => {
-        console.log(activityState)
-    })
 
     return(
         <div>

@@ -1,12 +1,10 @@
-import { ArrowLeftOutlined, CarOutlined, FireOutlined, HomeOutlined } from "@ant-design/icons"
-import { Details } from "@material-ui/icons"
-import React, {  useEffect, useRef, useState } from 'react'
+import { ArrowLeftOutlined } from "@ant-design/icons"
+import React, {  useEffect, useState } from 'react'
 import { useHistory,  useParams } from "react-router-dom"
-import { string } from "yup/lib/locale"
 import { sendGetPlanByPlanId } from "../api/DetailApi"
 import FloatingCircleButton from "../components/Button/FloatingCircleButton"
 import DetailView from "../components/View/DetailView/DetailView"
-import { Accommodation, Activity, Detail, DetailType, GetPlanByPlanIdResponseType, Transportation } from "../types/api/DetailType"
+import { Detail, GetPlanByPlanIdResponseType } from "../types/api/DetailType"
 import { Plan } from "../types/api/PlanType"
 import noDetailsIcon from "./../assets/no_details_icon.svg";
 
@@ -34,7 +32,6 @@ const PlanDetailPage = () => {
         console.log('params', params)
         sendGetPlanByPlanId(params.planId)
         .then((response: GetPlanByPlanIdResponseType) => {
-            console.log("get plan details response:", response)
             setPlanDetail({
                 details: response.details,
                 plan: response.plan,
@@ -67,7 +64,7 @@ const PlanDetailPage = () => {
                     : 
                     <ul className="w-full"> 
                         {
-                            planDetail.details.map((detail, idx) => {
+                            planDetail.details.map((detail) => {
                                 return (
                                     <DetailView detail={detail}/>
                                 )

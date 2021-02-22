@@ -99,13 +99,12 @@ export type CreateTransportationRequest = {
 } & CreateDetailType
 
 export enum Feature {
-    WIFI=0,
-    AIR_CONDITIONING=1,
-    HAIR_DRYER=2,
-    PARKING=3,
-    BED=4,
-    HOT_WATER=5,
-    KITCHEN=6,
-    TV=7,
-    HEATER=8
+    WIFI="무선 인터넷",
+    AIR_CONDITIONING= "냉방 시설",
+    PARKING= "주차 시설",
+    BED = "침대",
+    KITCHEN = "조리 시설",
+    TV = "TV",
+    HEATER = "난방 시설",
+    HOT_WATER = "온수"
 }

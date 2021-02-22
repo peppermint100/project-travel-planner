@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {  useParams } from "react-router-dom"
 import { DatePicker, Divider } from 'antd';
 import { Select } from 'antd';
 import { Input, Tag } from 'antd';
@@ -36,7 +35,6 @@ const CommonDetailForm: React.FC<Props> = ({
         inputValue: string,
     }
 
-    const params = useParams<{ planId: string, planName: string }>()
     const [needsState, setNeedsState] = useState<NeedsState>({
         tags: [],
         inputVisible: false,

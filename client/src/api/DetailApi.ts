@@ -32,7 +32,6 @@ export const sendGetDetailByDetailIdReqeust = async (detailId: string) => {
     })
 
     const resToReturn: BasicResponse & { detail: Detail } = response.data
-    console.log('get detail by detailid api response : ', resToReturn)
 
     return resToReturn
 }
@@ -47,8 +46,6 @@ export const sendGetPlanByPlanId = async (planId: string) => {
 
     const resToReturn: GetPlanByPlanIdResponseType = response.data;
 
-    console.log('send get all detail request response: ', resToReturn);
-
     return resToReturn;
 }
 
@@ -58,18 +55,13 @@ export const sendCreateActivityRequest = async (createActivityRequest: CreateAct
 
     const resToReturn: BasicResponse = response.data
     
-    console.log("create activity result: ", resToReturn)
-
     return resToReturn
 }
 
 export const sendCreateAccommodationRequest = async (createAccommodationRequest: CreateAccommodationRequest) => {
     const response = await basicAxios.post("/detail/createAccommodation", createAccommodationRequest)
-    console.log('create accomodation request :', createAccommodationRequest)
 
     const resToReturn: BasicResponse = response.data
-
-    console.log("create accomodation result: ", resToReturn)
 
     return resToReturn
 }
@@ -78,8 +70,6 @@ export const sendCreateTransportationRequest = async (createTransportationReques
     const response = await basicAxios.post("/detail/createTransportation", createTransportationRequest)
 
     const resToReturn: BasicResponse = response.data
-
-    console.log("create transportation result: ", resToReturn)
 
     return resToReturn
 }
@@ -101,8 +91,6 @@ export const sendUpdateTransportationRequest = async (detailId: string, updateTr
     const response = await basicAxios.put(`/detail/updateTransportation/${detailId}`, updateTransportationRequest)
 
     const resToReturn: BasicResponse = response.data
-    console.log(resToReturn)
-
     return resToReturn
 }
 
@@ -111,7 +99,6 @@ export const sendUpdateActivityRequest = async (detailId: string, updateActivity
 
     const resToReturn: BasicResponse = response.data
 
-    console.log(resToReturn)
     return resToReturn
 }
 
@@ -120,6 +107,5 @@ export const sendUpdateAccomodationRequest = async (detailId: string, updateAcco
 
     const resToReturn: BasicResponse = response.data
 
-    console.log(resToReturn)
     return resToReturn
 }

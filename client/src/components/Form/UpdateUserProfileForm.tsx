@@ -17,7 +17,6 @@ interface Props {
 const UpdateUserProfileForm: React.FC<Props> = ({ user }) => {
 
     const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch()
 
     return (
         <Formik initialValues={{ imageFile: "", planName: "", fileName: ""}} onSubmit={(data) => {
@@ -33,17 +32,15 @@ const UpdateUserProfileForm: React.FC<Props> = ({ user }) => {
             sendCreatePlanRequest(formData)
             .then((response: CreatePlanResponseType) => {
                 if(response.succees == true){
-                    console.log('response success : ', response)
                     message.info('새로운 계획을 추가했습니다.')
                     setLoading(false)
                 }else {
-                    console.log('response fail : ', response)
                     message.info(response.msg);
                     setLoading(false)
                 }
-            }) // create response of this with saga then update loading animation
+            }) 
         }}>
-            {({ setFieldValue , isSubmitting, handleChange, values: { imageFile, fileName } }) => (
+            {({ setFieldValue , values: { imageFile, fileName } }) => (
                 <Form>
                     <div className="flex w-full items-center justify-center">
                         <label className="w-40 h-40 flex justify-centerflex-col items-center bg-gray-200 text-blue rounded-lg tracking-wide uppercase border-2 border-dotted border-gray-300 cursor-pointer hover:bg-blue hover:text-white">

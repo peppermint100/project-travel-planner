@@ -1,13 +1,8 @@
-import { CheckOutlined } from "@ant-design/icons"
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Check } from "@material-ui/icons"
-import { Divider, Tag } from "antd"
-import moment from "moment"
+import { Divider } from "antd"
 import React from 'react'
 import { Activity } from "../../../types/api/DetailType"
 import ReadOnlyMap from "../../Map/ReadOnlyMap"
-import NeedsView from "./NeedsView"
+import ListView from "./ListView"
 
 interface Props {
     detail: Activity
@@ -39,7 +34,7 @@ const ActivityDetailView: React.FC<Props> = ({ detail }) => {
             </div>
             <Divider />
             <div className="ml-6">
-                <NeedsView needs={detail.needs} />
+                <ListView contents={detail.needs} />
             </div>
         </div>
     )

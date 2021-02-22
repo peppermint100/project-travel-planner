@@ -14,7 +14,6 @@ interface Props {
   userId: number;
 }
 
-
 const MyPlanView: React.FC<Props> = ({ userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentSelectedPlanId, setCurrentSelectedPlanId] = useState(0);
@@ -42,7 +41,6 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
 
   const handleSharePlan = async (userId: number, planId: number, email: string) => {
     const response = await sendSharePlanRequest(userId, planId, email);
-    console.log('share plan response', response)
     setSharePlanResponse(response)
   }
 
@@ -59,7 +57,6 @@ const MyPlanView: React.FC<Props> = ({ userId }) => {
           onCancel={handleCancel}
           footer={[
             <DefaultButton text="공유하기" onClick={() => {
-              console.log('current plan id: ', currentSelectedPlanId)
               handleSharePlan(userId, currentSelectedPlanId, modalEmailInput)
             }}/>
           ]}

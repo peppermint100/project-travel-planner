@@ -9,11 +9,6 @@ import { faBus, faDice, faHotel, faPlane, faSkating, faSubway, faTaxi, faWalking
 
 interface Props {
     detail: Detail;
-    // toDetail: () => void;
-    // title: string;
-    // date: string;
-    // dType: DetailType
-    // icon: AntdIconProps
 }
 
 const DetailView: React.FC<Props> = ({ detail }) => {
@@ -28,12 +23,10 @@ const DetailView: React.FC<Props> = ({ detail }) => {
     useEffect(() => {
         if(detail.detailType === DetailType.ACTIVITY){
             const typedDetail = detail as Activity;
-            console.log(typedDetail)
             setIcon(<FontAwesomeIcon icon={faDice} />)
             setTitle(typedDetail.activityName + "에서 활동")
         }else if(detail.detailType === DetailType.TRANSPORTATION){
             const typedDetail = detail as Transportation;
-            console.log(typedDetail)
             switch(typedDetail.transportationType){
                 case TransportationType.WALK:
                     setTitle("도보로 이동");
@@ -60,11 +53,9 @@ const DetailView: React.FC<Props> = ({ detail }) => {
             }
         }else if(detail.detailType === DetailType.ACCOMMODATION){
             const typedDetail = detail as Accommodation;
-            console.log(typedDetail)
             setIcon(<FontAwesomeIcon icon={faHotel} />)
             setTitle(typedDetail.accommodationName + "에서 숙박")
         }
-            console.log('title: ', title)
     }, [])
 
     return (

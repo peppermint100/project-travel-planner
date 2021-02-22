@@ -18,9 +18,3 @@ export interface IActivityFormAction {
     activityName?: string;
     time?: string; 
 }
-
-// export type setActivityNameType = ReturnType<typeof _setActivityName>
-// export type setActivityTimeType = ReturnType<typeof _setActivityTime>
-
-// export type ActivityFormActionType = setActivityNameType | setActivityTimeType
-

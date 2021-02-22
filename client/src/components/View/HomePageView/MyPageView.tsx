@@ -20,15 +20,10 @@ const MyPageContent: React.FC<Props> = ({ meResponse }) => {
         msg: ""
     }); 
 
-    useEffect(() => {
-        console.log("mypage meResponse: ", meResponse)
-    }, [])
- 
     return (
         <Formik
             initialValues={{ imageUrl: "", imageFile: "", name: "", passwordBefore: "", password: "", passwordConfirm: "" }}
             onSubmit={(data) => {
-                console.log("update user profile data", data)
                 const { imageFile, name, passwordBefore, password, passwordConfirm } = data;
 
                 const formData = new FormData();

@@ -3,12 +3,10 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker,
-  InfoWindow
+  Marker
 } from "react-google-maps";
 import env from "../../configs/env";
 import { MapStateType, Position } from "../../types/map/MapType";
-import {  onMarkerDragEnd } from "../../utils/map";
 
 interface Props {
     position: Position
@@ -23,8 +21,6 @@ const ReadOnlyMap: React.FC<Props> = ({ position }) => {
         mapPosition: position,
         markerPosition: position,
     });
-
-    console.log("mapState: ", mapState)
 
     const MapWithAMarker: React.ComponentClass<any, string | Element> = withScriptjs(withGoogleMap(props =>
         <GoogleMap

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   withScriptjs,
   withGoogleMap,
@@ -7,14 +7,11 @@ import {
   InfoWindow
 } from "react-google-maps";
 import env from "../../configs/env";
-import { MapStateType, Position } from "../../types/map/MapType";
+import { MapStateType } from "../../types/map/MapType";
 import { onMarkerDragEnd, onPlaceSelected } from "../../utils/map";
 
 import AutoComplete from "react-google-autocomplete";
-import { useDispatch, useSelector } from "react-redux";
-import { RootReducerType } from "../../redux/reducers/rootReducer";
 import { _setMapState } from "../../redux/actions/MapAction";
-import { Divider } from "antd";
 
 interface Props {
     mapState: MapStateType;
